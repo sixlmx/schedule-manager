@@ -1,6 +1,6 @@
 import DayTable from './components/DayTable'
 import { getMondayDate } from '../../lib/helpers/dateHelpers'
-import { sortLessonsByDays } from '../../lib/helpers/sortHelpers'
+import { addWindows, sortLessonsByDays } from '../../lib/helpers/sortHelpers'
 
 export default async function Schedule() {
   const teacherId = new URL(window.location.href).pathname.split('/')[2]
@@ -22,6 +22,8 @@ export default async function Schedule() {
   const { startDate, lessons } = await fetchSchedule()
   const sortedLessons = sortLessonsByDays(lessons)
   const days = Object.keys(sortedLessons)
+  console.log('sortedLessons', sortedLessons)
+  console.log('addWindows', addWindows(sortedLessons[1]))
 
   return `
     <div class="schedule-dashboard">
