@@ -26,17 +26,17 @@ export function calcDate(startOfWeek, dayOfWeek) {
 
 export function calcWindow(endTime, startTime) {
   function toMinutes(time) {
-    const [hours, minutes] = time.split(':').map(Number);
-    return hours * 60 + minutes;
+    const [hours, minutes] = time.split(':').map(Number)
+    return hours * 60 + minutes
   }
 
-  const endMinutes = toMinutes(endTime);     // 16:40 = 1000 минут
-  const startMinutes = toMinutes(startTime); // 19:10 = 1150 минут
-  const breakMinutes = startMinutes - endMinutes; // 1150 - 1000 = 150 минут
+  const endMinutes = toMinutes(endTime) // 16:40 = 1000 минут
+  const startMinutes = toMinutes(startTime) // 19:10 = 1150 минут
+  const breakMinutes = startMinutes - endMinutes // 1150 - 1000 = 150 минут
 
   // Конвертируем обратно в часы и минуты
-  const hours = Math.floor(breakMinutes / 60);
-  const minutes = breakMinutes % 60;
+  const hours = Math.floor(breakMinutes / 60)
+  const minutes = breakMinutes % 60
 
   return `${hours} ч ${minutes} мин`
 }

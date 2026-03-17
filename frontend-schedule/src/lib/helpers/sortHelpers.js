@@ -1,4 +1,4 @@
-import { calcWindow } from "./dateHelpers"
+import { calcWindow } from './dateHelpers'
 
 export const addWindows = (dayLessons) => {
   const result = [dayLessons[0]]
@@ -24,5 +24,3 @@ export const sortLessonsByDays = (lessons) => {
     return { ...acc, [day]: lessonsByDay }
   }, {})
 }
-
-

@@ -38,8 +38,8 @@ const navigate = (pathname) => {
 
 export const mountRoute = async () => {
   const href = (window.location.href).replace(/\/+$/, '')
-  if (window.location.href.at(-1) === '/') history.replaceState(undefined, undefined, href)
-  const { pathname } = new URL(href);
+  if (window.location.href.at(-1) === '/') history.replaceState({}, '', href)
+  const { pathname } = new URL(href)
 
   const element = navigate(pathname)
   const app = document.querySelector('#app')
@@ -52,7 +52,7 @@ document.addEventListener('click', async (event) => {
   if (link) {
     const href = link.getAttribute('href')
     event.preventDefault()
-    history.pushState(undefined, undefined, `${baseUrl}/${href}`)
+    history.pushState({}, '', `${baseUrl}/${href}`)
     mountRoute()
   }
 })
