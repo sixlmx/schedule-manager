@@ -6,7 +6,6 @@ import ErrorComponent from './components/ErrorComponent.js'
 console.log('load')
 
 const routes = [
-  { path: '/', component: App },
   { path: '/publications', component: App },
   { path: '/publications/teachers', component: Teachers },
   { path: '/publications/teachers/:id/lessons', component: Schedule },

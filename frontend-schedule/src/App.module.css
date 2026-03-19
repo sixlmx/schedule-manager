@@ -24,32 +24,3 @@
   gap: 30px;
   justify-content: center;
 }
-
-.cardsContainer a {
-  display: block;
-  width: 300px;
-  background: white;
-  padding: 25px;
-  border-radius: 8px;
-  text-decoration: none;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  border: 2px solid transparent;
-  transition: 0.2s;
-}
-
-.cardsContainer a:hover {
-  border-color: #3498db;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-}
-
-.cardsContainer a h1 {
-  color: #2980b9;
-  font-size: 22px;
-  margin-bottom: 10px;
-}
-
-.cardsContainer a h2 {
-  color: #666;
-  font-size: 16px;
-  font-weight: normal;
-}

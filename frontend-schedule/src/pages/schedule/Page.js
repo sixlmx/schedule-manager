@@ -1,6 +1,7 @@
 import DayTable from './components/DayTable'
 import { getMondayDate } from '../../lib/helpers/dateHelpers'
 import { addWindows, sortLessonsByDays } from '../../lib/helpers/sortHelpers'
+import styles from './Page.module.css'
 
 export default async function Schedule() {
   const teacherId = new URL(window.location.href).pathname.split('/')[2]
@@ -26,9 +27,9 @@ export default async function Schedule() {
   console.log('addWindows', addWindows(sortedLessons[1]))
 
   return `
-    <div class="schedule-dashboard">
-      <h1>${'Страница с расписанием'}</h1>
-      <div class="schedule-grid">
+    <div class=${styles.scheduleDashboard}>
+      <h1 class=${styles.scheduleHeader}>${'Страница с расписанием'}</h1>
+      <div class=${styles.scheduleGrid}>
         ${days.map(day => DayTable({ lessons: sortedLessons[day], startDate })).join('\n')}
       </div>
     </div>
