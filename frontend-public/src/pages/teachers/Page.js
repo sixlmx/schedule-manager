@@ -15,7 +15,6 @@ export default async function Teachers() {
     }
   }
   const teachers = await fetchTeachers()
-  console.log(2, teachers)
 
   const teachersElements = teachers.map(teacher => TeacherName(teacher)).join('\n')
   return `<div>${teachersElements}</div>`

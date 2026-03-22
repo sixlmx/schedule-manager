@@ -6,8 +6,6 @@ import styles from './Page.module.css'
 export default async function Page() {
   const teacherId = new URL(window.location.href).pathname.split('/')[3]
   const date = getMondayDate()
-  console.log(teacherId, 'teacherId')
-  console.log(date, 'date')
 
   async function fetchLessons() {
     try {
@@ -25,8 +23,6 @@ export default async function Page() {
   const { startDate, lessons } = await fetchLessons()
   const sortedLessons = sortLessonsByDays(lessons)
   const days = Object.keys(sortedLessons)
-  console.log('sortedLessons', sortedLessons)
-  console.log('addWindows', addWindows(sortedLessons[1]))
 
   return `
     <div class=${styles.scheduleDashboard}>
