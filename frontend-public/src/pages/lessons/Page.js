@@ -1,30 +1,17 @@
 import DayTable from './components/DayTable'
-import { getMondayDate } from '../../lib/helpers/dateHelpers'
 import { addWindows, sortLessonsByDays } from '../../lib/helpers/sortHelpers'
 import styles from './Page.module.css'
+import BreadCrumbs from '../../components/BreadCrumbs'
+import { fetchLessons } from '../../lib/data'
 
 export default async function Page() {
-  const teacherId = new URL(window.location.href).pathname.split('/')[3]
-  const date = getMondayDate()
-
-  async function fetchLessons() {
-    try {
-      const response = await fetch(`/apiv1/teachers/lessons?teacher=${teacherId}&date=${date}`)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      const data = await response.json()
-      return data
-    }
-    catch (error) {
-      console.error('Fetch error:', error)
-    }
-  }
   const { startDate, lessons } = await fetchLessons()
   const sortedLessons = sortLessonsByDays(lessons)
   const days = Object.keys(sortedLessons)
+  const teacher = lessons[0].teachers[0].fio
 
   return `
+  ${BreadCrumbs([{ type: 'ref', href: '/public/teachers', text: 'Преподаватели' }, { text: teacher }])}
     <div class=${styles.scheduleDashboard}>
       <h1 class=${styles.scheduleHeader}>${'Страница с расписанием'}</h1>
       <div class=${styles.scheduleGrid}>

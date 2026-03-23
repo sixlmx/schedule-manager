@@ -37,7 +37,6 @@ export const mountRoute = async () => {
 }
 
 document.addEventListener('click', async (event) => {
-  const baseUrl = window.location.href
   const link = event.target.closest('a')
   if (link) {
     const href = link.getAttribute('href')
@@ -46,7 +45,7 @@ document.addEventListener('click', async (event) => {
       history.back()
       return
     }
-    history.pushState({}, '', `${baseUrl}/${href}`)
+    history.pushState({}, '', `${href}`)
     mountRoute()
   }
 })
