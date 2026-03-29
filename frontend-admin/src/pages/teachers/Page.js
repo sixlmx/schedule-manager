@@ -1,16 +1,9 @@
-import { registerHandler } from '../../core/init'
 import styles from './Page.module.css'
 import { fetchTeachers } from '../../lib/data'
 import TeachersCrudModal from './components/TeachersCrudModal'
 
 export default async function Page() {
   const teachers = await fetchTeachers()
-
-  const onClick = () => {
-    const modal = document.querySelector('.modal-overlay')
-    modal.classList.remove('hidden')
-  }
-  const id = registerHandler(onClick)
 
   return `
   <h1 class="${styles.title}">Преподаватели</h1>
@@ -32,7 +25,7 @@ export default async function Page() {
         </tr>`).join('')} 
       </tbody>
     </table>
-    <button data-id=${id}>Добавить преподавателя</button>
+    <button data-id="openModal"}>Добавить преподавателя</button>
     ${TeachersCrudModal()}
     `
 }
