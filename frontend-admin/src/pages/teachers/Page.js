@@ -7,7 +7,7 @@ export default async function Page() {
   const teachers = await fetchTeachers()
 
   const onClick = () => {
-    const modal = document.querySelector('.modal-teachers')
+    const modal = document.querySelector('.teachersCrudModal')
     modal.classList.remove('hidden')
   }
   const id = registerHandler(onClick)
