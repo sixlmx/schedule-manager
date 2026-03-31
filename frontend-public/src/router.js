@@ -14,21 +14,23 @@ const routes = [
   { path: '/public/groups/:id/lessons', component: Schedule },
 ]
 
-const navigate = pathname => routes
-  .find((route) => {
-    const pattern = route.path.replace(/:[^/]+/g, '([^/]+)') + '/?$'
-    const regex = new RegExp('^' + pattern)
-    return regex.test(pathname)
-  })
+const navigate = (pathname) => {
+  const route = routes
+    .find((route) => {
+      const pattern = route.path.replace(/:[^/]+/g, '([^/]+)') + '/?$'
+      const regex = new RegExp('^' + pattern)
+      return regex.test(pathname)
+    })
+  return route ? route.component : ErrorPage
+}
 
 export const mountRoute = async () => {
   const href = (window.location.href).replace(/\/+$/, '')
   if (window.location.href.at(-1) === '/') history.replaceState({}, '', href)
   const { pathname } = new URL(href)
-  const page = navigate(pathname)
-  const element = page ? page.component : ErrorPage
+  const content = navigate(pathname)
   const app = document.querySelector('#app')
-  app.innerHTML = await element()
+  app.innerHTML = await content()
 }
 
 document.addEventListener('click', async (event) => {

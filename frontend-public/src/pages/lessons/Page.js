@@ -11,11 +11,13 @@ export default async function Page() {
   const { startDate, lessons, group } = await fetchLessons(category)
   const sortedLessons = sortLessonsByDays(lessons)
   const days = Object.keys(sortedLessons)
-  const breadcrumbs = [{
-    type: 'ref', href: `/public/${category}`,
-    text: category === 'teachers' ? 'Преподаватели' : 'Группы'
-  },
-  { text: category === 'teachers' ? lessons[0].teachers[0].fio : group.name }]
+  const breadcrumbs = [
+    {
+      type: 'ref', href: `/public/${category}`,
+      text: category === 'teachers' ? 'Преподаватели' : 'Группы',
+    },
+    { text: category === 'teachers' ? lessons[0].teachers[0].fio : group.name }
+  ]
 
   return `
   ${BreadCrumbs(breadcrumbs)}
