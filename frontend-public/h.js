@@ -1,5 +1,5 @@
 export function h(tag, props, ...children) {
-  console.log(1, tag);
+  console.log(1, tag)
   if (typeof tag === 'function') {
     return tag(props)
   }
