@@ -6,5 +6,6 @@ export default function App() {
   return `<div class="${styles.container}">
       ${Sidebar()}
       ${Main()}
+      <div class="flash-message"></div>    
   </div>`
 }

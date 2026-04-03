@@ -6,6 +6,15 @@ export const handlers = {
   closeModal: () => {
     document.querySelector('.modal-overlay').classList.add('hidden')
   },
+  showFlashMessage: ({ type, message }) => {
+    const flashContainer = document.querySelector('.flash-message')
+    flashContainer.innerHTML = message
+    flashContainer.classList.add('show', type)
+    setTimeout(() => {
+      flashContainer.classList.remove('show', type)
+      flashContainer.innerHTML = ''
+    }, 1000)
+  },
   getId: function () { return ++this.id },
 }
 

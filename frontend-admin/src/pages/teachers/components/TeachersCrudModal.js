@@ -12,7 +12,10 @@ export default function TeachersCrudModal() {
       position: formData.get('position'),
     }
     const result = await createTeacher(data)
-    if (result) handlers.closeModal()
+    if (result) {
+      handlers.closeModal()
+      handlers.showFlashMessage({ type: 'success', message: 'Пользователь успешно создан!' })
+    }
   }
 
   const id = registerHandler(onSubmit)
