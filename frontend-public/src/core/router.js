@@ -1,8 +1,8 @@
-import Teachers from './pages/teachers/Page.jsx'
-import Schedule from './pages/lessons/Page.jsx'
-import App from './App.jsx'
-import ErrorPage from './pages/Error.jsx'
-import Groups from './pages/groups/Page.jsx'
+import Teachers from '../pages/teachers/Page.jsx'
+import Schedule from '../pages/lessons/Page.jsx'
+import App from '../App.jsx'
+import ErrorPage from '../pages/Error.jsx'
+import Groups from '../pages/groups/Page.jsx'
 
 console.log('load')
 
