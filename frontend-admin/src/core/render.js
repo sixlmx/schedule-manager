@@ -1,3 +1,3 @@
-export default function (element, content) {
-  element.innerHTML = content
+export default async function (element, content) {
+  element.innerHTML = await content
 }

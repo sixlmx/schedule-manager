@@ -1,6 +1,8 @@
 import styles from './TeachersCrudModal.module.css'
 import { handlers, registerHandler } from '../../../core/init'
 import { createTeacher } from '../../../lib/actions'
+import render from '../../../core/render'
+import Page from '../Page'
 
 export default function TeachersCrudModal() {
   const onSubmit = async (e) => {
@@ -14,6 +16,7 @@ export default function TeachersCrudModal() {
     const result = await createTeacher(data)
     handlers.closeModal()
     handlers.showFlashMessage(result)
+    render(document.querySelector('#main'), <Page/>)
   }
 
   const id = registerHandler(onSubmit)
