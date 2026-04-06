@@ -24,17 +24,22 @@ export const registerHandler = (handler) => {
   return id
 }
 
-export const init = () => {
-  const handle = (e) => {
+export const initHandlers = () => {
+  const handleClick = (e) => {
     const { id } = e.target.dataset
-    if (e.type === 'submit') {
-      e.preventDefault()
-    }
     if (handlers[id]) {
       handlers[id](e)
     }
   }
 
-  document.addEventListener('click', handle)
-  document.addEventListener('submit', handle)
+  const handleSubmit = (e) => {
+    const { id } = e.target.dataset
+    e.preventDefault()
+    if (handlers[id]) {
+      handlers[id](e)
+    }
+  }
+
+  document.addEventListener('click', handleClick)
+  document.addEventListener('submit', handleSubmit)
 }
