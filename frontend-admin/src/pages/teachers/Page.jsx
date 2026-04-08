@@ -6,13 +6,20 @@ import { deleteTeacher } from '../../lib/actions'
 import render from '../../core/render'
 import Modal from '../../components/shared/Modal'
 import ConfirmForm from '../../components/shared/ConfirmForm'
+import UpdateTeacherForm from './components/UpdateTeacherForm'
 
 export default async function Page() {
   const teachers = await fetchTeachers()
+  let teacher = {}
   const showModalCreateTeacher = () => {
     handlers.openModal('createTeacher')
   }
-  const showModalUpdateTeacher = () => {
+  const showModalUpdateTeacher = (e) => {
+    const updateTeacherForm = document.querySelector('#updateTeacherForm')
+    const teacherid = e.target.attributes.getNamedItem('teacherid').value
+    teacher = teachers.find((teacher) => teacher.id === +teacherid)
+    updateTeacherForm.dataset.teacherid = teacherid
+    render('#updateTeacher-content', <UpdateTeacherForm closeId="updateTeacher" teacher={teacher}/>)
     handlers.openModal('updateTeacher')
   }
   const showModalDeleteTeacher = (e) => {
@@ -65,10 +72,13 @@ export default async function Page() {
       </table>
       <button data-id={idCreate}>Добавить преподавателя</button>
       <Modal modalId="createTeacher">
-        <CreateTeacherForm closeId="createTeacher"/>
+        <CreateTeacherForm closeId="createTeacher" />
+      </Modal>
+      <Modal modalId="updateTeacher">
+        <UpdateTeacherForm closeId="updateTeacher" teacher={teacher} />
       </Modal>
       <Modal modalId="deleteTeacher">
-        <ConfirmForm message="Подтвердите удаление преподавателя" onConfirm={onConfirm} onCancel={onCancel}/>
+        <ConfirmForm message="Подтвердите удаление преподавателя" onConfirm={onConfirm} onCancel={onCancel} />
       </Modal>
     </div>
   )

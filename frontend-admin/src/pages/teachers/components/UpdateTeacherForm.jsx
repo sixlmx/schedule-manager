@@ -4,7 +4,8 @@ import { updateTeacher } from '../../../lib/actions'
 import render from '../../../core/render'
 import Page from '../Page'
 
-export default function UpdateTeacherForm({ closeId }) {
+export default function UpdateTeacherForm({ closeId, teacher }) {
+  console.log(teacher);  
   const onSubmit = async (e) => {
     const formData = new FormData(e.target)
     const data = {
@@ -21,12 +22,12 @@ export default function UpdateTeacherForm({ closeId }) {
   const formId = registerSubmit(onSubmit)
 
   return (
-    <form class={styles.modal} data-id={formId}>
-      <h3>Добавить преподавателя</h3>
-      <input type="text" name="fio" placeholder="ФИО" required />
-      <input type="text" name="abbr" placeholder="Сокращение" required />
-      <input type="text" name="position" placeholder="Должность" />
-      <button type="submit">Добавить</button>
+    <form class={styles.modal} data-id={formId} id="updateTeacherForm">
+      <h3>Редактировать преподавателя</h3>
+      <input type="text" name="fio" placeholder="ФИО" required value={teacher.name}/>
+      <input type="text" name="abbr" placeholder="Сокращение" required value={teacher.fio}/>
+      <input type="text" name="position" placeholder="Должность" value={teacher.position}/>
+      <button type="submit">Редактировать</button>
     </form>
   )
 }
