@@ -1,10 +1,10 @@
-import styles from './UpsertTeacherForm.module.css'
+import styles from './TeacherForm.module.css'
 import { handlers, registerSubmit } from '../../../core/handlers'
-import { createTeacher } from '../../../lib/actions'
+import { updateTeacher } from '../../../lib/actions'
 import render from '../../../core/render'
 import Page from '../Page'
 
-export default function TeachersCrudModal({ closeId }) {
+export default function UpdateTeacherForm({ closeId }) {
   const onSubmit = async (e) => {
     const formData = new FormData(e.target)
     const data = {
@@ -12,7 +12,7 @@ export default function TeachersCrudModal({ closeId }) {
       abbr: formData.get('abbr'),
       position: formData.get('position'),
     }
-    const result = await createTeacher(data)
+    const result = await updateTeacher(data)
     handlers.closeModal(closeId)
     handlers.showFlashMessage(result)
     render('#main', <Page />)

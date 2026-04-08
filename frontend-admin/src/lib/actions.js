@@ -17,6 +17,25 @@ export async function createTeacher(data) {
   }
 }
 
+export async function updateTeacher(data) {
+  try {
+    const response = await fetch('/apiv1/teachers', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    return await response.json()
+  }
+  catch (error) {
+    return { type: 'error', message: error.message }
+  }
+}
+
 export async function deleteTeacher(teacherId) {
   try {
     const response = await fetch('/apiv1/teachers', {

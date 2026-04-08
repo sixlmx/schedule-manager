@@ -1,10 +1,7 @@
 import { handlers, registerClick } from "../../core/handlers"
 
 export default function Modal({ modalId, children }) {
-  const onClose = () => {
-    handlers.closeModal(modalId)  
-  }
-
+  const onClose = () => handlers.closeModal(modalId)
   const closeBtnId = registerClick(onClose)
   
   return (

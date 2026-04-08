@@ -1,7 +1,7 @@
 import styles from './Page.module.css'
 import { fetchTeachers } from '../../lib/data'
-import UpsertTeacherForm from './components/UpsertTeacherForm'
-import { handlers, registerSubmit, registerClick } from '../../core/handlers'
+import CreateTeacherForm from './components/CreateTeacherForm'
+import { handlers, registerClick } from '../../core/handlers'
 import { deleteTeacher } from '../../lib/actions'
 import render from '../../core/render'
 import Modal from '../../components/shared/Modal'
@@ -9,8 +9,11 @@ import ConfirmForm from '../../components/shared/ConfirmForm'
 
 export default async function Page() {
   const teachers = await fetchTeachers()
-  const showModalUpsertTeacher = () => {
+  const showModalCreateTeacher = () => {
     handlers.openModal('createTeacher')
+  }
+  const showModalUpdateTeacher = () => {
+    handlers.openModal('updateTeacher')
   }
   const showModalDeleteTeacher = (e) => {
     const confirmForm = document.querySelector('#confirmForm')
@@ -18,7 +21,8 @@ export default async function Page() {
     confirmForm.dataset.teacherid = teacherid
     handlers.openModal('deleteTeacher')
   }
-  const idUpsert = registerClick(showModalUpsertTeacher)
+  const idCreate = registerClick(showModalCreateTeacher)
+  const idUpdate = registerClick(showModalUpdateTeacher)
   const idDelete = registerClick(showModalDeleteTeacher)
 
   const onConfirm = async () => {
@@ -29,6 +33,8 @@ export default async function Page() {
     handlers.showFlashMessage(result)
     render('#main', <Page />)
   }
+
+  const onCancel = () => handlers.closeModal('deleteTeacher')
 
   return (
     <div>
@@ -41,6 +47,7 @@ export default async function Page() {
             <th>Должность</th>
             <th>Цвет</th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -50,17 +57,18 @@ export default async function Page() {
               <td>{teacher.fio}</td>
               <td>{teacher.position}</td>
               <td>{teacher.color}</td>
+              <td><button teacherId={teacher.id} data-id={idUpdate}>Редактировать</button></td>
               <td><button teacherId={teacher.id} data-id={idDelete}>Удалить</button></td>
             </tr>
           ))}
         </tbody>
       </table>
-      <button data-id={idUpsert}>Добавить преподавателя</button>
+      <button data-id={idCreate}>Добавить преподавателя</button>
       <Modal modalId="createTeacher">
-        <UpsertTeacherForm closeId="createTeacher"/>
+        <CreateTeacherForm closeId="createTeacher"/>
       </Modal>
       <Modal modalId="deleteTeacher">
-        <ConfirmForm message="Подтвердите удаление преподавателя" onConfirm={onConfirm}/>
+        <ConfirmForm message="Подтвердите удаление преподавателя" onConfirm={onConfirm} onCancel={onCancel}/>
       </Modal>
     </div>
   )
