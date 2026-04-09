@@ -1,4 +1,4 @@
-import { getTeachers, getTeacherById, createTeacher, deleteTeacher } from '../controllers/teachers.js'
+import { getTeachers, createTeacher, deleteTeacher, updateTeacher } from '../controllers/teachers.js'
 
 export default async function teachersRoutes(fastify) {
   fastify.get('/teachers', async (req, reply) => {
@@ -961,16 +961,13 @@ export default async function teachersRoutes(fastify) {
 }`)
   })
 
-  fastify.get('/teachers/:id', async (req, reply) => {
-    const teacher = await getTeacherById(fastify, req.params.id)
-    if (!teacher) {
-      return reply.status(404).send({ error: 'Teacher not found' })
-    }
-    reply.send(teacher)
-  })
-
   fastify.post('/teachers', async (req, reply) => {
     const result = await createTeacher(fastify, req.body)
+    reply.status(201).send(result)
+  })
+
+  fastify.put('/teachers', async (req, reply) => {
+    const result = await updateTeacher(fastify, req.body)
     reply.status(201).send(result)
   })
 

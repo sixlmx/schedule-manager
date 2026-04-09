@@ -11,17 +11,6 @@ export const getTeachers = async (fastify) => {
   }
 }
 
-export const getTeacherById = async (fastify, id) => {
-  const client = await fastify.pg.connect()
-  try {
-    const { rows } = await client.query(teachersQueries.getById, [id])
-    return rows[0] || null
-  }
-  finally {
-    client.release()
-  }
-}
-
 export const createTeacher = async (fastify, data) => {
   const client = await fastify.pg.connect()
   try {
@@ -31,6 +20,22 @@ export const createTeacher = async (fastify, data) => {
       data.position,
     ])
     return { type: 'success', message: 'Преподаватель добавлен!' }
+  }
+  finally {
+    client.release()
+  }
+}
+
+export const updateTeacher = async (fastify, data) => {
+  const client = await fastify.pg.connect()
+  try {
+    await client.query(teachersQueries.update, [
+      data.fio,
+      data.abbr,
+      data.position,
+      data.id,
+    ])
+    return { type: 'success', message: 'Данные успешно обновлены!' }
   }
   finally {
     client.release()

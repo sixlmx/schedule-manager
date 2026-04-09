@@ -40,6 +40,7 @@ async function updateTeacher(data) {
       },
       body: JSON.stringify(data),
     })
+    console.log(123, response)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }

@@ -5,13 +5,13 @@ import render from '../../../core/render'
 import Page from '../Page'
 
 export default function UpdateTeacherForm({ closeId, teacher }) {
-  console.log(teacher);  
   const onSubmit = async (e) => {
     const formData = new FormData(e.target)
     const data = {
       fio: formData.get('fio'),
       abbr: formData.get('abbr'),
       position: formData.get('position'),
+      id: teacher.id,
     }
     const result = await updateTeacher(data)
     handlers.closeModal(closeId)
