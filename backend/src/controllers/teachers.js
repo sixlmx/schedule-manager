@@ -19,7 +19,7 @@ export const createTeacher = async (fastify, data) => {
       data.abbr,
       data.position,
     ])
-    return { type: 'success', message: 'Преподаватель добавлен!' }
+    return { message: 'Преподаватель добавлен!' }
   }
   finally {
     client.release()
@@ -35,7 +35,7 @@ export const updateTeacher = async (fastify, data) => {
       data.position,
       data.id,
     ])
-    return { type: 'success', message: 'Данные успешно обновлены!' }
+    return { message: 'Данные успешно обновлены!' }
   }
   finally {
     client.release()
@@ -46,7 +46,7 @@ export const deleteTeacher = async (fastify, teacherId) => {
   const client = await fastify.pg.connect()
   try {
     await client.query(teachersQueries.delete, [teacherId])
-    return { type: 'success', message: 'Преподаватель удален!' }
+    return { message: 'Преподаватель удален!' }
   }
   finally {
     client.release()

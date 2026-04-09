@@ -24,7 +24,8 @@ async function createTeacher(data) {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
-    return await response.json()
+    const message = await response.json()
+    return { type: 'success', ...message }
   }
   catch (error) {
     return { type: 'error', message: error.message }
@@ -40,11 +41,11 @@ async function updateTeacher(data) {
       },
       body: JSON.stringify(data),
     })
-    console.log(123, response)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
-    return await response.json()
+    const message = await response.json()
+    return { type: 'success', ...message }
   }
   catch (error) {
     return { type: 'error', message: error.message }
@@ -63,7 +64,8 @@ async function deleteTeacher(teacherId) {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
-    return await response.json()
+    const message = await response.json()
+    return { type: 'success', ...message }
   }
   catch (error) {
     return { type: 'error', message: error.message }
