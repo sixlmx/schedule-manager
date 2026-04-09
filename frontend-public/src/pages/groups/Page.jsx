@@ -1,6 +1,6 @@
 import BreadCrumbs from '../../components/BreadCrumbs.jsx'
 import Title from '../../components/Title.jsx'
-import { fetchGroups } from '../../lib/data.js'
+import { fetchGroups } from '../../lib/api.js'
 import Group from './components/Group.js'
 
 export default async function Groups() {

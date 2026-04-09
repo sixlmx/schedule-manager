@@ -1,6 +1,6 @@
 import styles from './TeacherForm.module.css'
 import { handlers, registerSubmit } from '../../../core/handlers'
-import { updateTeacher } from '../../../lib/actions'
+import { updateTeacher } from '../../../api/teachers'
 import render from '../../../core/render'
 import Page from '../Page'
 
