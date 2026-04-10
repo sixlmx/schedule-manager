@@ -2,7 +2,7 @@ import styles from './TeacherForm.module.css'
 import { handlers, registerSubmit } from '../../../core/handlers'
 import { updateTeacher } from '../../../api/teachers'
 import render from '../../../core/render'
-import Page from '../Page'
+import TeachersPage from '../TeachersPage'
 
 export default function UpdateTeacherForm({ closeId, teacher }) {
   const onSubmit = async (e) => {
@@ -16,7 +16,7 @@ export default function UpdateTeacherForm({ closeId, teacher }) {
     const result = await updateTeacher(data)
     handlers.closeModal(closeId)
     handlers.showFlashMessage(result)
-    render('#main', <Page />)
+    render('#main', <TeachersPage />)
   }
 
   const formId = registerSubmit(onSubmit)

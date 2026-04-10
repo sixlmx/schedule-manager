@@ -1,16 +1,16 @@
-import Calls from '../pages/calls/Page.jsx'
-import Classes from '../pages/classes/Page.jsx'
-import Groups from '../pages/groups/Page.jsx'
-import Subjects from '../pages/subjects/Page.jsx'
-import Teachers from '../pages/teachers/Page.jsx'
+import CallsPage from '../pages/calls/CallsPage.jsx'
+import ClassesPage from '../pages/classes/ClassesPage.jsx'
+import GroupsPage from '../pages/groups/GroupsPage.jsx'
+import SubjectsPage from '../pages/subjects/SubjectsPage.jsx'
+import TeachersPage from '../pages/teachers/TeachersPage.jsx'
 
 export default {
   routes: {
-    Звонки: Calls,
-    Группы: Groups,
-    Предметы: Subjects,
-    Преподаватели: Teachers,
-    Аудитории: Classes,
+    Звонки: CallsPage,
+    Группы: ClassesPage,
+    Предметы: GroupsPage,
+    Преподаватели: SubjectsPage,
+    Аудитории: TeachersPage,
   },
 
   async getRoute(route) {

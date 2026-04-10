@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   build: {
-    target: 'esnext', // Твой код почти не будет изменен
+    target: 'esnext',
   },
   base: '/admin',
   server: {

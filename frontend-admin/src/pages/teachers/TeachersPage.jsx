@@ -7,8 +7,9 @@ import render from '../../core/render'
 import Modal from '../../components/shared/Modal'
 import ConfirmForm from '../../components/shared/ConfirmForm'
 import UpdateTeacherForm from './components/UpdateTeacherForm'
+import PageTitle from '../../components/shared/PageTitle'
 
-export default async function Page() {
+export default async function TeachersPage() {
   const teachers = await fetchTeachers()
   let teacher = {}
   const showModalCreateTeacher = () => {
@@ -45,7 +46,7 @@ export default async function Page() {
 
   return (
     <div>
-      <h1 class={styles.title}>Преподаватели</h1>
+      <PageTitle title="Преподаватели"/>
       <table class={styles.table}>
         <thead>
           <tr>
