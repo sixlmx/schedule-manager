@@ -32,7 +32,7 @@ export const registerSubmit = (handler) => {
   return id
 }
 
-export const initHandlers = () => {
+export const initListeners = () => {
   const handleClick = (e) => {
     const { handler } = e.target.dataset
     if (handlers.click[handler]) {
