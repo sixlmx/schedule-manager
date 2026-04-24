@@ -7,7 +7,7 @@ export default function Sidebar() {
 
   return (
     <ol class={styles.sidebar}>
-      <SidebarCategory text="Звонки" href={"/admin/bells"} isActive={pathname === "/admin/bells"}/>
+      <SidebarCategory text="Звонки" href={"/admin/bells"} isActive={pathname === "/admin/bells"} />
       <SidebarCategory text="Группы" href={"/admin/groups"} isActive={pathname === "/admin/groups"} />
       <SidebarCategory text="Предметы" href={"/admin/subjects"} isActive={pathname === "/admin/subjects"} />
       <SidebarCategory text="Преподаватели" href={"/admin/teachers"} isActive={pathname === "/admin/teachers"} />

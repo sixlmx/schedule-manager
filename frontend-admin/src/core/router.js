@@ -40,6 +40,12 @@ document.addEventListener('click', async (event) => {
   if (link) {
     const href = link.getAttribute('href')
     event.preventDefault()
+    const handlerElement = link.closest('[data-handler]')
+    if (handlerElement) {
+      // Имитируем клик для срабатывания обработчика, если он в родителе ссылки
+      handlerElement.click()
+    }
+
     if (href === 'back') {
       history.back()
       return
