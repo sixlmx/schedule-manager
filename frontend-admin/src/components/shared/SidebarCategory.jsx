@@ -1,7 +1,7 @@
 import styles from './Sidebar.module.css'
 
-export default function SidebarCategory({ text, href, isActive }) {
-  return <li class={isActive ? styles.active : ''}>
-    <a href={href}>{text}</a>
+export default function SidebarCategory({ text, handler, isActive }) {
+  return <li>
+    <button class={isActive ? 'activeNavBtn sidebarBtn' : 'sidebarBtn'} onClick={handler}>{text}</button>
   </li>
 }

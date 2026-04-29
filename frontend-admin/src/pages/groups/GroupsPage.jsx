@@ -12,7 +12,6 @@ export default async function GroupsPage() {
 
   return (
     <>
-      <Sidebar />
       <div class="content">
 
         <PageTitle title="Группы" />

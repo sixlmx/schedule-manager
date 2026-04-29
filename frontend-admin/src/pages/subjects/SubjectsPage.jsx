@@ -3,7 +3,6 @@ import Sidebar from "../../components/shared/Sidebar";
 
 export default function SubjectsPage() {
   return <>
-    <Sidebar />
     <div className="content">
       <PageTitle title="Предметы" />
 

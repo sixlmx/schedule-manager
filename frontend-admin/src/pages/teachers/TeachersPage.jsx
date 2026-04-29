@@ -13,7 +13,6 @@ export default async function TeachersPage() {
 
   return (
     <>
-      <Sidebar />
       <div class='content'>
         <PageTitle title="Преподаватели" />
         <TeachersTable teachers={teachers} />

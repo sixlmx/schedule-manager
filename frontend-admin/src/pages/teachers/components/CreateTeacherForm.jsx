@@ -1,7 +1,7 @@
 import styles from './TeacherForm.module.css'
 import { handlers } from '../../../core/handlers'
 import { createTeacher } from '../../../api/teachers'
-import render from '../../../core/render'
+import { render } from '../../../core/render'
 import TeachersPage from '../TeachersPage'
 
 export default function CreateTeacherForm({ closeId }) {

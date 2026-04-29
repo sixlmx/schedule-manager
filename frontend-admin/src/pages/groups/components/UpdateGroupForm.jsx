@@ -1,7 +1,7 @@
 import styles from './GroupForm.module.css'
 import { handlers } from '../../../core/handlers'
 import { updateTeacher } from '../../../api/teachers'
-import render from '../../../core/render'
+import { render } from '../../../core/render'
 import GroupsPage from '../GroupsPage'
 
 export default function UpdateGroupForm({ closeId, teacher }) {
@@ -22,9 +22,9 @@ export default function UpdateGroupForm({ closeId, teacher }) {
   return (
     <form class={styles.modal} onSubmit={onSubmit} id="updateTeacherForm">
       <h3>Редактировать преподавателя</h3>
-      <input type="text" name="fio" placeholder="ФИО" required value={teacher.name}/>
-      <input type="text" name="abbr" placeholder="Сокращение" required value={teacher.fio}/>
-      <input type="text" name="position" placeholder="Должность" value={teacher.position}/>
+      <input type="text" name="fio" placeholder="ФИО" required value={teacher.name} />
+      <input type="text" name="abbr" placeholder="Сокращение" required value={teacher.fio} />
+      <input type="text" name="position" placeholder="Должность" value={teacher.position} />
       <button type="submit">Редактировать</button>
     </form>
   )

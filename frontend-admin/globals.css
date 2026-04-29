@@ -9,6 +9,7 @@ html, body {
 
 #app {
   height: 100%;
+  display: flex;
 }
 
 .modal-overlay {
@@ -106,3 +107,16 @@ html, body {
   background-color: #f8fafc;
   overflow-y: auto;
 }
+
+.activeNavBtn {
+  background-color: #3498db !important;
+  border-left: 4px solid #fff !important;
+    color: white !important;
+  font-weight: 600 !important;
+}
+
+#sidebarContainer {
+  display: flex;
+  width: 22%;
+}
+

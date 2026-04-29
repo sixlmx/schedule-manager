@@ -1,6 +1,6 @@
 import styles from './GroupForm.module.css'
 import { handlers, registerSubmit } from '../../../core/handlers'
-import render from '../../../core/render'
+import { render } from '../../../core/render'
 import GroupsPage from '../GroupsPage'
 import { createGroup } from '../../../api/groups'
 

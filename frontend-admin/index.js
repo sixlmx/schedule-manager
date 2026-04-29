@@ -1,8 +1,21 @@
 import App from './src/App.jsx'
-import { initListeners } from './src/core/handlers.js'
-import render from './src/core/render.js'
-import { mountRoute } from './src/core/router.js'
+import BellsPage from './src/pages/bells/BellsPage.jsx'
+import ErrorPage from './src/pages/Error.jsx'
+import SubjectsPage from './src/pages/subjects/SubjectsPage.jsx'
+import TeachersPage from './src/pages/teachers/TeachersPage.jsx'
+import ClassesPage from './src/pages/classes/ClassesPage.jsx'
+import GroupsPage from './src/pages/groups/GroupsPage.jsx'
+import { initWood } from './src/core/initWood.js'
 
-render('#app', App())
-mountRoute()
-initListeners()
+const routes = [
+  { path: '/admin', component: App, parentSelector: '#app' },
+  { path: '/admin/teachers', component: TeachersPage, parentSelector: '#main' },
+  { path: '/admin/bells', component: BellsPage, parentSelector: '#main' },
+  { path: '/admin/subjects', component: SubjectsPage, parentSelector: '#main' },
+  { path: '/admin/classes', component: ClassesPage, parentSelector: '#main' },
+  { path: '/admin/groups', component: GroupsPage, parentSelector: '#main' },
+]
+
+const errorRoute = [{ component: ErrorPage, parentSelector: '#app' }]
+
+initWood(App, routes, errorRoute)

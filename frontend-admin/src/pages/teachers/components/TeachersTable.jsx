@@ -2,7 +2,7 @@ import { deleteTeacher } from "../../../api/teachers";
 import ConfirmForm from "../../../components/shared/ConfirmForm";
 import Modal from "../../../components/shared/Modal";
 import { handlers } from "../../../core/handlers"
-import render from "../../../core/render";
+import { render } from "../../../core/render";
 import TeachersPage from "../TeachersPage";
 import styles from "./TeachersTable.module.css"
 import UpdateTeacherForm from "./UpdateTeacherForm";
