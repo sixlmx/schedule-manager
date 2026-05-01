@@ -1,4 +1,4 @@
-import Sidebar from "./components/shared/Sidebar";
+import Sidebar from "./shared/Sidebar";
 
 export default function App() {
   return (

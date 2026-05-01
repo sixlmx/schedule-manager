@@ -1,5 +1,5 @@
-import PageTitle from "../../components/shared/PageTitle";
-import Sidebar from "../../components/shared/Sidebar";
+import PageTitle from "../../shared/PageTitle";
+import Sidebar from "../../shared/Sidebar";
 
 export default function ClassesPage() {
   return <>

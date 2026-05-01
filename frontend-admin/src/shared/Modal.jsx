@@ -1,4 +1,4 @@
-import { handlers } from "../../core/handlers"
+import { handlers } from "../core/handlers"
 
 export default function Modal({ modalId, children }) {
   return (

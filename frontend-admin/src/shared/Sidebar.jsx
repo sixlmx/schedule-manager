@@ -1,7 +1,7 @@
 import SidebarCategory from './SidebarCategory.jsx'
 import styles from './Sidebar.module.css'
-import { render } from '../../core/render.js'
-import { redirect } from '../../core/router.js'
+import { render } from '../core/render.js'
+import { redirect } from '../core/router.js'
 
 export default function Sidebar() {
   const { pathname } = new URL(window.location.href)

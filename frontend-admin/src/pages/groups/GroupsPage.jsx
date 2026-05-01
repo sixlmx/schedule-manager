@@ -1,10 +1,10 @@
 import { fetchGroups } from '../../api/groups'
 import CreateGroupForm from './components/CreateGroupForm'
 import { handlers, registerClick } from '../../core/handlers'
-import Modal from '../../components/shared/Modal'
-import PageTitle from '../../components/shared/PageTitle'
+import Modal from '../../shared/Modal'
+import PageTitle from '../../shared/PageTitle'
 import GroupsTable from './components/GroupTable'
-import Sidebar from '../../components/shared/Sidebar'
+import Sidebar from '../../shared/Sidebar'
 
 export default async function GroupsPage() {
   const groups = await fetchGroups()

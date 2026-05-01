@@ -1,6 +1,6 @@
 import { deleteTeacher } from "../../../api/teachers";
-import ConfirmForm from "../../../components/shared/ConfirmForm";
-import Modal from "../../../components/shared/Modal";
+import ConfirmForm from "../../../shared/ConfirmForm";
+import Modal from "../../../shared/Modal";
 import { handlers } from "../../../core/handlers"
 import { render } from "../../../core/render";
 import TeachersPage from "../TeachersPage";

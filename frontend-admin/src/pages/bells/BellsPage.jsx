@@ -1,6 +1,6 @@
 import { fetchBells } from "../../api/bells";
-import PageTitle from "../../components/shared/PageTitle";
-import Sidebar from "../../components/shared/Sidebar";
+import PageTitle from "../../shared/PageTitle";
+import Sidebar from "../../shared/Sidebar";
 import BellsTable from "./components/BellsTable";
 
 export default async function BellsPage() {
