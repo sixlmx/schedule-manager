@@ -1,4 +1,4 @@
-import styles from './TeacherForm.module.css'
+import styles from '../../pages.module.css'
 import { handlers } from '../../../core/handlers'
 import { createTeacher } from '../../../api/teachers'
 import { render } from '../../../core/render'
@@ -20,7 +20,7 @@ export default function CreateTeacherForm({ closeId }) {
   }
 
   return (
-    <form class={styles.modal} onSubmit={onSubmit}>
+    <form class={styles.form} onSubmit={onSubmit}>
       <h3>Добавить преподавателя</h3>
       <input type="text" name="fio" placeholder="ФИО" required />
       <input type="text" name="abbr" placeholder="Сокращение" required />

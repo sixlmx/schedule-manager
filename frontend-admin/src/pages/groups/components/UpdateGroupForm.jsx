@@ -1,4 +1,4 @@
-import styles from './GroupForm.module.css'
+import styles from '../../pages.module.css'
 import { handlers } from '../../../core/handlers'
 import { render } from '../../../core/render'
 import GroupsPage from '../GroupsPage'
@@ -21,7 +21,7 @@ export default function UpdateGroupForm({ group }) {
   }
 
   return (
-    <form class={styles.modal} onSubmit={onSubmit} id="updateGroupForm">
+    <form class={styles.form} onSubmit={onSubmit} id="updateGroupForm">
       <h3>Редактировать группу</h3>
       <input type="text" name="name" placeholder="ФИО" required value={group.name} />
       <input type="text" name="abbreviation" placeholder="Должность" value={group.abbreviation} />

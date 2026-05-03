@@ -1,4 +1,4 @@
-import styles from './SubjectForm.module.css'
+import styles from '../../pages.module.css'
 import { createSubject } from '../../../api/subjects'
 import { render } from '../../../core/render'
 import SubjectsPage from '../SubjectsPage'
@@ -19,7 +19,7 @@ export default function CreateSubjectForm({ closeId }) {
   }
 
   return (
-    <form class={styles.modal} onSubmit={onSubmit}>
+    <form class={styles.form} onSubmit={onSubmit}>
       <h3>Добавить предмет</h3>
       <input type="text" name="name" placeholder="Название предмета" required />
       <input type="text" name="abbreviation" placeholder="Сокращение" required />

@@ -3,7 +3,7 @@ import CreateSubjectForm from './components/CreateSubjectForm'
 import Modal from '../../shared/Modal'
 import PageTitle from '../../shared/PageTitle'
 import SubjectsTable from './components/SubjectsTable'
-import styles from './SubjectsPage.module.css'
+import styles from '../pages.module.css'
 import { ui } from '../../utils/dom'
 
 export default async function SubjectsPage() {

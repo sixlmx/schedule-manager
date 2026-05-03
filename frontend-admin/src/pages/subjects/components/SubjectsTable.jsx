@@ -3,7 +3,7 @@ import ConfirmForm from "../../../shared/ConfirmForm";
 import Modal from "../../../shared/Modal";
 import { render } from "../../../core/render";
 import SubjectsPage from "../SubjectsPage";
-import styles from "./SubjectsTable.module.css"
+import styles from "../../pages.module.css"
 import UpdateSubjectForm from "./UpdateSubjectForm";
 import { ui } from "../../../utils/dom";
 
@@ -46,8 +46,8 @@ export default function SubjectsTable({ subjects }) {
             <tr key={subject.id}>
               <td>{subject.name}</td>
               <td>{subject.abbreviation || subject.abbr}</td>
-              <td><button onClick={() => showModalUpdateSubject(subject.id)}>Редактировать</button></td>
-              <td><button onClick={() => showModalDeleteSubject(subject.id)}>Удалить</button></td>
+              <td><button class={`${styles.tableActionButton} ${styles.tableEditButton}`} onClick={() => showModalUpdateSubject(subject.id)}>Редактировать</button></td>
+              <td><button class={`${styles.tableActionButton} ${styles.tableDeleteButton}`} onClick={() => showModalDeleteSubject(subject.id)}>Удалить</button></td>
             </tr>
           ))}
         </tbody>

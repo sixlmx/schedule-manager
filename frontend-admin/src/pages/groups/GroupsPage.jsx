@@ -5,6 +5,7 @@ import Modal from '../../shared/Modal'
 import PageTitle from '../../shared/PageTitle'
 import GroupsTable from './components/GroupTable'
 import Sidebar from '../../shared/Sidebar'
+import styles from '../pages.module.css'
 import { ui } from '../../utils/dom'
 
 export default async function GroupsPage() {
@@ -17,7 +18,7 @@ export default async function GroupsPage() {
 
         <PageTitle title="Группы" />
         <GroupsTable groups={groups} />
-        <button onClick={showModalCreateGroup}>Добавить группу</button>
+        <button class={styles.addButton} onClick={showModalCreateGroup}>Добавить группу</button>
         <Modal modalId="createGroup">
           <CreateGroupForm closeId="createGroup" />
         </Modal>

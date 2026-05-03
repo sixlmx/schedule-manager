@@ -1,4 +1,4 @@
-import styles from './GroupForm.module.css'
+import styles from '../../pages.module.css'
 import { handlers, registerSubmit } from '../../../core/handlers'
 import { render } from '../../../core/render'
 import GroupsPage from '../GroupsPage'
@@ -20,7 +20,7 @@ export default function CreateGroupForm() {
   }
 
   return (
-    <form class={styles.modal} onSubmit={onSubmit}>
+    <form class={styles.form} onSubmit={onSubmit}>
       <h3>Добавить группу</h3>
       <input type="text" name="name" placeholder="Название группы" required />
       <input type="text" name="year_of_admission" placeholder="Год поступления" required />

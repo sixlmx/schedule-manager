@@ -3,7 +3,7 @@ import ConfirmForm from "../../../shared/ConfirmForm";
 import Modal from "../../../shared/Modal";
 import { render } from "../../../core/render";
 import TeachersPage from "../TeachersPage";
-import styles from "./TeachersTable.module.css"
+import styles from "../../pages.module.css"
 import UpdateTeacherForm from "./UpdateTeacherForm";
 import { ui } from "../../../utils/dom";
 
@@ -49,8 +49,8 @@ export default function TeachersTable({ teachers }) {
               <td>{teacher.fio}</td>
               <td>{teacher.position}</td>
               <td>{teacher.color}</td>
-              <td><button teacherId={teacher.id} onClick={() => showModalUpdateTeacher(teacher.id)}>Редактировать</button></td>
-              <td><button teacherId={teacher.id} onClick={() => showModalDeleteTeacher(teacher.id)}>Удалить</button></td>
+              <td><button class={`${styles.tableActionButton} ${styles.tableEditButton}`} teacherId={teacher.id} onClick={() => showModalUpdateTeacher(teacher.id)}>Редактировать</button></td>
+              <td><button class={`${styles.tableActionButton} ${styles.tableDeleteButton}`} teacherId={teacher.id} onClick={() => showModalDeleteTeacher(teacher.id)}>Удалить</button></td>
             </tr>
           ))}
         </tbody>

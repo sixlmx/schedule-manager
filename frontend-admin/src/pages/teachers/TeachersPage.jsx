@@ -4,7 +4,7 @@ import Modal from '../../shared/Modal'
 import PageTitle from '../../shared/PageTitle'
 import TeachersTable from './components/TeachersTable'
 import Sidebar from '../../shared/Sidebar'
-import styles from './TeachersPage.module.css'
+import styles from '../pages.module.css'
 import { ui } from '../../utils/dom'
 
 export default async function TeachersPage() {

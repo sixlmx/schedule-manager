@@ -2,7 +2,7 @@ import ConfirmForm from "../../../shared/ConfirmForm";
 import Modal from "../../../shared/Modal";
 import { render } from "../../../core/render";
 import GroupsPage from "../GroupsPage";
-import styles from "./GroupsTable.module.css"
+import styles from "../../pages.module.css"
 import UpdateGroupForm from "./UpdateGroupForm";
 import { deleteGroup } from "../../../api/groups";
 import { ui } from "../../../utils/dom";
@@ -46,8 +46,8 @@ export default function GroupsTable({ groups }) {
               <td>{group.name}</td>
               <td>{group.year_of_admission}</td>
               <td>{group.abbreviation}</td>
-              <td><button groupId={group.id} onClick={()=> showModalUpdateGroup(group.id)}>Редактировать</button></td>
-              <td><button groupId={group.id} onClick={() => showModalDeleteGroup(group.id)}>Удалить</button></td>
+              <td><button class={`${styles.tableActionButton} ${styles.tableEditButton}`} groupId={group.id} onClick={()=> showModalUpdateGroup(group.id)}>Редактировать</button></td>
+              <td><button class={`${styles.tableActionButton} ${styles.tableDeleteButton}`} groupId={group.id} onClick={() => showModalDeleteGroup(group.id)}>Удалить</button></td>
             </tr>
           ))}
         </tbody>

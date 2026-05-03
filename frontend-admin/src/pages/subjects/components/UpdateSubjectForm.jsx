@@ -1,4 +1,4 @@
-import styles from './SubjectForm.module.css'
+import styles from '../../pages.module.css'
 import { updateSubject } from '../../../api/subjects'
 import { render } from '../../../core/render'
 import SubjectsPage from '../SubjectsPage'
@@ -20,7 +20,7 @@ export default function UpdateSubjectForm({ closeId, subject }) {
   }
 
   return (
-    <form class={styles.modal} onSubmit={onSubmit} id="updateSubjectForm">
+    <form class={styles.form} onSubmit={onSubmit} id="updateSubjectForm">
       <h3>Редактировать предмет</h3>
       <input type="text" name="name" placeholder="Название предмета" required value={subject.name} />
       <input type="text" name="abbreviation" placeholder="Сокращение" required value={subject.abbreviation || subject.abbr} />
