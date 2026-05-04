@@ -3,7 +3,7 @@ import ConfirmForm from "../../../shared/ConfirmForm";
 import Modal from "../../../shared/Modal";
 import { render } from "../../../core/render";
 import SchedulesPage from "../SchedulesPage";
-import styles from "./SchedulesTable.module.css"
+import pages from "../../pages.module.css"
 import UpdateScheduleForm from "./UpdateScheduleForm";
 import { ui } from "../../../utils/dom";
 import { redirect } from "../../../core/router";
@@ -41,7 +41,7 @@ export default function SchedulesTable({ schedules }) {
 
   return (
     <>
-      <table class={styles.table}>
+      <table class={pages.table}>
         <thead>
           <tr>
             <th>Название</th>
@@ -59,8 +59,22 @@ export default function SchedulesTable({ schedules }) {
               <td>{new Date(schedule.created).toLocaleDateString()}</td>
               <td>{schedule.lessonsInDay}</td>
               <td>{schedule.weekdays?.join(', ')}</td>
-              <td><button onClick={() => showModalUpdateSchedule(schedule.id)}>Редактировать</button></td>
-              <td><button onClick={() => showModalDeleteSchedule(schedule.id)}>Удалить</button></td>
+              <td>
+                <button
+                  class={`${pages.tableActionButton} ${pages.tableEditButton}`}
+                  onClick={() => showModalUpdateSchedule(schedule.id)}
+                >
+                  Редактировать
+                </button>
+              </td>
+              <td>
+                <button
+                  class={`${pages.tableActionButton} ${pages.tableDeleteButton}`}
+                  onClick={() => showModalDeleteSchedule(schedule.id)}
+                >
+                  Удалить
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
