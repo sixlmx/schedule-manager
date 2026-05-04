@@ -2,6 +2,7 @@ import { fetchSchedules } from '../../api/schedules'
 import CreateScheduleForm from './components/CreateScheduleForm'
 import Modal from '../../shared/Modal'
 import PageTitle from '../../shared/PageTitle'
+import pages from '../pages.module.css'
 import SchedulesTable from './components/SchedulesTable'
 import { ui } from '../../utils/dom'
 
@@ -11,10 +12,12 @@ export default async function SchedulesPage() {
 
   return (
     <>
-      <div class="content">
-        <PageTitle title="Расписания" />
+      <div class={pages.crudPage}>
+        <div class={pages.crudHeader}>
+          <PageTitle title="Р Р°СЃРїРёСЃР°РЅРёСЏ" />
+          <button class={pages.addButton} onClick={showModalCreateSchedule}>Р”РѕР±Р°РІРёС‚СЊ СЂР°СЃРїРёСЃР°РЅРёРµ</button>
+        </div>
         <SchedulesTable schedules={schedules} />
-        <button onClick={showModalCreateSchedule}>Добавить расписание</button>
         <Modal modalId="createSchedule">
           <CreateScheduleForm closeId="createSchedule" />
         </Modal>

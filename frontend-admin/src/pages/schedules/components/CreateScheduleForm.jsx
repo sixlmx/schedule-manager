@@ -1,3 +1,4 @@
+import pages from '../../pages.module.css'
 import styles from './ScheduleForm.module.css'
 import { createSchedule } from '../../../api/schedules'
 import { render } from '../../../core/render'
@@ -29,7 +30,7 @@ export default function CreateScheduleForm({ closeId }) {
   }
 
   return (
-    <form class={styles.modal} onSubmit={onSubmit}>
+    <form class={pages.form} onSubmit={onSubmit}>
       <h3>Добавить расписание</h3>
       <input type="text" name="name" placeholder="Название расписания" required />
       <input type="number" name="lessonsInDay" placeholder="Количество пар в день" required min="1" max="8" />

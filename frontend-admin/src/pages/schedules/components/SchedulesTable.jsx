@@ -3,7 +3,7 @@ import ConfirmForm from "../../../shared/ConfirmForm";
 import Modal from "../../../shared/Modal";
 import { render } from "../../../core/render";
 import SchedulesPage from "../SchedulesPage";
-import styles from "./SchedulesTable.module.css"
+import pages from "../../pages.module.css"
 import UpdateScheduleForm from "./UpdateScheduleForm";
 import { ui } from "../../../utils/dom";
 import { redirect } from "../../../core/router";
@@ -41,13 +41,13 @@ export default function SchedulesTable({ schedules }) {
 
   return (
     <>
-      <table class={styles.table}>
+      <table class={pages.table}>
         <thead>
           <tr>
-            <th>Название</th>
-            <th>Дата создания</th>
-            <th>Пар в день</th>
-            <th>Дни недели</th>
+            <th>РќР°Р·РІР°РЅРёРµ</th>
+            <th>Р”Р°С‚Р° СЃРѕР·РґР°РЅРёСЏ</th>
+            <th>РџР°СЂ РІ РґРµРЅСЊ</th>
+            <th>Р”РЅРё РЅРµРґРµР»Рё</th>
             <th></th>
             <th></th>
           </tr>
@@ -59,8 +59,22 @@ export default function SchedulesTable({ schedules }) {
               <td>{new Date(schedule.created).toLocaleDateString()}</td>
               <td>{schedule.lessonsInDay}</td>
               <td>{schedule.weekdays?.join(', ')}</td>
-              <td><button onClick={() => showModalUpdateSchedule(schedule.id)}>Редактировать</button></td>
-              <td><button onClick={() => showModalDeleteSchedule(schedule.id)}>Удалить</button></td>
+              <td>
+                <button
+                  class={`${pages.tableActionButton} ${pages.tableEditButton}`}
+                  onClick={() => showModalUpdateSchedule(schedule.id)}
+                >
+                  Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ
+                </button>
+              </td>
+              <td>
+                <button
+                  class={`${pages.tableActionButton} ${pages.tableDeleteButton}`}
+                  onClick={() => showModalDeleteSchedule(schedule.id)}
+                >
+                  РЈРґР°Р»РёС‚СЊ
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -69,7 +83,7 @@ export default function SchedulesTable({ schedules }) {
         <UpdateScheduleForm closeId="updateSchedule" schedule={scheduleToUpdate} />
       </Modal>
       <Modal modalId="deleteSchedule">
-        <ConfirmForm message="Подтвердите удаление расписания" onConfirm={onConfirm} />
+        <ConfirmForm message="РџРѕРґС‚РІРµСЂРґРёС‚Рµ СѓРґР°Р»РµРЅРёРµ СЂР°СЃРїРёСЃР°РЅРёСЏ" onConfirm={onConfirm} />
       </Modal>
     </>
   )

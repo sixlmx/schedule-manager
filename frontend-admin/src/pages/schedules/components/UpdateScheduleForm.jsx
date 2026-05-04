@@ -1,4 +1,5 @@
 // pages/schedules/components/UpdateScheduleForm.jsx
+import pages from '../../pages.module.css'
 import styles from './ScheduleForm.module.css'
 import { updateSchedule } from '../../../api/schedules'
 import { render } from '../../../core/render'
@@ -32,7 +33,7 @@ export default function UpdateScheduleForm({ closeId, schedule }) {
   const isChecked = (day) => schedule.weekdays?.includes(day)
 
   return (
-    <form class={styles.modal} onSubmit={onSubmit} id="updateScheduleForm">
+    <form class={pages.form} onSubmit={onSubmit} id="updateScheduleForm">
       <h3>Редактировать расписание</h3>
       <input type="text" name="name" placeholder="Название расписания" required value={schedule.name} />
       <input type="number" name="lessonsInDay" placeholder="Количество пар в день" required min="1" max="8" value={schedule.lessonsInDay} />
