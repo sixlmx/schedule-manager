@@ -33,7 +33,6 @@ export const initListeners = () => {
     const { handler } = e.target.closest('[data-handler]')
       ? e.target.closest('[data-handler]').dataset
       : { handler: null };
-
     if (handlers.click[handler]) {
       handlers.click[handler](e);
     }
@@ -42,6 +41,7 @@ export const initListeners = () => {
   const handleSubmit = (e) => {
     const { handler } = e.target.dataset;
     e.preventDefault();
+    console.log('submit');
     if (handlers.submit[handler]) {
       handlers.submit[handler](e);
     }
