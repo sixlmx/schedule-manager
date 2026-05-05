@@ -2,7 +2,7 @@ import { fetchGroups } from '../../api/groups'
 import CreateGroupForm from './components/CreateGroupForm'
 import { handlers, registerClick } from '../../core/handlers'
 import Modal from '../../shared/Modal'
-import PageTitle from '../../shared/PageTitle'
+import PageHeader from '../shared/PageHeader'
 import GroupsTable from './components/GroupTable'
 import Sidebar from '../../shared/Sidebar'
 import styles from '../pages.module.css'
@@ -15,10 +15,7 @@ export default async function GroupsPage() {
   return (
     <>
       <div class={`content ${styles.crudPage}`}>
-        <div class={styles.crudHeader}>
-          <PageTitle title="Группы" />
-          <button class={styles.addButton} onClick={showModalCreateGroup}>Добавить группу</button>
-        </div>
+        <PageHeader title="Группы" addButtonText="Добавить группу" onAdd={showModalCreateGroup} />
         <GroupsTable groups={groups} />
         <Modal modalId="createGroup">
           <CreateGroupForm closeId="createGroup" />

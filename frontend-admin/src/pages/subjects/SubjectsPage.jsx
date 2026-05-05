@@ -1,7 +1,7 @@
 import { fetchSubjects } from '../../api/subjects.js'
 import CreateSubjectForm from './components/CreateSubjectForm'
 import Modal from '../../shared/Modal'
-import PageTitle from '../../shared/PageTitle'
+import PageHeader from '../shared/PageHeader'
 import SubjectsTable from './components/SubjectsTable'
 import styles from '../pages.module.css'
 import { ui } from '../../utils/dom'
@@ -13,15 +13,7 @@ export default async function SubjectsPage() {
   return (
     <>
       <div class={`content ${styles.crudPage}`}>
-        <div class={styles.crudHeader}>
-          <PageTitle title="Предметы" />
-          <button
-            class={styles.addButton}
-            onClick={showModalCreateSubject}
-          >
-            Добавить предмет
-          </button>
-        </div>
+        <PageHeader title="Предметы" addButtonText="Добавить предмет" onAdd={showModalCreateSubject} />
         <SubjectsTable subjects={subjects} />
       </div>
       <Modal modalId="createSubject">
