@@ -5,7 +5,7 @@ import { render } from '../../../core/render'
 import SchedulesPage from '../SchedulesPage'
 import { ui } from '../../../utils/dom'
 
-export default function CreateScheduleForm({ closeId }) {
+export default function CreateScheduleForm() {
   const onSubmit = async (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)

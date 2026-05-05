@@ -1,20 +1,26 @@
 import { daysMap } from '../../../utils/lessons';
+import HeadCell from './HeadCell';
 import styles from './LessonsTable.module.css'
 import TableCell from './TableCell';
 
 export default function LessonsTable({ lessons, groups, schedule }) {
   const { weekdays, lessonsInDay } = schedule
-  console.log(schedule);
-  const days = ['понедельник', 'вторник', "среда", "четверг", "пятница", "суббота", "воскресенье"]
-console.log(weekdays);
+
   return (
     <table class={styles.table}>
       <thead>
         <tr>
-          <th>Группа</th>
+          <th>День недели</th>
+          
           {weekdays.map((day, idx) => (
             <th>{daysMap[day]}</th>
           ))}
+        </tr>
+        <tr>
+          <th>Пара</th>
+          {weekdays.map((day, idx) => (
+              <HeadCell lessonsInDay={lessonsInDay}/>
+            ))}
         </tr>
       </thead>
       <tbody>

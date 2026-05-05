@@ -1,4 +1,3 @@
-// api/lessons.js
 async function fetchLessonsByScheduleId(scheduleId) {
   try {
     const response = await fetch(`/apiv1/lessons/schedule/${scheduleId}`);
@@ -14,4 +13,23 @@ async function fetchLessonsByScheduleId(scheduleId) {
   }
 }
 
-export { fetchLessonsByScheduleId };
+// api/lessons.js
+async function createLessons(data) {
+  try {
+    const response = await fetch('/apiv1/lessons', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const message = await response.json();
+    return { type: 'success', ...message };
+  }
+  catch (error) {
+    return { type: 'error', message: error.message };
+  }
+}
+
+export { fetchLessonsByScheduleId, createLessons };

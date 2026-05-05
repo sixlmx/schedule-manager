@@ -1,6 +1,8 @@
+import { lessonsQueries } from '../db/queries.js';
+
 export const getLessonsByScheduleId = async (fastify, scheduleId) => {
   const client = await fastify.pg.connect();
-
+  console.log(1, scheduleId);
   try {
     // Получаем уроки для конкретного расписания
     const { rows: lessons } = await client.query(`
@@ -61,6 +63,66 @@ export const getLessonsByScheduleId = async (fastify, scheduleId) => {
       subjects,
       teachers,
     };
+  }
+  finally {
+    client.release();
+  }
+};
+
+// Новые функции для CRUD нагрузки
+export const getLessons = async (fastify) => {
+  const client = await fastify.pg.connect();
+  try {
+    const { rows } = await client.query(lessonsQueries.getAll);
+    return rows;
+  }
+  finally {
+    client.release();
+  }
+};
+
+export const createLesson = async (fastify, data) => {
+  const client = await fastify.pg.connect();
+  try {
+    const result = await client.query(lessonsQueries.create, [
+      data.groupId,
+      data.teacherId,
+      data.subjectId,
+      data.lessonsCount,
+    ]);
+    return { message: 'Урок добавлен!', id: result.rows[0]?.id };
+  }
+  catch (error) {
+    console.error('Error creating lesson:', error);
+    throw new Error('Не удалось создать урок');
+  }
+  finally {
+    client.release();
+  }
+};
+
+export const updateLesson = async (fastify, data) => {
+  const client = await fastify.pg.connect();
+  try {
+    await client.query(lessonsQueries.update, [
+      data.groupId,
+      data.teacherId,
+      data.subjectId,
+      data.lessonsCount,
+      data.id,
+    ]);
+    return { message: 'Урок обновлен!' };
+  }
+  finally {
+    client.release();
+  }
+};
+
+export const deleteLesson = async (fastify, lessonId) => {
+  const client = await fastify.pg.connect();
+  try {
+    await client.query(lessonsQueries.delete, [lessonId]);
+    return { message: 'Урок удален!' };
   }
   finally {
     client.release();

@@ -1,0 +1,83 @@
+/* LessonsPage.module.css */
+
+.crudPage {
+  padding: 0;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Растягиваем на всю высоту экрана */
+  overflow: hidden;
+}
+
+.crudHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #dbe3ea;
+  background-color: white;
+  flex-shrink: 0; /* Шапка не сжимается */
+}
+
+.crudHeader h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #1e293b;
+}
+
+/* Обертка для таблицы, чтобы она занимала все свободное место */
+.tableWrapper {
+  flex: 1;
+  overflow: auto;
+  background-color: #f8fafc;
+}
+
+/* Контейнер для нижних панелей */
+.bottomContainer {
+  display: flex;
+  flex-shrink: 0; /* Нижние панели не сжимаются */
+  background-color: white;
+  border-top: 1px solid #dbe3ea;
+}
+
+/* Левая панель (30%) */
+.leftPanel {
+  width: 30%;
+  padding: 1rem;
+  border-right: 1px solid #dbe3ea;
+  background-color: #fafbfc;
+}
+
+.leftPanel h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.leftPanel div {
+  padding: 0.375rem 0;
+  font-size: 0.8125rem;
+  color: #475569;
+}
+
+/* Правая панель (70%) */
+.rightPanel {
+  width: 70%;
+  padding: 1rem;
+  background-color: #ffffff;
+}
+
+.rightPanel h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.rightPanel div {
+  padding: 0.375rem 0;
+  font-size: 0.8125rem;
+  color: #475569;
+}

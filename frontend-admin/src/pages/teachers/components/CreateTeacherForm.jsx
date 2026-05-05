@@ -1,11 +1,10 @@
 import styles from '../../pages.module.css'
-import { handlers } from '../../../core/handlers'
 import { createTeacher } from '../../../api/teachers'
 import { render } from '../../../core/render'
 import TeachersPage from '../TeachersPage'
 import { ui } from '../../../utils/dom'
 
-export default function CreateTeacherForm({ closeId }) {
+export default function CreateTeacherForm() {
   const onSubmit = async (e) => {
     const formData = new FormData(e.target)
     const data = {

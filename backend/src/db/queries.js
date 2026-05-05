@@ -33,8 +33,61 @@ export const subjectsQueries = {
   delete: 'DELETE FROM subjects WHERE id = $1',
 };
 
+// db/queries.js (обнови queries)
 export const lessonsQueries = {
-  getAll: 'SELECT * FROM lessons ORDER BY name',
+  // Существующий запрос для getLessonsByScheduleId
+  getByScheduleId: `
+    SELECT 
+      l.id,
+      l.weekday,
+      l.lesson_number as "lessonNumber",
+      l.classroom,
+      l.group_id as "groupId",
+      g.name as "groupName",
+      g.abbreviation as "groupAbbr",
+      l.subject_id as "subjectId",
+      sub.name as "subjectName",
+      sub.abbreviation as "subjectAbbr",
+      l.teacher_id as "teacherId",
+      t.fio as "teacherName",
+      t.position as "teacherPosition"
+    FROM lessons l
+    JOIN groups g ON l.group_id = g.id
+    JOIN subjects sub ON l.subject_id = sub.id
+    JOIN teachers t ON l.teacher_id = t.id
+    WHERE l.schedule_id = $1
+    ORDER BY l.group_id, l.weekday, l.lesson_number
+  `,
+
+  getAll: `
+    SELECT 
+      l.id,
+      l.group_id as "groupId",
+      g.name as "groupName",
+      g.abbreviation as "groupAbbr",
+      l.teacher_id as "teacherId",
+      t.fio as "teacherName",
+      l.subject_id as "subjectId",
+      s.name as "subjectName",
+      s.abbreviation as "subjectAbbr",
+      l.lessons_count as "lessonsCount"
+    FROM lessons l
+    JOIN groups g ON l.group_id = g.id
+    JOIN teachers t ON l.teacher_id = t.id
+    JOIN subjects s ON l.subject_id = s.id
+    ORDER BY g.name, s.name
+  `,
+  create: `
+    INSERT INTO lessons (group_id, teacher_id, subject_id, lessons_count) 
+    VALUES ($1, $2, $3, $4) 
+    RETURNING id
+  `,
+  update: `
+    UPDATE lessons 
+    SET group_id = $1, teacher_id = $2, subject_id = $3, lessons_count = $4
+    WHERE id = $5
+  `,
+  delete: 'DELETE FROM lessons WHERE id = $1',
 };
 
 export const schedulesQueries = {

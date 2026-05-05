@@ -39,6 +39,17 @@
   border-right: none;
 }
 
+.headSlot {
+  flex: 1;
+  min-height: 10px;
+  border-right: 1px solid #e2e8f0;
+  transition: all 0.2s;
+}
+
+.headSlot:last-child {
+  border-right: none;
+}
+
 .pairSlot:hover {
   background-color: #f1f5f9;
 }
