@@ -17,7 +17,7 @@ export default async function ClassesPage() {
           <PageTitle title="Аудитории" />
           <button class={styles.addButton} onClick={showModalCreateClass}>Добавить аудиторию</button>
         </div>
-        <ClassesTable classes={classes || []} />
+        <ClassesTable classes={classes} />
         <Modal modalId="createClass">
           <CreateClassForm closeId="createClass" />
         </Modal>

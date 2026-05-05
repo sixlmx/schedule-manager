@@ -29,7 +29,7 @@ export default function ClassesTable({ classes }) {
   }
 
   return (
-    <div>
+    <>
       <table class={styles.table}>
         <thead>
           <tr>
@@ -60,6 +60,6 @@ export default function ClassesTable({ classes }) {
       <Modal modalId="deleteClass">
         <ConfirmForm message="Подтвердите удаление аудитории" onConfirm={onConfirm} />
       </Modal>
-    </div>
+    </>
   )
 }
