@@ -1,11 +1,13 @@
 .teacherName {
   cursor: pointer;
   display: inline-block;
+
   /* фон только по ширине текста */
   padding: 2px 6px;
   border-radius: 3px;
   transition: background-color 0.15s ease;
   white-space: nowrap;
+
   /* чтобы текст не переносился */
 }
 

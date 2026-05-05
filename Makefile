@@ -8,8 +8,14 @@ start-front-admin:
 	cd frontend-admin && npm run dev
 
 lint:
-	npx eslint .
+	npm run lint
+	npm run lint:css
 
 lint-fix:
 	npx eslint . --fix
+	npx stylelint "frontend-admin/src/**/*.css" --fix
+	npx stylelint "frontend-public/src/**/*.css" --fix
+
+pre-push: lint-fix
+	@echo "✅ lint checks passed"
 

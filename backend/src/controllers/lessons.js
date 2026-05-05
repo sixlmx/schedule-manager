@@ -94,7 +94,6 @@ export const createLesson = async (fastify, data) => {
   }
   catch (error) {
     console.error('Error creating lesson:', error);
-    throw new Error('Не удалось создать урок');
   }
   finally {
     client.release();
