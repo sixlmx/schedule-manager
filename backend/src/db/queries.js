@@ -40,7 +40,6 @@ export const lessonsQueries = {
     SELECT 
       l.id,
       l.weekday,
-      l.lesson_number as "lessonNumber",
       l.classroom,
       l.group_id as "groupId",
       g.name as "groupName",
@@ -56,7 +55,7 @@ export const lessonsQueries = {
     JOIN subjects sub ON l.subject_id = sub.id
     JOIN teachers t ON l.teacher_id = t.id
     WHERE l.schedule_id = $1
-    ORDER BY l.group_id, l.weekday, l.lesson_number
+    ORDER BY l.group_id, l.weekday
   `,
 
   getAll: `
@@ -78,8 +77,8 @@ export const lessonsQueries = {
     ORDER BY g.name, s.name
   `,
   create: `
-    INSERT INTO lessons (group_id, teacher_id, subject_id, lessons_count) 
-    VALUES ($1, $2, $3, $4) 
+    INSERT INTO lessons (group_id, teacher_id, subject_id, lessons_count, schedule_id) 
+    VALUES ($1, $2, $3, $4, $5) 
     RETURNING id
   `,
   update: `

@@ -4,29 +4,31 @@ import { ui } from '../../../utils/dom'
 import LessonsPage from '../LessonsPage';
 import { createLessons } from '../../../api/lessons';
 
-export default function CreateLessonsForm({ groups, teachers, subjects }) {
+export default function CreateLessonsForm({ groups, teachers, subjects, scheduleId }) {
+
   const onSubmit = async (e) => {
     e.preventDefault()
     const formData = new FormData(e.target)
     const data = {
-      groupId: parseInt(formData.get('groupId')),
-      teacherId: parseInt(formData.get('teacherId')),
-      subjectId: parseInt(formData.get('subjectId')),
-      lessonsCount: parseInt(formData.get('lessonsCount')),
+      groupId: formData.get('groupId'),
+      teacherId: formData.get('teacherId'),
+      subjectId: formData.get('subjectId'),
+      lessonsCount: formData.get('lessonsCount'),
+      scheduleId: scheduleId
     }
-    console.log(formData.get('groupId'));
-    // const result = await createLessons(data)
-    // ui.closeModal()
-    // ui.showFlashMessage(result)
-    // render('#main', <LessonsPage />)
+    console.log(data);
+    const result = await createLessons(data)
+    ui.closeModal()
+    ui.showFlashMessage(result)
+    render('#main', <LessonsPage />)
   }
 
   return (
     <form class={styles.form} onSubmit={onSubmit}>
       <h3>Добавить нагрузку</h3>
 
+      <label htmlFor="groupId">Группа</label>
       <select name="groupId" required>
-        <option value=""></option>
         {groups.map(group => (
           <option value={group.id}>
             {group.name} ({group.abbreviation})
@@ -34,8 +36,8 @@ export default function CreateLessonsForm({ groups, teachers, subjects }) {
         ))}
       </select>
 
+      <label htmlFor="teacherId">Учитель</label>
       <select name="teacherId" required>
-        <option value=""></option>
         {teachers.map(teacher => (
           <option value={teacher.id}>
             {teacher.fio} ({teacher.position})
@@ -43,8 +45,8 @@ export default function CreateLessonsForm({ groups, teachers, subjects }) {
         ))}
       </select>
 
+      <label htmlFor="subjectId">Предмет</label>
       <select name="subjectId" required>
-        <option value=""></option>
         {subjects.map(subject => (
           <option value={subject.id}>
             {subject.name} ({subject.abbreviation})
@@ -52,6 +54,7 @@ export default function CreateLessonsForm({ groups, teachers, subjects }) {
         ))}
       </select>
 
+      <label htmlFor="subjectId">Количество уроков</label>
       <input
         type="number"
         name="lessonsCount"

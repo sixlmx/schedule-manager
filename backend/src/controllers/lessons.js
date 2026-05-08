@@ -9,7 +9,6 @@ export const getLessonsByScheduleId = async (fastify, scheduleId) => {
       SELECT 
         l.id,
         l.weekday,
-        l.lesson_number as "lessonNumber",
         l.classroom,
         l.group_id as "groupId",
         g.name as "groupName",
@@ -25,7 +24,7 @@ export const getLessonsByScheduleId = async (fastify, scheduleId) => {
       JOIN subjects sub ON l.subject_id = sub.id
       JOIN teachers t ON l.teacher_id = t.id
       WHERE l.schedule_id = $1
-      ORDER BY l.group_id, l.weekday, l.lesson_number
+      ORDER BY l.group_id, l.weekday
     `, [scheduleId]);
 
     // Получаем информацию о расписании
@@ -82,6 +81,7 @@ export const getLessons = async (fastify) => {
 };
 
 export const createLesson = async (fastify, data) => {
+  console.log(1111, data);
   const client = await fastify.pg.connect();
   try {
     const result = await client.query(lessonsQueries.create, [
@@ -89,6 +89,7 @@ export const createLesson = async (fastify, data) => {
       data.teacherId,
       data.subjectId,
       data.lessonsCount,
+      data.scheduleId,
     ]);
     return { message: 'Урок добавлен!', id: result.rows[0]?.id };
   }

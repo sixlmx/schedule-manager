@@ -46,7 +46,7 @@ export default async function LessonsPage() {
         </div>
       </div>
       <Modal modalId="createLesson">
-        <CreateLessonsForm teachers={teachers} groups={groups} subjects={subjects}/>
+        <CreateLessonsForm teachers={teachers} groups={groups} subjects={subjects} scheduleId={scheduleId}/>
       </Modal>
     </div>
   );
