@@ -1,5 +1,4 @@
 import { fetchSchedules } from '../../api/schedules'
-import { cleanDeadHandlers } from '../../core/handlers'
 import { render } from '../../core/render'
 import CreateScheduleForm from './components/CreateScheduleForm'
 import Modal from '../../shared/Modal'
@@ -16,19 +15,21 @@ export default async function SchedulesPage() {
   const filterSchedules = (query) => {
     const normalizedQuery = query.toLowerCase()
 
-    return schedules.filter((schedule) => [
-      schedule.name,
-      getCreatedDate(schedule.created),
-      schedule.lessonsInDay,
-      getWeekdaysText(schedule.weekdays),
-    ]
-      .map((value) => String(value ?? '').toLowerCase())
-      .some((value) => value.includes(normalizedQuery)))
+    return schedules.filter((schedule) => {
+      const name = String(schedule.name ?? '').toLowerCase()
+      const created = String(getCreatedDate(schedule.created) ?? '').toLowerCase()
+      const lessonsInDay = String(schedule.lessonsInDay ?? '').toLowerCase()
+      const weekdays = String(getWeekdaysText(schedule.weekdays) ?? '').toLowerCase()
+
+      return name.includes(normalizedQuery)
+        || created.includes(normalizedQuery)
+        || lessonsInDay.includes(normalizedQuery)
+        || weekdays.includes(normalizedQuery)
+    })
   }
-  const handleSearch = async (query) => {
+  const handleSearch = (query) => {
     const filteredSchedules = query ? filterSchedules(query) : schedules
-    await render('#schedules-table', <SchedulesTable schedules={filteredSchedules} />)
-    cleanDeadHandlers()
+    render('#schedules-table', <SchedulesTable schedules={filteredSchedules} />)
   }
 
   return (

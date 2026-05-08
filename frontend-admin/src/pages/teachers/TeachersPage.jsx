@@ -1,5 +1,4 @@
 import { fetchTeachers } from '../../api/teachers'
-import { cleanDeadHandlers } from '../../core/handlers'
 import { render } from '../../core/render'
 import CreateTeacherForm from './components/CreateTeacherForm'
 import Modal from '../../shared/Modal'
@@ -15,19 +14,21 @@ export default async function TeachersPage() {
   const filterTeachers = (query) => {
     const normalizedQuery = query.toLowerCase()
 
-    return teachers.filter((teacher) => [
-      teacher.name,
-      teacher.fio,
-      teacher.position,
-      teacher.color,
-    ]
-      .map((value) => String(value ?? '').toLowerCase())
-      .some((value) => value.includes(normalizedQuery)))
+    return teachers.filter((teacher) => {
+      const name = String(teacher.name ?? '').toLowerCase()
+      const fio = String(teacher.fio ?? '').toLowerCase()
+      const position = String(teacher.position ?? '').toLowerCase()
+      const color = String(teacher.color ?? '').toLowerCase()
+
+      return name.includes(normalizedQuery)
+        || fio.includes(normalizedQuery)
+        || position.includes(normalizedQuery)
+        || color.includes(normalizedQuery)
+    })
   }
-  const handleSearch = async (query) => {
+  const handleSearch = (query) => {
     const filteredTeachers = query ? filterTeachers(query) : teachers
-    await render('#teachers-table', <TeachersTable teachers={filteredTeachers} />)
-    cleanDeadHandlers()
+    render('#teachers-table', <TeachersTable teachers={filteredTeachers} />)
   }
 
   return (

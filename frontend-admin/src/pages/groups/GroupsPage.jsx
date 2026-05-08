@@ -1,6 +1,5 @@
 import { fetchGroups } from '../../api/groups'
 import CreateGroupForm from './components/CreateGroupForm'
-import { cleanDeadHandlers } from '../../core/handlers'
 import { render } from '../../core/render'
 import Modal from '../../shared/Modal'
 import PageHeader from '../shared/PageHeader'
@@ -15,18 +14,19 @@ export default async function GroupsPage() {
   const filterGroups = (query) => {
     const normalizedQuery = query.toLowerCase()
 
-    return groups.filter((group) => [
-      group.name,
-      group.abbreviation,
-      group.year_of_admission,
-    ]
-      .map((value) => String(value ?? '').toLowerCase())
-      .some((value) => value.includes(normalizedQuery)))
+    return groups.filter((group) => {
+      const name = String(group.name ?? '').toLowerCase()
+      const abbreviation = String(group.abbreviation ?? '').toLowerCase()
+      const yearOfAdmission = String(group.year_of_admission ?? '').toLowerCase()
+
+      return name.includes(normalizedQuery)
+        || abbreviation.includes(normalizedQuery)
+        || yearOfAdmission.includes(normalizedQuery)
+    })
   }
-  const handleSearch = async (query) => {
+  const handleSearch = (query) => {
     const filteredGroups = query ? filterGroups(query) : groups
-    await render('#groups-table', <GroupsTable groups={filteredGroups} />)
-    cleanDeadHandlers()
+    render('#groups-table', <GroupsTable groups={filteredGroups} />)
   }
 
   return (

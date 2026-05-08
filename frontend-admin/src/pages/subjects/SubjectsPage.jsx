@@ -1,5 +1,4 @@
 import { fetchSubjects } from '../../api/subjects.js'
-import { cleanDeadHandlers } from '../../core/handlers'
 import { render } from '../../core/render'
 import CreateSubjectForm from './components/CreateSubjectForm'
 import Modal from '../../shared/Modal'
@@ -14,18 +13,19 @@ export default async function SubjectsPage() {
   const filterSubjects = (query) => {
     const normalizedQuery = query.toLowerCase()
 
-    return subjects.filter((subject) => [
-      subject.name,
-      subject.abbreviation,
-      subject.abbr,
-    ]
-      .map((value) => String(value ?? '').toLowerCase())
-      .some((value) => value.includes(normalizedQuery)))
+    return subjects.filter((subject) => {
+      const name = String(subject.name ?? '').toLowerCase()
+      const abbreviation = String(subject.abbreviation ?? '').toLowerCase()
+      const abbr = String(subject.abbr ?? '').toLowerCase()
+
+      return name.includes(normalizedQuery)
+        || abbreviation.includes(normalizedQuery)
+        || abbr.includes(normalizedQuery)
+    })
   }
-  const handleSearch = async (query) => {
+  const handleSearch = (query) => {
     const filteredSubjects = query ? filterSubjects(query) : subjects
-    await render('#subjects-table', <SubjectsTable subjects={filteredSubjects} />)
-    cleanDeadHandlers()
+    render('#subjects-table', <SubjectsTable subjects={filteredSubjects} />)
   }
 
   return (

@@ -1,5 +1,4 @@
 import { fetchClasses } from '../../api/classes'
-import { cleanDeadHandlers } from '../../core/handlers'
 import { render } from '../../core/render'
 import CreateClassForm from './components/CreateClassForm'
 import Modal from '../../shared/Modal'
@@ -14,19 +13,21 @@ export default async function ClassesPage() {
   const filterClasses = (query) => {
     const normalizedQuery = query.toLowerCase()
 
-    return classes.filter((classItem) => [
-      classItem.name,
-      classItem.abbreviation,
-      classItem.capacity,
-      classItem.building,
-    ]
-      .map((value) => String(value ?? '').toLowerCase())
-      .some((value) => value.includes(normalizedQuery)))
+    return classes.filter((classItem) => {
+      const name = String(classItem.name ?? '').toLowerCase()
+      const abbreviation = String(classItem.abbreviation ?? '').toLowerCase()
+      const capacity = String(classItem.capacity ?? '').toLowerCase()
+      const building = String(classItem.building ?? '').toLowerCase()
+
+      return name.includes(normalizedQuery)
+        || abbreviation.includes(normalizedQuery)
+        || capacity.includes(normalizedQuery)
+        || building.includes(normalizedQuery)
+    })
   }
-  const handleSearch = async (query) => {
+  const handleSearch = (query) => {
     const filteredClasses = query ? filterClasses(query) : classes
-    await render('#classes-table', <ClassesTable classes={filteredClasses} />)
-    cleanDeadHandlers()
+    render('#classes-table', <ClassesTable classes={filteredClasses} />)
   }
 
   return (
