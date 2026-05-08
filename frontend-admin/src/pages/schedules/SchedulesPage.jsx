@@ -6,29 +6,13 @@ import PageHeader from '../shared/PageHeader'
 import pages from '../pages.module.css'
 import SchedulesTable from './components/SchedulesTable'
 import { ui } from '../../utils/dom'
+import { filterByQuery } from '../../utils/search';
 
 export default async function SchedulesPage() {
   const schedules = await fetchSchedules()
   const showModalCreateSchedule = () => ui.openModal('createSchedule')
-  const getCreatedDate = (created) => new Date(created).toLocaleDateString()
-  const getWeekdaysText = (weekdays) => Array.isArray(weekdays) ? weekdays.join(', ') : weekdays
-  const filterSchedules = (query) => {
-    const normalizedQuery = query.toLowerCase()
-
-    return schedules.filter((schedule) => {
-      const name = String(schedule.name ?? '').toLowerCase()
-      const created = String(getCreatedDate(schedule.created) ?? '').toLowerCase()
-      const lessonsInDay = String(schedule.lessonsInDay ?? '').toLowerCase()
-      const weekdays = String(getWeekdaysText(schedule.weekdays) ?? '').toLowerCase()
-
-      return name.includes(normalizedQuery)
-        || created.includes(normalizedQuery)
-        || lessonsInDay.includes(normalizedQuery)
-        || weekdays.includes(normalizedQuery)
-    })
-  }
   const handleSearch = (query) => {
-    const filteredSchedules = query ? filterSchedules(query) : schedules
+    const filteredSchedules = query ? filterByQuery(schedules, query) : schedules
     render('#schedules-table', <SchedulesTable schedules={filteredSchedules} />)
   }
 

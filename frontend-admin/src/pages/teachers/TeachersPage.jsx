@@ -7,27 +7,13 @@ import TeachersTable from './components/TeachersTable'
 import Sidebar from '../../shared/Sidebar'
 import styles from '../pages.module.css'
 import { ui } from '../../utils/dom'
+import { filterByQuery } from '../../utils/search';
 
 export default async function TeachersPage() {
   const teachers = await fetchTeachers()
   const showModalCreateTeacher = () => ui.openModal('createTeacher')
-  const filterTeachers = (query) => {
-    const normalizedQuery = query.toLowerCase()
-
-    return teachers.filter((teacher) => {
-      const name = String(teacher.name ?? '').toLowerCase()
-      const fio = String(teacher.fio ?? '').toLowerCase()
-      const position = String(teacher.position ?? '').toLowerCase()
-      const color = String(teacher.color ?? '').toLowerCase()
-
-      return name.includes(normalizedQuery)
-        || fio.includes(normalizedQuery)
-        || position.includes(normalizedQuery)
-        || color.includes(normalizedQuery)
-    })
-  }
   const handleSearch = (query) => {
-    const filteredTeachers = query ? filterTeachers(query) : teachers
+    const filteredTeachers = query ? filterByQuery(teachers, query) : teachers
     render('#teachers-table', <TeachersTable teachers={filteredTeachers} />)
   }
 

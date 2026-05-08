@@ -6,25 +6,13 @@ import PageHeader from '../shared/PageHeader'
 import SubjectsTable from './components/SubjectsTable'
 import styles from '../pages.module.css'
 import { ui } from '../../utils/dom'
+import { filterByQuery } from '../../utils/search.js';
 
 export default async function SubjectsPage() {
   const subjects = await fetchSubjects()
   const showModalCreateSubject = () => ui.openModal('createSubject')
-  const filterSubjects = (query) => {
-    const normalizedQuery = query.toLowerCase()
-
-    return subjects.filter((subject) => {
-      const name = String(subject.name ?? '').toLowerCase()
-      const abbreviation = String(subject.abbreviation ?? '').toLowerCase()
-      const abbr = String(subject.abbr ?? '').toLowerCase()
-
-      return name.includes(normalizedQuery)
-        || abbreviation.includes(normalizedQuery)
-        || abbr.includes(normalizedQuery)
-    })
-  }
   const handleSearch = (query) => {
-    const filteredSubjects = query ? filterSubjects(query) : subjects
+    const filteredSubjects = query ? filterByQuery(subjects, query) : subjects
     render('#subjects-table', <SubjectsTable subjects={filteredSubjects} />)
   }
 

@@ -7,25 +7,13 @@ import GroupsTable from './components/GroupTable'
 import Sidebar from '../../shared/Sidebar'
 import styles from '../pages.module.css'
 import { ui } from '../../utils/dom'
+import { filterByQuery } from '../../utils/search';
 
 export default async function GroupsPage() {
   const groups = await fetchGroups()
   const showModalCreateGroup = () => ui.openModal('createGroup')
-  const filterGroups = (query) => {
-    const normalizedQuery = query.toLowerCase()
-
-    return groups.filter((group) => {
-      const name = String(group.name ?? '').toLowerCase()
-      const abbreviation = String(group.abbreviation ?? '').toLowerCase()
-      const yearOfAdmission = String(group.year_of_admission ?? '').toLowerCase()
-
-      return name.includes(normalizedQuery)
-        || abbreviation.includes(normalizedQuery)
-        || yearOfAdmission.includes(normalizedQuery)
-    })
-  }
   const handleSearch = (query) => {
-    const filteredGroups = query ? filterGroups(query) : groups
+    const filteredGroups = query ? filterByQuery(groups, query) : groups
     render('#groups-table', <GroupsTable groups={filteredGroups} />)
   }
 

@@ -6,27 +6,13 @@ import PageHeader from '../shared/PageHeader'
 import ClassesTable from './components/ClassesTable'
 import styles from '../pages.module.css'
 import { ui } from '../../utils/dom'
+import { filterByQuery } from '../../utils/search';
 
 export default async function ClassesPage() {
   const classes = await fetchClasses()
   const showModalCreateClass = () => ui.openModal('createClass')
-  const filterClasses = (query) => {
-    const normalizedQuery = query.toLowerCase()
-
-    return classes.filter((classItem) => {
-      const name = String(classItem.name ?? '').toLowerCase()
-      const abbreviation = String(classItem.abbreviation ?? '').toLowerCase()
-      const capacity = String(classItem.capacity ?? '').toLowerCase()
-      const building = String(classItem.building ?? '').toLowerCase()
-
-      return name.includes(normalizedQuery)
-        || abbreviation.includes(normalizedQuery)
-        || capacity.includes(normalizedQuery)
-        || building.includes(normalizedQuery)
-    })
-  }
   const handleSearch = (query) => {
-    const filteredClasses = query ? filterClasses(query) : classes
+    const filteredClasses = query ? filterByQuery(classes, query) : classes
     render('#classes-table', <ClassesTable classes={filteredClasses} />)
   }
 
