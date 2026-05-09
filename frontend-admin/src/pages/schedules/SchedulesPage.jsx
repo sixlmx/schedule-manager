@@ -19,8 +19,7 @@ export default async function SchedulesPage() {
     ui.openModal('updateSchedule')
   }
 
-  const handleDeleteSchedule = async (event, scheduleId) => {
-    event.preventDefault()
+  const handleDeleteSchedule = async (scheduleId) => {
     const result = await deleteSchedule(scheduleId)
     ui.closeModal()
     ui.showFlashMessage(result)
@@ -32,7 +31,7 @@ export default async function SchedulesPage() {
       '#deleteSchedule-content',
       <ConfirmForm
         message="Подтвердите удаление расписания"
-        onConfirm={(event) => handleDeleteSchedule(event, schedule.id)}
+        onConfirm={() => handleDeleteSchedule(schedule.id)}
       />
     )
     ui.openModal('deleteSchedule')
