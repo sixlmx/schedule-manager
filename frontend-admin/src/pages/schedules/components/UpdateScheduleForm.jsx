@@ -30,7 +30,7 @@ export default function UpdateScheduleForm({ closeId, schedule }) {
     render('#main', <SchedulesPage />)
   }
 
-  const isChecked = (day) => schedule.weekdays?.includes(day)
+  const isChecked = (day) => schedule.weekdays.includes(day)
 
   return (
     <form class={pages.form} onSubmit={onSubmit} id="updateScheduleForm">

@@ -1,7 +1,9 @@
-import { fetchSchedules } from '../../api/schedules'
+import { deleteSchedule, fetchSchedules } from '../../api/schedules'
 import { render } from '../../core/render'
 import CreateScheduleForm from './components/CreateScheduleForm'
+import UpdateScheduleForm from './components/UpdateScheduleForm'
 import Modal from '../../shared/Modal'
+import ConfirmForm from '../../shared/ConfirmForm'
 import PageHeader from '../shared/PageHeader'
 import pages from '../pages.module.css'
 import SchedulesTable from './components/SchedulesTable'
@@ -11,9 +13,41 @@ import { filterByQuery } from '../../utils/search';
 export default async function SchedulesPage() {
   const schedules = await fetchSchedules()
   const showModalCreateSchedule = () => ui.openModal('createSchedule')
+
+  const openUpdateScheduleModal = (schedule) => {
+    render('#updateSchedule-content', <UpdateScheduleForm closeId="updateSchedule" schedule={schedule} />)
+    ui.openModal('updateSchedule')
+  }
+
+  const handleDeleteSchedule = async (event, scheduleId) => {
+    event.preventDefault()
+    const result = await deleteSchedule(scheduleId)
+    ui.closeModal()
+    ui.showFlashMessage(result)
+    render('#main', <SchedulesPage />)
+  }
+
+  const openDeleteScheduleModal = (schedule) => {
+    render(
+      '#deleteSchedule-content',
+      <ConfirmForm
+        message="Подтвердите удаление расписания"
+        onConfirm={(event) => handleDeleteSchedule(event, schedule.id)}
+      />
+    )
+    ui.openModal('deleteSchedule')
+  }
+
   const handleSearch = (query) => {
     const filteredSchedules = query ? filterByQuery(schedules, query) : schedules
-    render('#schedules-table', <SchedulesTable schedules={filteredSchedules} />)
+    render(
+      '#schedules-table',
+      <SchedulesTable
+        schedules={filteredSchedules}
+        onEdit={openUpdateScheduleModal}
+        onDelete={openDeleteScheduleModal}
+      />
+    )
   }
 
   return (
@@ -27,11 +61,17 @@ export default async function SchedulesPage() {
           onSearch={handleSearch}
         />
         <div id="schedules-table">
-          <SchedulesTable schedules={schedules} />
+          <SchedulesTable
+            schedules={schedules}
+            onEdit={openUpdateScheduleModal}
+            onDelete={openDeleteScheduleModal}
+          />
         </div>
         <Modal modalId="createSchedule">
           <CreateScheduleForm closeId="createSchedule" />
         </Modal>
+        <Modal modalId="updateSchedule" />
+        <Modal modalId="deleteSchedule" />
       </div>
     </>
   )

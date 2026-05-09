@@ -1,42 +1,14 @@
-import { deleteSchedule } from "../../../api/schedules";
-import ConfirmForm from "../../../shared/ConfirmForm";
-import Modal from "../../../shared/Modal";
 import { render } from "../../../core/render";
-import SchedulesPage from "../SchedulesPage";
 import pages from "../../pages.module.css"
-import UpdateScheduleForm from "./UpdateScheduleForm";
-import { ui } from "../../../utils/dom";
 import { redirect } from "../../../core/router";
 import state from "../../../state";
 import Sidebar from "../../../shared/Sidebar";
 
-export default function SchedulesTable({ schedules }) {
-  let scheduleToDelete;
-  let scheduleToUpdate = {};
-
+export default function SchedulesTable({ schedules, onEdit, onDelete }) {
   const redirectToLessons = (scheduleId) => {
     state.currentScheduleIndex = scheduleId
     redirect(`/admin/lessons/${scheduleId}`)
     render('#sidebarContainer', <Sidebar />)
-  }
-
-  const onConfirm = async () => {
-    const result = await deleteSchedule(scheduleToDelete)
-    ui.closeModal()
-    ui.showFlashMessage(result)
-    scheduleToDelete = null
-    render('#main', <SchedulesPage />)
-  }
-
-  const showModalUpdateSchedule = (scheduleId) => {
-    scheduleToUpdate = schedules.find((schedule) => schedule.id === scheduleId)
-    render('#updateSchedule-content', <UpdateScheduleForm closeId="updateSchedule" schedule={scheduleToUpdate} />)
-    ui.openModal('updateSchedule')
-  }
-
-  const showModalDeleteSchedule = (scheduleId) => {
-    scheduleToDelete = scheduleId
-    ui.openModal('deleteSchedule')
   }
 
   return (
@@ -58,11 +30,11 @@ export default function SchedulesTable({ schedules }) {
               <td>{schedule.name}</td>
               <td>{new Date(schedule.created).toLocaleDateString()}</td>
               <td>{schedule.lessonsInDay}</td>
-              <td>{schedule.weekdays?.join(', ')}</td>
+              <td>{schedule.weekdays.join(', ')}</td>
               <td>
                 <button
                   class={`${pages.tableActionButton} ${pages.tableEditButton}`}
-                  onClick={() => showModalUpdateSchedule(schedule.id)}
+                  onClick={() => onEdit(schedule)}
                 >
                   Редактировать
                 </button>
@@ -70,7 +42,7 @@ export default function SchedulesTable({ schedules }) {
               <td>
                 <button
                   class={`${pages.tableActionButton} ${pages.tableDeleteButton}`}
-                  onClick={() => showModalDeleteSchedule(schedule.id)}
+                  onClick={() => onDelete(schedule)}
                 >
                   Удалить
                 </button>
@@ -79,12 +51,6 @@ export default function SchedulesTable({ schedules }) {
           ))}
         </tbody>
       </table>
-      <Modal modalId="updateSchedule">
-        <UpdateScheduleForm closeId="updateSchedule" schedule={scheduleToUpdate} />
-      </Modal>
-      <Modal modalId="deleteSchedule">
-        <ConfirmForm message="Подтвердите удаление расписания" onConfirm={onConfirm} />
-      </Modal>
     </>
   )
 }
