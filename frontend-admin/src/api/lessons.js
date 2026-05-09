@@ -13,7 +13,6 @@ async function fetchLessonsByScheduleId(scheduleId) {
   }
 }
 
-// api/lessons.js
 async function createLessons(data) {
   try {
     const response = await fetch('/apiv1/lessons', {

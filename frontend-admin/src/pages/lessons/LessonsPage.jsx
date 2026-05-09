@@ -1,18 +1,17 @@
 import { fetchLessonsByScheduleId } from '../../api/lessons';
 import Modal from '../../shared/Modal';
-import PageTitle from '../../shared/PageTitle';
-import { ui } from '../../utils/dom';
 import CreateLessonsForm from './components/CreateLessonsForm';
-import LessonsTable from './components/LessonsTable';
+import LessonsTable from './components/table/LessonsTable';
+import PairSection from './components/pairSection/PairSection';
 import styles from './LessonsPage.module.css'
+import InfoSection from './components/InfoSection';
 
 export default async function LessonsPage() {
   const { pathname } = new URL(window.location.href)
-  const [root, adminRoute, lessonsRoute, scheduleId] = pathname.split('/')
-  const { schedule, lessons, groups, subjects, teachers } = await fetchLessonsByScheduleId(scheduleId);
-  
-  const showModalCreateLesson = () => ui.openModal('createLesson')
-  
+  const [, , , scheduleId] = pathname.split('/')
+  const test = await fetchLessonsByScheduleId(scheduleId);
+  const { schedule, lessons, groups, subjects, teachers } = test;
+  console.log(1,test);
   if (!schedule) {
     return <div>Расписание не найдено</div>;
   }
@@ -32,21 +31,11 @@ export default async function LessonsPage() {
       </div>
 
       <div class={styles.bottomContainer}>
-        <div class={styles.leftPanel}>
-          <h1>info</h1>
-        </div>
-        <div class={styles.rightPanel}>
-          <h1>lessons</h1>
-          <button
-            class={styles.addButton}
-            onClick={showModalCreateLesson}
-          >
-            Добавить нагрузку
-          </button>
-        </div>
+        <InfoSection />
+        <PairSection lessons={lessons}/>
       </div>
       <Modal modalId="createLesson">
-        <CreateLessonsForm teachers={teachers} groups={groups} subjects={subjects} scheduleId={scheduleId}/>
+        <CreateLessonsForm teachers={teachers} groups={groups} subjects={subjects} scheduleId={scheduleId} />
       </Modal>
     </div>
   );

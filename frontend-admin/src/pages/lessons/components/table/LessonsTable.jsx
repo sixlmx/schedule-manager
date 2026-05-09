@@ -1,9 +1,9 @@
-import { daysMap } from '../../../utils/lessons';
+import { daysMap } from '../../../../utils/lessons';
 import HeadCell from './HeadCell';
 import styles from './LessonsTable.module.css'
 import TableCell from './TableCell';
 
-export default function LessonsTable({ lessons, groups, schedule }) {
+export default function LessonsTable({ groups, schedule }) {
   const { weekdays, lessonsInDay } = schedule
 
   return (

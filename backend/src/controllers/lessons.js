@@ -2,14 +2,13 @@ import { lessonsQueries } from '../db/queries.js';
 
 export const getLessonsByScheduleId = async (fastify, scheduleId) => {
   const client = await fastify.pg.connect();
-  console.log(1, scheduleId);
   try {
-    // Получаем уроки для конкретного расписания
     const { rows: lessons } = await client.query(`
       SELECT 
         l.id,
         l.weekday,
         l.classroom,
+        l.lessons_count as "lessonsCount",
         l.group_id as "groupId",
         g.name as "groupName",
         g.abbreviation as "groupAbbr",

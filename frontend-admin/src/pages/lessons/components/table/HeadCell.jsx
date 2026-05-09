@@ -1,4 +1,4 @@
-import { pairsToArray } from '../../../utils/lessons'
+import { pairsToArray } from '../../../../utils/lessons';
 import styles from './LessonsTable.module.css'
 
 export default function HeadCell({ lessonsInDay }) {
