@@ -1,13 +1,13 @@
 import styles from '../pages.module.css'
 
 export default function SearchForm({ searchPlaceholder, onSearch }) {
-  const handleSearchSubmit = (event) => {
-    event.preventDefault()
-    const formData = new FormData(event.target)
+  const handleSearchSubmit = (e) => {
+    e.preventDefault()
+    const formData = new FormData(e.target)
     const query = String(formData.get('query') ?? '').trim()
 
     onSearch(query)
-    event.target.querySelector('input').focus();
+    e.target.querySelector('input').focus();
   }
 
   return (

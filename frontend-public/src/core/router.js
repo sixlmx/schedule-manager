@@ -33,11 +33,11 @@ export const mountRoute = async () => {
   app.innerHTML = await content();
 };
 
-document.addEventListener('click', async (event) => {
-  const link = event.target.closest('a');
+document.addEventListener('click', async (e) => {
+  const link = e.target.closest('a');
   if (link) {
     const href = link.getAttribute('href');
-    event.preventDefault();
+    e.preventDefault();
     if (href === 'back') {
       history.back();
       return;
