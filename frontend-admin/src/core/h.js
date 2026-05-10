@@ -8,13 +8,13 @@ export function h(tag, props, ...children) {
   if (props) {
     if (props['onClick']) {
       const handlerId = registerClick(props['onClick']);
-      props['data-handler'] = handlerId;
+      props['data-click'] = handlerId;
       delete props['onClick'];
     }
 
     if (props['onSubmit']) {
       const handlerId = registerSubmit(props['onSubmit']);
-      props['data-handler'] = handlerId;
+      props['data-submit'] = handlerId;
       delete props['onSubmit'];
     }
 

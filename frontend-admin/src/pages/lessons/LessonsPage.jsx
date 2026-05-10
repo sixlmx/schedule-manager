@@ -11,7 +11,7 @@ export default async function LessonsPage() {
   const [, , , scheduleId] = pathname.split('/')
   const test = await fetchLessonsByScheduleId(scheduleId);
   const { schedule, lessons, groups, subjects, teachers } = test;
-  console.log(1,test);
+  
   if (!schedule) {
     return <div>Расписание не найдено</div>;
   }

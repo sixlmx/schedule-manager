@@ -33,38 +33,38 @@ export const registerMouseLeave = (handler) => {
 
 export function cleanDeadHandlers() {
   for (const id in handlers.click) {
-    const element = document.querySelector(`[data-handler="${id}"]`);
+    const element = document.querySelector(`[data-click="${id}"]`);
     if (!element) delete handlers.click[id];
   }
   for (const id in handlers.submit) {
-    const element = document.querySelector(`[data-handler="${id}"]`);
+    const element = document.querySelector(`[data-submit="${id}"]`);
     if (!element) delete handlers.submit[id];
   }
   for (const id in handlers.mouseenter) {
-    const element = document.querySelector(`[data-handler="${id}"]`);
+    const element = document.querySelector(`[data-mouseenter="${id}"]`);
     if (!element) delete handlers.mouseenter[id];
   }
   for (const id in handlers.mouseleave) {
-    const element = document.querySelector(`[data-handler="${id}"]`);
+    const element = document.querySelector(`[data-mouseleave="${id}"]`);
     if (!element) delete handlers.mouseleave[id];
   }
 }
 
 export const initListeners = () => {
   const handleClick = (e) => {
-    const { handler } = e.target.closest('[data-handler]')
-      ? e.target.closest('[data-handler]').dataset
+    const { click } = e.target.closest('[data-click]')
+      ? e.target.closest('[data-click]').dataset
       : { handler: null };
-    if (handlers.click[handler]) {
-      handlers.click[handler](e);
+    if (handlers.click[click]) {
+      handlers.click[click](e);
     }
   };
 
   const handleSubmit = (e) => {
-    const { handler } = e.target.dataset;
+    const { submit } = e.target.dataset;
     e.preventDefault();
-    if (handlers.submit[handler]) {
-      handlers.submit[handler](e);
+    if (handlers.submit[submit]) {
+      handlers.submit[submit](e);
     }
   };
 
