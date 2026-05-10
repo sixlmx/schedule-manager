@@ -31,7 +31,10 @@ export default async function LessonsPage() {
       </div>
 
       <div class={styles.bottomContainer}>
+        <div id="infoSection" class={styles.leftPanel}>
+
         <InfoSection />
+        </div>
         <PairSection lessons={lessons}/>
       </div>
       <Modal modalId="createLesson">
