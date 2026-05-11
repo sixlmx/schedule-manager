@@ -18,7 +18,7 @@ export default function Pair({ lesson }) {
   }
   return (
     <div class={styles.pair} onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave} onClick={selectGroup}>
+      onMouseLeave={onMouseLeave} onClick={selectGroup} onContextMenu={(e)=>console.log(12)}>
       <div class={styles.subjectName}>{lesson.subjectAbbr}</div>
       <div class={styles.divider}></div>
       <div class={styles.lessonsCount}>{lesson.lessonsCount}</div>

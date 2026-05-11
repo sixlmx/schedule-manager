@@ -4,6 +4,7 @@ export const handlers = {
   submit: {},
   mouseenter: {},
   mouseleave: {},
+  contextmenu: {},
   getId: function () { return ++this._id; },
 };
 
@@ -31,6 +32,12 @@ export const registerMouseLeave = (handler) => {
   return id;
 };
 
+export const registerContextMenu = (handler) => {
+  const id = handlers.getId()
+  handlers.contextmenu[id] = handler
+  return id
+}
+
 export function cleanDeadHandlers() {
   for (const id in handlers.click) {
     const element = document.querySelector(`[data-click="${id}"]`);
@@ -47,6 +54,10 @@ export function cleanDeadHandlers() {
   for (const id in handlers.mouseleave) {
     const element = document.querySelector(`[data-mouseleave="${id}"]`);
     if (!element) delete handlers.mouseleave[id];
+  }
+  for (const id in handlers.contextmenu) {
+    const element = document.querySelector(`[data-contextmenu="${id}"]`);
+    if (!element) delete handlers.contextmenu[id];
   }
 }
 
@@ -86,8 +97,20 @@ export const initListeners = () => {
     }
   };
 
+  const handleContextMenu = (e) => {
+    const { contextmenu } = e.target.closest('[data-contextmenu]')
+      ? e.target.closest('[data-contextmenu]').dataset
+      : { handler: null };
+
+    if (handlers.contextmenu[contextmenu]) {
+      e.preventDefault()
+      handlers.contextmenu[contextmenu](e)
+    }
+  }
+
   document.addEventListener('click', handleClick);
   document.addEventListener('submit', handleSubmit);
   document.addEventListener('mouseenter', handleMouseEnter, true);
   document.addEventListener('mouseleave', handleMouseLeave, true);
+  document.addEventListener('contextmenu', handleContextMenu)
 };
