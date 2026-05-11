@@ -6,10 +6,27 @@ export const teachersQueries = {
 };
 
 export const bellsQueries = {
-  getAll: 'SELECT * FROM bells',
-  create: 'INSERT INTO teachers (name, fio, position) VALUES ($1, $2, $3) RETURNING *',
-  update: 'UPDATE teachers SET name = $1, fio = $2, position = $3 WHERE id = $4 RETURNING *',
-  delete: 'DELETE FROM teachers WHERE id = $1',
+  getScheduleById: 'SELECT id, name, lessons_in_day as "lessonsInDay", weekdays FROM schedules WHERE id = $1',
+  getByScheduleId: `
+    SELECT
+      id,
+      schedule_id as "scheduleId",
+      lesson_number as "lessonNumber",
+      start_time as "startTime",
+      end_time as "endTime"
+    FROM bells
+    WHERE schedule_id = $1
+    ORDER BY lesson_number
+  `,
+  upsert: `
+    INSERT INTO bells (schedule_id, lesson_number, start_time, end_time)
+    VALUES ($1, $2, $3, $4)
+    ON CONFLICT (schedule_id, lesson_number)
+    DO UPDATE SET
+      start_time = EXCLUDED.start_time,
+      end_time = EXCLUDED.end_time
+  `,
+  deleteExtra: 'DELETE FROM bells WHERE schedule_id = $1 AND lesson_number > $2',
 };
 
 export const groupsQueries = {

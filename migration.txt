@@ -100,3 +100,25 @@ VALUES
   (6, '17:10:00', '18:40:00');
 
 COMMIT;
+
+-- 002_bells_schedule_relation
+-- Applies to an existing database that already has public.schedules.
+BEGIN;
+
+ALTER TABLE public.bells
+  DROP CONSTRAINT IF EXISTS bells_lesson_number_key;
+
+ALTER TABLE public.bells
+  ADD COLUMN IF NOT EXISTS schedule_id integer REFERENCES public.schedules(id) ON DELETE CASCADE;
+
+UPDATE public.bells
+SET schedule_id = (SELECT id FROM public.schedules ORDER BY id LIMIT 1)
+WHERE schedule_id IS NULL;
+
+ALTER TABLE public.bells
+  ALTER COLUMN schedule_id SET NOT NULL;
+
+CREATE UNIQUE INDEX IF NOT EXISTS bells_schedule_lesson_unique
+  ON public.bells (schedule_id, lesson_number);
+
+COMMIT;

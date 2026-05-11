@@ -12,7 +12,7 @@ import SchedulesPage from './src/pages/schedules/SchedulesPage.jsx';
 const routes = [
   { path: '/admin', component: App, parentSelector: '#app' },
   { path: '/admin/teachers', component: TeachersPage, parentSelector: '#main' },
-  { path: '/admin/bells', component: BellsPage, parentSelector: '#main' },
+  { path: '/admin/bells/:id', component: BellsPage, parentSelector: '#main' },
   { path: '/admin/subjects', component: SubjectsPage, parentSelector: '#main' },
   { path: '/admin/classes', component: ClassesPage, parentSelector: '#main' },
   { path: '/admin/groups', component: GroupsPage, parentSelector: '#main' },

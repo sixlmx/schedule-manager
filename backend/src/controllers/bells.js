@@ -1,52 +1,41 @@
-import { bellsQueries, teachersQueries } from '../db/queries.js';
+import { bellsQueries } from '../db/queries.js';
 
-export const getBells = async (fastify) => {
+export const getBellsByScheduleId = async (fastify, scheduleId) => {
   const client = await fastify.pg.connect();
   try {
-    const { rows } = await client.query(bellsQueries.getAll);
-    return rows;
+    const { rows: scheduleInfo } = await client.query(bellsQueries.getScheduleById, [scheduleId]);
+    const { rows: bells } = await client.query(bellsQueries.getByScheduleId, [scheduleId]);
+
+    return {
+      schedule: scheduleInfo[0],
+      bells,
+    };
   }
   finally {
     client.release();
   }
 };
 
-export const createTeacher = async (fastify, data) => {
+export const updateBellsByScheduleId = async (fastify, scheduleId, bells) => {
   const client = await fastify.pg.connect();
   try {
-    await client.query(teachersQueries.create, [
-      data.fio,
-      data.abbr,
-      data.position,
-    ]);
-    return { message: 'Преподаватель добавлен!' };
-  }
-  finally {
-    client.release();
-  }
-};
+    await client.query('BEGIN');
 
-export const updateTeacher = async (fastify, data) => {
-  const client = await fastify.pg.connect();
-  try {
-    await client.query(teachersQueries.update, [
-      data.fio,
-      data.abbr,
-      data.position,
-      data.id,
-    ]);
-    return { message: 'Данные успешно обновлены!' };
-  }
-  finally {
-    client.release();
-  }
-};
+    await Promise.all(bells.map(bell => client.query(bellsQueries.upsert, [
+      scheduleId,
+      bell.lessonNumber,
+      bell.startTime,
+      bell.endTime,
+    ])));
 
-export const deleteTeacher = async (fastify, teacherId) => {
-  const client = await fastify.pg.connect();
-  try {
-    await client.query(teachersQueries.delete, [teacherId]);
-    return { message: 'Преподаватель удален!' };
+    await client.query(bellsQueries.deleteExtra, [scheduleId, bells.length]);
+    await client.query('COMMIT');
+
+    return { message: 'Звонки обновлены!' };
+  }
+  catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
   }
   finally {
     client.release();
