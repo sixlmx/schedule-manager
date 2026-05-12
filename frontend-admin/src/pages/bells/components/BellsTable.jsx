@@ -1,28 +1,5 @@
 import styles from '../../pages.module.css'
-
-const timeToMinutes = (time) => {
-  if (!time) return null
-
-  const [hours, minutes] = String(time).split(':').map(Number)
-  if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return null
-
-  return hours * 60 + minutes
-}
-
-const formatTime = (time) => {
-  if (!time) return ''
-
-  return String(time).slice(0, 5)
-}
-
-const formatDuration = (startTime, endTime) => {
-  const start = timeToMinutes(startTime)
-  const end = timeToMinutes(endTime)
-
-  if (start === null || end === null) return ''
-
-  return `${end - start} мин`
-}
+import { formatDuration, formatTime } from '../helpers'
 
 export default function BellsTable({ bells }) {
   return (

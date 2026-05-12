@@ -1,18 +1,13 @@
 import styles from '../../pages.module.css'
-
-const formatTimeInput = (time) => {
-  if (!time) return ''
-
-  return String(time).slice(0, 5)
-}
+import { formatTime } from '../helpers'
 
 export default function BellsForm({ bells, onSave }) {
   const handleSubmit = (e) => {
     const formData = new FormData(e.target)
     const updatedBells = bells.map((bell) => ({
       lessonNumber: bell.lessonNumber,
-      startTime: String(formData.get(`startTime_${bell.lessonNumber}`)),
-      endTime: String(formData.get(`endTime_${bell.lessonNumber}`)),
+      startTime: formData.get(`startTime_${bell.lessonNumber}`),
+      endTime: formData.get(`endTime_${bell.lessonNumber}`),
     }))
 
     onSave(updatedBells)
@@ -38,7 +33,7 @@ export default function BellsForm({ bells, onSave }) {
                   type="time"
                   required
                   name={`startTime_${bell.lessonNumber}`}
-                  value={formatTimeInput(bell.startTime)}
+                  value={formatTime(bell.startTime)}
                 />
               </td>
               <td>
@@ -46,7 +41,7 @@ export default function BellsForm({ bells, onSave }) {
                   type="time"
                   required
                   name={`endTime_${bell.lessonNumber}`}
-                  value={formatTimeInput(bell.endTime)}
+                  value={formatTime(bell.endTime)}
                 />
               </td>
             </tr>

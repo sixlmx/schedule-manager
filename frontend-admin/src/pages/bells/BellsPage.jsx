@@ -6,31 +6,13 @@ import { ui } from '../../utils/dom'
 import pages from '../pages.module.css'
 import BellsForm from './components/BellsForm'
 import BellsTable from './components/BellsTable'
+import { buildBellRows } from './helpers'
 
 const getScheduleId = () => {
   const { pathname } = new URL(window.location.href)
   const [, , , scheduleId] = pathname.split('/')
 
   return scheduleId
-}
-
-const buildBellRows = (bells, lessonsInDay) => {
-  const rowsCount = Number(lessonsInDay)
-
-  if (!Number.isInteger(rowsCount)) {
-    throw new Error('Schedule lessonsInDay is required')
-  }
-
-  return Array.from({ length: rowsCount }, (_, index) => {
-    const lessonNumber = index + 1
-    const bell = bells.find((item) => item.lessonNumber === lessonNumber)
-
-    return {
-      lessonNumber,
-      startTime: bell ? bell.startTime : '',
-      endTime: bell ? bell.endTime : '',
-    }
-  })
 }
 
 export default async function BellsPage() {
