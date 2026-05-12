@@ -1,16 +1,22 @@
 import { render } from '../../../../core/render';
 import { refreshPage } from '../../../../core/router';
 import state from '../../../../state';
+import { deleteLesson } from '../../../../api/lessons';
 import { ui } from '../../../../utils/dom';
 import InfoSection from '../InfoSection';
 import styles from './Pair.module.css'
 
 export default function Pair({ lesson }) {
 
+  const handleDeleteLesson = async () => {
+    const result = await deleteLesson(lesson.id)
+    ui.hideCustomMenu()
+    ui.showFlashMessage(result)
+    refreshPage()
+  }
+
   const handleContextMenu = (e) => {
-    e.preventDefault()
-    // Показываем кастомное меню
-    ui.showCustomMenu(e.clientX, e.clientY, lesson)
+    ui.showCustomMenu(e.clientX, e.clientY, handleDeleteLesson)
   }
   const selectGroup = () => {
     state.ui.selectedGroup = lesson.groupId
