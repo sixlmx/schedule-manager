@@ -8,10 +8,9 @@ export default function App() {
         <Sidebar />
       </aside>
       <main id="main" class="container">
-        Главная страница
       </main>
       <div class="flash-message"></div>
-      <ContextMenu/>
+      <ContextMenu />
     </>
   )
 }

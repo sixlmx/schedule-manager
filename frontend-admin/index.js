@@ -10,7 +10,6 @@ import LessonsPage from './src/pages/lessons/LessonsPage.jsx';
 import SchedulesPage from './src/pages/schedules/SchedulesPage.jsx';
 
 const routes = [
-  { path: '/admin', component: App, parentSelector: '#app' },
   { path: '/admin/teachers', component: TeachersPage, parentSelector: '#main' },
   { path: '/admin/bells/:id', component: BellsPage, parentSelector: '#main' },
   { path: '/admin/subjects', component: SubjectsPage, parentSelector: '#main' },
