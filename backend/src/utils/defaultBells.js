@@ -1,49 +1,23 @@
-const timeToMinutes = (time) => {
-  if (typeof time !== 'string') {
-    throw new Error('Bell time must be a string');
+export const buildDefaultBells = (lessonsInDay, lessonDurationMinutes = 90, breakMinutes = 10, startHour = 8, startMinute = 30) => {
+  const bells = [];
+  let currentTime = new Date();
+  currentTime.setHours(startHour, startMinute, 0, 0);
+
+  for (let i = 1; i <= lessonsInDay; i++) {
+    const startTime = new Date(currentTime);
+    const endTime = new Date(currentTime);
+    endTime.setMinutes(endTime.getMinutes() + lessonDurationMinutes);
+
+    bells.push({
+      lessonNumber: i,
+      startTime: startTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
+      endTime: endTime.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })
+    });
+
+    if (i < lessonsInDay) {
+      currentTime.setMinutes(currentTime.getMinutes() + lessonDurationMinutes + breakMinutes);
+    }
   }
 
-  const [hours, minutes] = time.split(':');
-  const totalMinutes = parseInt(hours, 10) * 60 + parseInt(minutes, 10);
-
-  if (!Number.isInteger(totalMinutes)) {
-    throw new Error('Bell time must use HH:mm or HH:mm:ss format');
-  }
-
-  return totalMinutes;
-};
-
-const minutesToTime = (minutes) => {
-  const hours = Math.floor(minutes / 60);
-  const restMinutes = minutes % 60;
-  const formattedHours = hours < 10 ? `0${hours}` : `${hours}`;
-  const formattedMinutes = restMinutes < 10 ? `0${restMinutes}` : `${restMinutes}`;
-
-  return `${formattedHours}:${formattedMinutes}`;
-};
-
-export const buildDefaultBells = (templateBells, lessonsInDay) => {
-  if (!Number.isInteger(lessonsInDay)) {
-    throw new Error('Schedule lessonsInDay is required');
-  }
-
-  const firstBell = templateBells[0];
-  const secondBell = templateBells[1];
-  const firstStartMinutes = timeToMinutes(firstBell.startTime);
-  const firstEndMinutes = timeToMinutes(firstBell.endTime);
-  const secondStartMinutes = timeToMinutes(secondBell.startTime);
-  const lessonDuration = firstEndMinutes - firstStartMinutes;
-  const breakDuration = secondStartMinutes - firstEndMinutes;
-
-  return Array.from({ length: lessonsInDay }, (_, index) => {
-    const lessonNumber = index + 1;
-    const startMinutes = firstStartMinutes + index * (lessonDuration + breakDuration);
-    const endMinutes = startMinutes + lessonDuration;
-
-    return {
-      lessonNumber,
-      startTime: minutesToTime(startMinutes),
-      endTime: minutesToTime(endMinutes),
-    };
-  });
+  return bells;
 };

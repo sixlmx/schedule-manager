@@ -15,17 +15,13 @@ export const getSchedules = async (fastify) => {
 export const createSchedule = async (fastify, data) => {
   const client = await fastify.pg.connect();
   try {
-    const { rows: templateBells } = await client.query(bellsQueries.getDefaultTemplate);
-    if (templateBells.length < 2) {
-      throw new Error('Default bells template requires at least two rows');
-    }
-
     const { rows: [schedule] } = await client.query(schedulesQueries.create, [
       data.name,
       data.lessonsInDay,
       data.weekdays,
     ]);
-    const defaultBells = buildDefaultBells(templateBells, schedule.lessonsInDay);
+
+    const defaultBells = buildDefaultBells(schedule.lessonsInDay);
 
     for (const bell of defaultBells) {
       await client.query(bellsQueries.upsert, [
