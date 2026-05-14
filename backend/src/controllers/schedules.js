@@ -1,4 +1,5 @@
-import { schedulesQueries } from '../db/queries.js';
+import { bellsQueries, schedulesQueries } from '../db/queries.js';
+import { buildDefaultBells } from '../utils/defaultBells.js';
 
 export const getSchedules = async (fastify) => {
   const client = await fastify.pg.connect();
@@ -14,11 +15,27 @@ export const getSchedules = async (fastify) => {
 export const createSchedule = async (fastify, data) => {
   const client = await fastify.pg.connect();
   try {
-    await client.query(schedulesQueries.create, [
+    const { rows: templateBells } = await client.query(bellsQueries.getDefaultTemplate);
+    if (templateBells.length < 2) {
+      throw new Error('Default bells template requires at least two rows');
+    }
+
+    const { rows: [schedule] } = await client.query(schedulesQueries.create, [
       data.name,
       data.lessonsInDay,
       data.weekdays,
     ]);
+    const defaultBells = buildDefaultBells(templateBells, schedule.lessonsInDay);
+
+    for (const bell of defaultBells) {
+      await client.query(bellsQueries.upsert, [
+        schedule.id,
+        bell.lessonNumber,
+        bell.startTime,
+        bell.endTime,
+      ]);
+    }
+
     return { message: 'Расписание добавлено!' };
   }
   finally {
