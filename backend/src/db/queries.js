@@ -7,21 +7,6 @@ export const teachersQueries = {
 
 export const bellsQueries = {
   getScheduleById: 'SELECT id, name, lessons_in_day as "lessonsInDay", weekdays FROM schedules WHERE id = $1',
-  getDefaultTemplate: `
-    SELECT
-      lesson_number as "lessonNumber",
-      start_time as "startTime",
-      end_time as "endTime"
-    FROM bells
-    WHERE schedule_id = (
-      SELECT id
-      FROM schedules
-      ORDER BY id
-      LIMIT 1
-    )
-    ORDER BY lesson_number
-    LIMIT 2
-  `,
   getByScheduleId: `
     SELECT
       id,
