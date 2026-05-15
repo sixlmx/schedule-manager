@@ -40,7 +40,7 @@ export default async function SchedulesPage() {
   const handleSearch = (query) => {
     const filteredSchedules = query ? filterByQuery(schedules, query) : schedules
     render(
-      '#schedules-table',
+      '#schedulesTable',
       <SchedulesTable
         schedules={filteredSchedules}
         onEdit={openUpdateScheduleModal}
@@ -59,7 +59,7 @@ export default async function SchedulesPage() {
           searchPlaceholder="Поиск по расписаниям"
           onSearch={handleSearch}
         />
-        <div id="schedules-table">
+        <div id="schedulesTable">
           <SchedulesTable
             schedules={schedules}
             onEdit={openUpdateScheduleModal}

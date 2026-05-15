@@ -40,7 +40,7 @@ export default async function ClassesPage() {
   const handleSearch = (query) => {
     const filteredClasses = query ? filterByQuery(classes, query) : classes
     render(
-      '#classes-table',
+      '#classesTable',
       <ClassesTable
         classes={filteredClasses}
         onEdit={openUpdateClassModal}
@@ -59,7 +59,7 @@ export default async function ClassesPage() {
           searchPlaceholder="Поиск по аудиториям"
           onSearch={handleSearch}
         />
-        <div id="classes-table">
+        <div id="classesTable">
           <ClassesTable
             classes={classes}
             onEdit={openUpdateClassModal}

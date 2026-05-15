@@ -41,7 +41,7 @@ export default async function GroupsPage() {
   const handleSearch = (query) => {
     const filteredGroups = query ? filterByQuery(groups, query) : groups
     render(
-      '#groups-table',
+      '#groupsTable',
       <GroupsTable
         groups={filteredGroups}
         onEdit={openUpdateGroupModal}
@@ -60,7 +60,7 @@ export default async function GroupsPage() {
           searchPlaceholder="Поиск по группам"
           onSearch={handleSearch}
         />
-        <div id="groups-table">
+        <div id="groupsTable">
           <GroupsTable
             groups={groups}
             onEdit={openUpdateGroupModal}

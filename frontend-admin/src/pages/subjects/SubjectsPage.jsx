@@ -40,7 +40,7 @@ export default async function SubjectsPage() {
   const handleSearch = (query) => {
     const filteredSubjects = query ? filterByQuery(subjects, query) : subjects
     render(
-      '#subjects-table',
+      '#subjectsTable',
       <SubjectsTable
         subjects={filteredSubjects}
         onEdit={openUpdateSubjectModal}
@@ -59,7 +59,7 @@ export default async function SubjectsPage() {
           searchPlaceholder="Поиск по предметам"
           onSearch={handleSearch}
         />
-        <div id="subjects-table">
+        <div id="subjectsTable">
           <SubjectsTable
             subjects={subjects}
             onEdit={openUpdateSubjectModal}

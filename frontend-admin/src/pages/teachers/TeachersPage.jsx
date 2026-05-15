@@ -41,7 +41,7 @@ export default async function TeachersPage() {
   const handleSearch = (query) => {
     const filteredTeachers = query ? filterByQuery(teachers, query) : teachers
     render(
-      '#teachers-table',
+      '#teachersTable',
       <TeachersTable
         teachers={filteredTeachers}
         onEdit={openUpdateTeacherModal}
@@ -60,7 +60,7 @@ export default async function TeachersPage() {
           searchPlaceholder="Поиск по преподавателям"
           onSearch={handleSearch}
         />
-        <div id="teachers-table">
+        <div id="teachersTable">
           <TeachersTable
             teachers={teachers}
             onEdit={openUpdateTeacherModal}
