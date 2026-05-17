@@ -8,14 +8,19 @@ import styles from './Pair.module.css'
 
 export default function Workload({ workload }) {
 
-  const handleDeleteworkload = async () => {
+  const handleDeleteWorkload = async () => {
     const result = await deleteWorkload(workload.id)
-    ui.hideCustomMenu()
     ui.showFlashMessage(result)
     refreshPage()
   }
   const handleContextMenu = (e) => {
-    ui.showCustomMenu(e.clientX, e.clientY, handleDeleteworkload)
+    ui.showCustomMenu(e.clientX, e.clientY, [
+      {
+        label: 'Удалить',
+        variant: 'danger',
+        onClick: handleDeleteWorkload,
+      },
+    ])
   }
   const selectPair = () => {
     state.ui.selectedGroup = workload.groupId
