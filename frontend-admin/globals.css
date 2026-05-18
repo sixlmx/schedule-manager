@@ -95,6 +95,50 @@ html, body {
   background-color: #f59e0b;
 }
 
+.contextMenu {
+  position: fixed;
+  display: none;
+  min-width: 128px;
+  padding: 4px;
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  box-shadow: 0 10px 24px rgb(15 23 42 / 16%);
+  z-index: 1000;
+  box-sizing: border-box;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.contextMenuOpen {
+  display: flex;
+}
+
+.contextMenuItem {
+  width: 100%;
+  margin: 0;
+  padding: 0.45rem 0.65rem;
+  border: 0;
+  border-radius: 4px;
+  background: white;
+  color: #111827;
+  font: inherit;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+}
+
+.contextMenuItem:hover,
+.contextMenuItem:focus {
+  background: #f1f5f9;
+  outline: none;
+}
+
+.contextMenuItemDanger {
+  color: #b91c1c;
+}
+
 
 .container {
   display: flex;

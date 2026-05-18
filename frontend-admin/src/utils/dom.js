@@ -1,3 +1,31 @@
+let closeContextMenuHandler = null;
+
+const removeContextMenuHandler = () => {
+  if (!closeContextMenuHandler) return;
+
+  document.removeEventListener('click', closeContextMenuHandler);
+  closeContextMenuHandler = null;
+};
+
+const renderContextMenuItems = (contextMenu, items) => {
+  contextMenu.replaceChildren();
+
+  items.forEach(({ label, variant, onClick }) => {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = variant === 'danger'
+      ? 'contextMenuItem contextMenuItemDanger'
+      : 'contextMenuItem';
+    item.textContent = label;
+    item.addEventListener('click', () => {
+      ui.hideCustomMenu();
+      onClick();
+    });
+
+    contextMenu.append(item);
+  });
+};
+
 export const ui = {
   openModal: (modalId) => {
     document.getElementById(modalId).classList.add('show');
@@ -22,60 +50,33 @@ export const ui = {
 
   hideCustomMenu: () => {
     const contextMenu = document.querySelector('#contextMenu');
-    contextMenu.classList.remove('show');
+    contextMenu.classList.remove('contextMenuOpen');
+    contextMenu.replaceChildren();
+    removeContextMenuHandler();
   },
 
-  showCustomMenu: (x, y, onDelete) => {
+  showCustomMenu: (x, y, items) => {
     const contextMenu = document.querySelector('#contextMenu');
-    const deleteButton = document.querySelector('#deleteLessonMenuItem');
-    const menuWidth = 128;
-    const menuHeight = 40;
-    const menuLeft = Math.min(x + 6, window.innerWidth - menuWidth - 8);
-    const menuTop = Math.min(y + 6, window.innerHeight - menuHeight - 8);
 
-    if (contextMenu.classList.contains('show')) {
-      contextMenu.classList.remove('show');
-    }
+    ui.hideCustomMenu();
+    renderContextMenuItems(contextMenu, items);
 
-    contextMenu.style.cssText = `
-      position: fixed;
-      top: ${menuTop}px;
-      left: ${menuLeft}px;
-      min-width: ${menuWidth}px;
-      padding: 4px;
-      background: white;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      box-shadow: 0 10px 24px rgb(15 23 42 / 16%);
-      z-index: 1000;
-      box-sizing: border-box;
-    `;
+    contextMenu.style.left = `${x + 6}px`;
+    contextMenu.style.top = `${y + 6}px`;
+    contextMenu.classList.add('contextMenuOpen');
 
-    deleteButton.style.cssText = `
-      width: 100%;
-      margin: 0;
-      padding: 0.45rem 0.65rem;
-      border: 0;
-      border-radius: 4px;
-      background: white;
-      color: #b91c1c;
-      font: inherit;
-      font-size: 0.875rem;
-      line-height: 1.2;
-      text-align: left;
-      cursor: pointer;
-    `;
+    const menuLeft = Math.max(8, Math.min(x + 6, window.innerWidth - contextMenu.offsetWidth - 8));
+    const menuTop = Math.max(8, Math.min(y + 6, window.innerHeight - contextMenu.offsetHeight - 8));
 
-    deleteButton.onclick = onDelete;
-    contextMenu.classList.add('show');
+    contextMenu.style.left = `${menuLeft}px`;
+    contextMenu.style.top = `${menuTop}px`;
 
-    const closeMenu = (e) => {
+    closeContextMenuHandler = (e) => {
       if (!contextMenu.contains(e.target)) {
         ui.hideCustomMenu();
-        document.removeEventListener('click', closeMenu);
       }
     };
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener('click', closeContextMenuHandler);
   },
 };
