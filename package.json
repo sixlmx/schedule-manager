@@ -22,10 +22,10 @@
   "homepage": "https://github.com/sseezov/shedule-manager-vanilla#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "globals": "^17.4.0",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "eslint": "^10.0.3",
-    "stylelint": "^17.10.0",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
+    "stylelint": "^17.11.1",
     "stylelint-config-standard": "^40.0.0"
   }
 }

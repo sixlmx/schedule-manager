@@ -1,50 +1,45 @@
-import Teachers from '../pages/teachers/Page.jsx';
-import Schedule from '../pages/lessons/Page.jsx';
-import App from '../App.jsx';
-import ErrorPage from '../pages/Error.jsx';
-import Groups from '../pages/groups/Page.jsx';
+import { render } from './render.js';
+import { cleanDeadHandlers } from './handlers.js';
 
-console.log('load');
+let routes = [];
+let errorComponent = {};
 
-const routes = [
-  { path: '/public', component: App },
-  { path: '/public/teachers', component: Teachers },
-  { path: '/public/groups', component: Groups },
-  { path: '/public/teachers/:id/lessons', component: Schedule },
-  { path: '/public/groups/:id/lessons', component: Schedule },
-];
-
-const navigate = (pathname) => {
-  const route = routes
-    .find((route) => {
-      const pattern = route.path.replace(/:[^/]+/g, '([^/]+)') + '/?$';
-      const regex = new RegExp('^' + pattern);
-      return regex.test(pathname);
-    });
-  return route ? route.component : ErrorPage;
+export const setRoutes = (routesList) => {
+  routes = routesList;
 };
+export const setErrorComponent = (Error) => {
+  errorComponent = Error;
+};
+
+const navigate = pathname => routes
+  .find((route) => {
+    const pattern = route.path.replace(/:[^/]+/g, '([^/]+)') + '/?$';
+    const regex = new RegExp('^' + pattern);
+    return regex.test(pathname);
+  }) || errorComponent;
 
 export const mountRoute = async () => {
   const href = (window.location.href).replace(/\/+$/, '');
   if (window.location.href.at(-1) === '/') history.replaceState({}, '', href);
   const { pathname } = new URL(href);
-  const content = navigate(pathname);
-  const app = document.querySelector('#app');
-  app.innerHTML = await content();
+  const { component, parentSelector } = navigate(pathname);
+  await render(parentSelector, component());
+  cleanDeadHandlers();
 };
 
-document.addEventListener('click', async (e) => {
-  const link = e.target.closest('a');
-  if (link) {
-    const href = link.getAttribute('href');
-    e.preventDefault();
-    if (href === 'back') {
-      history.back();
-      return;
-    }
-    history.pushState({}, '', `${href}`);
-    mountRoute();
-  }
-});
+export const navigateBack = () => {
+  history.back();
+};
+
+export const redirect = (route) => {
+  history.pushState({}, '', `${route}`);
+  mountRoute();
+};
+
+export const refreshPage = () => {
+  const currentUrl = window.location.href;
+  history.replaceState({}, '', currentUrl);
+  mountRoute();
+};
 
 window.addEventListener('popstate', () => mountRoute());
