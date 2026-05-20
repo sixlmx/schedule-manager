@@ -2,12 +2,12 @@
 -- PostgreSQL database dump
 --
 
-\restrict 5H94jkSEfpaFQtTRgjidOBrbxXjhwPyKFy686SpD49VPauBLdrRaxBwNEzTnhfi
+\restrict pDZ7eYhSd9JmlXfcAWimsxxeeum2gEbqxNg3kh7xcB4UJaCXzvReerqGUC2KwGW
 
 -- Dumped from database version 18.1
 -- Dumped by pg_dump version 18.0
 
--- Started on 2026-05-16 18:21:01 +07
+-- Started on 2026-05-20 13:45:10 +07
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -165,7 +165,7 @@ CREATE TABLE public.schedule_groups (
 ALTER TABLE public.schedule_groups OWNER TO postgres;
 
 --
--- TOC entry 235 (class 1259 OID 16930)
+-- TOC entry 233 (class 1259 OID 16930)
 -- Name: schedule_lessons; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -186,7 +186,7 @@ CREATE TABLE public.schedule_lessons (
 ALTER TABLE public.schedule_lessons OWNER TO postgres;
 
 --
--- TOC entry 234 (class 1259 OID 16929)
+-- TOC entry 232 (class 1259 OID 16929)
 -- Name: scheduled_lessons_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -203,7 +203,7 @@ ALTER SEQUENCE public.scheduled_lessons_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3933 (class 0 OID 0)
--- Dependencies: 234
+-- Dependencies: 232
 -- Name: scheduled_lessons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -332,12 +332,13 @@ ALTER SEQUENCE public.teachers_id_seq OWNED BY public.teachers.id;
 
 
 --
--- TOC entry 233 (class 1259 OID 16898)
+-- TOC entry 235 (class 1259 OID 16990)
 -- Name: workloads; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.workloads (
     id integer NOT NULL,
+    schedule_id integer NOT NULL,
     group_id integer NOT NULL,
     teacher_id integer NOT NULL,
     subject_id integer NOT NULL,
@@ -351,7 +352,7 @@ CREATE TABLE public.workloads (
 ALTER TABLE public.workloads OWNER TO postgres;
 
 --
--- TOC entry 232 (class 1259 OID 16897)
+-- TOC entry 234 (class 1259 OID 16989)
 -- Name: workloads_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -368,7 +369,7 @@ ALTER SEQUENCE public.workloads_id_seq OWNER TO postgres;
 
 --
 -- TOC entry 3937 (class 0 OID 0)
--- Dependencies: 232
+-- Dependencies: 234
 -- Name: workloads_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -400,7 +401,7 @@ ALTER TABLE ONLY public.groups ALTER COLUMN id SET DEFAULT nextval('public.group
 
 
 --
--- TOC entry 3714 (class 2604 OID 16933)
+-- TOC entry 3711 (class 2604 OID 16933)
 -- Name: schedule_lessons id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -432,7 +433,7 @@ ALTER TABLE ONLY public.teachers ALTER COLUMN id SET DEFAULT nextval('public.tea
 
 
 --
--- TOC entry 3711 (class 2604 OID 16901)
+-- TOC entry 3714 (class 2604 OID 16993)
 -- Name: workloads id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -446,11 +447,11 @@ ALTER TABLE ONLY public.workloads ALTER COLUMN id SET DEFAULT nextval('public.wo
 --
 
 COPY public.bells (id, schedule_id, lesson_number, start_time, end_time, created_at, updated_at) FROM stdin;
-17	10	1	08:30:00	10:00:00	2026-05-16 17:51:54.506545	2026-05-16 17:51:54.506545
-18	10	2	10:10:00	11:40:00	2026-05-16 17:51:54.51065	2026-05-16 17:51:54.51065
-19	10	3	11:50:00	13:20:00	2026-05-16 17:51:54.511349	2026-05-16 17:51:54.511349
-20	10	4	13:30:00	15:00:00	2026-05-16 17:51:54.511965	2026-05-16 17:51:54.511965
-21	10	5	15:10:00	16:40:00	2026-05-16 17:51:54.512511	2026-05-16 17:51:54.512511
+42	16	1	08:30:00	10:00:00	2026-05-20 13:26:45.118256	2026-05-20 13:26:45.118256
+43	16	2	10:10:00	11:40:00	2026-05-20 13:26:45.121268	2026-05-20 13:26:45.121268
+44	16	3	11:50:00	13:20:00	2026-05-20 13:26:45.121891	2026-05-20 13:26:45.121891
+45	16	4	13:30:00	15:00:00	2026-05-20 13:26:45.122353	2026-05-20 13:26:45.122353
+46	16	5	15:10:00	16:40:00	2026-05-20 13:26:45.122755	2026-05-20 13:26:45.122755
 \.
 
 
@@ -472,10 +473,8 @@ COPY public.classes (id, name, abbreviation, capacity, building) FROM stdin;
 --
 
 COPY public.groups (id, name, abbreviation, year_of_admission) FROM stdin;
-13	группа02	гр02	2022
-11	группа03	гр3	2022
-10	группа01	гр01	2022
-14	группа крови 	2+	1990
+16	group1	gr1	2022
+17	group22	2	122
 \.
 
 
@@ -490,12 +489,23 @@ COPY public.schedule_groups (schedule_id, group_id) FROM stdin;
 
 
 --
--- TOC entry 3924 (class 0 OID 16930)
--- Dependencies: 235
+-- TOC entry 3922 (class 0 OID 16930)
+-- Dependencies: 233
 -- Data for Name: schedule_lessons; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.schedule_lessons (id, workload_id, schedule_id, weekday, lesson_number, classroom, created_at, updated_at) FROM stdin;
+51	18	16	1	1	\N	2026-05-20 13:27:02.100998	2026-05-20 13:27:02.100998
+52	18	16	1	2	\N	2026-05-20 13:27:03.501466	2026-05-20 13:27:03.501466
+53	18	16	1	3	\N	2026-05-20 13:27:04.168008	2026-05-20 13:27:04.168008
+54	18	16	1	4	\N	2026-05-20 13:27:04.834911	2026-05-20 13:27:04.834911
+55	18	16	1	5	\N	2026-05-20 13:27:05.467198	2026-05-20 13:27:05.467198
+62	18	16	2	3	\N	2026-05-20 13:38:47.768862	2026-05-20 13:38:47.768862
+63	19	16	2	2	\N	2026-05-20 13:38:49.84958	2026-05-20 13:38:49.84958
+64	19	16	2	1	\N	2026-05-20 13:38:50.730983	2026-05-20 13:38:50.730983
+69	18	16	2	1	\N	2026-05-20 13:42:51.534995	2026-05-20 13:42:51.534995
+70	19	16	2	3	\N	2026-05-20 13:42:54.418022	2026-05-20 13:42:54.418022
+71	19	16	1	3	\N	2026-05-20 13:42:55.619393	2026-05-20 13:42:55.619393
 \.
 
 
@@ -506,7 +516,7 @@ COPY public.schedule_lessons (id, workload_id, schedule_id, weekday, lesson_numb
 --
 
 COPY public.schedules (id, name, created, lessons_in_day, weekdays) FROM stdin;
-10	1	2026-05-16 17:51:54.482383	5	{1,2,3,4,5}
+16	первое	2026-05-20 13:26:45.09412	5	{1,2,3,4,5}
 \.
 
 
@@ -538,15 +548,15 @@ COPY public.teachers (id, name, fio, "position", color) FROM stdin;
 
 
 --
--- TOC entry 3922 (class 0 OID 16898)
--- Dependencies: 233
+-- TOC entry 3924 (class 0 OID 16990)
+-- Dependencies: 235
 -- Data for Name: workloads; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.workloads (id, group_id, teacher_id, subject_id, lessons_per_week, created_at, updated_at) FROM stdin;
-2	14	51	2	2	2026-05-16 18:06:48.854577	2026-05-16 18:06:48.854577
-5	14	51	3	44	2026-05-16 18:08:30.869215	2026-05-16 18:08:30.869215
-7	13	51	2	1	2026-05-16 18:15:05.656943	2026-05-16 18:15:05.656943
+COPY public.workloads (id, schedule_id, group_id, teacher_id, subject_id, lessons_per_week, created_at, updated_at) FROM stdin;
+18	16	16	51	2	2	2026-05-20 13:27:00.302259	2026-05-20 13:27:00.302259
+19	16	17	51	3	2	2026-05-20 13:27:14.216917	2026-05-20 13:27:14.216917
+20	16	16	43	3	4	2026-05-20 13:42:02.693147	2026-05-20 13:42:02.693147
 \.
 
 
@@ -556,7 +566,7 @@ COPY public.workloads (id, group_id, teacher_id, subject_id, lessons_per_week, c
 -- Name: bells_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.bells_id_seq', 21, true);
+SELECT pg_catalog.setval('public.bells_id_seq', 46, true);
 
 
 --
@@ -574,16 +584,16 @@ SELECT pg_catalog.setval('public.classes_id_seq', 2, true);
 -- Name: groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.groups_id_seq', 14, true);
+SELECT pg_catalog.setval('public.groups_id_seq', 17, true);
 
 
 --
 -- TOC entry 3941 (class 0 OID 0)
--- Dependencies: 234
+-- Dependencies: 232
 -- Name: scheduled_lessons_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.scheduled_lessons_id_seq', 1, false);
+SELECT pg_catalog.setval('public.scheduled_lessons_id_seq', 71, true);
 
 
 --
@@ -592,7 +602,7 @@ SELECT pg_catalog.setval('public.scheduled_lessons_id_seq', 1, false);
 -- Name: schedules_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.schedules_id_seq', 10, true);
+SELECT pg_catalog.setval('public.schedules_id_seq', 16, true);
 
 
 --
@@ -615,11 +625,11 @@ SELECT pg_catalog.setval('public.teachers_id_seq', 60, true);
 
 --
 -- TOC entry 3945 (class 0 OID 0)
--- Dependencies: 232
+-- Dependencies: 234
 -- Name: workloads_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.workloads_id_seq', 8, true);
+SELECT pg_catalog.setval('public.workloads_id_seq', 20, true);
 
 
 --
@@ -668,21 +678,12 @@ ALTER TABLE ONLY public.schedule_groups
 
 
 --
--- TOC entry 3750 (class 2606 OID 16944)
+-- TOC entry 3746 (class 2606 OID 16944)
 -- Name: schedule_lessons scheduled_lessons_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.schedule_lessons
     ADD CONSTRAINT scheduled_lessons_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 3752 (class 2606 OID 16946)
--- Name: schedule_lessons scheduled_lessons_schedule_id_weekday_lesson_number_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.schedule_lessons
-    ADD CONSTRAINT scheduled_lessons_schedule_id_weekday_lesson_number_key UNIQUE (schedule_id, weekday, lesson_number);
 
 
 --
@@ -713,21 +714,30 @@ ALTER TABLE ONLY public.teachers
 
 
 --
--- TOC entry 3742 (class 2606 OID 16913)
--- Name: workloads workloads_group_id_teacher_id_subject_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- TOC entry 3748 (class 2606 OID 17028)
+-- Name: schedule_lessons unique_schedule_cell; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.workloads
-    ADD CONSTRAINT workloads_group_id_teacher_id_subject_id_key UNIQUE (group_id, teacher_id, subject_id);
+ALTER TABLE ONLY public.schedule_lessons
+    ADD CONSTRAINT unique_schedule_cell UNIQUE (schedule_id, weekday, lesson_number, workload_id);
 
 
 --
--- TOC entry 3744 (class 2606 OID 16911)
+-- TOC entry 3750 (class 2606 OID 17004)
 -- Name: workloads workloads_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.workloads
     ADD CONSTRAINT workloads_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3752 (class 2606 OID 17006)
+-- Name: workloads workloads_schedule_id_group_id_teacher_id_subject_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.workloads
+    ADD CONSTRAINT workloads_schedule_id_group_id_teacher_id_subject_id_key UNIQUE (schedule_id, group_id, teacher_id, subject_id);
 
 
 --
@@ -755,7 +765,7 @@ CREATE INDEX idx_classes_id ON public.classes USING btree (id);
 
 
 --
--- TOC entry 3745 (class 1259 OID 16960)
+-- TOC entry 3741 (class 1259 OID 16960)
 -- Name: idx_scheduled_lessons_lesson_number; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -763,7 +773,7 @@ CREATE INDEX idx_scheduled_lessons_lesson_number ON public.schedule_lessons USIN
 
 
 --
--- TOC entry 3746 (class 1259 OID 16958)
+-- TOC entry 3742 (class 1259 OID 16958)
 -- Name: idx_scheduled_lessons_schedule_id; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -771,7 +781,7 @@ CREATE INDEX idx_scheduled_lessons_schedule_id ON public.schedule_lessons USING 
 
 
 --
--- TOC entry 3747 (class 1259 OID 16959)
+-- TOC entry 3743 (class 1259 OID 16959)
 -- Name: idx_scheduled_lessons_weekday; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -779,7 +789,7 @@ CREATE INDEX idx_scheduled_lessons_weekday ON public.schedule_lessons USING btre
 
 
 --
--- TOC entry 3748 (class 1259 OID 16957)
+-- TOC entry 3744 (class 1259 OID 16957)
 -- Name: idx_scheduled_lessons_workload_id; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -814,7 +824,7 @@ ALTER TABLE ONLY public.schedule_groups
 
 
 --
--- TOC entry 3759 (class 2606 OID 16952)
+-- TOC entry 3756 (class 2606 OID 16952)
 -- Name: schedule_lessons scheduled_lessons_schedule_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -823,16 +833,7 @@ ALTER TABLE ONLY public.schedule_lessons
 
 
 --
--- TOC entry 3760 (class 2606 OID 16947)
--- Name: schedule_lessons scheduled_lessons_workload_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.schedule_lessons
-    ADD CONSTRAINT scheduled_lessons_workload_id_fkey FOREIGN KEY (workload_id) REFERENCES public.workloads(id) ON DELETE CASCADE;
-
-
---
--- TOC entry 3756 (class 2606 OID 16914)
+-- TOC entry 3757 (class 2606 OID 17012)
 -- Name: workloads workloads_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -841,7 +842,16 @@ ALTER TABLE ONLY public.workloads
 
 
 --
--- TOC entry 3757 (class 2606 OID 16924)
+-- TOC entry 3758 (class 2606 OID 17007)
+-- Name: workloads workloads_schedule_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.workloads
+    ADD CONSTRAINT workloads_schedule_id_fkey FOREIGN KEY (schedule_id) REFERENCES public.schedules(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 3759 (class 2606 OID 17022)
 -- Name: workloads workloads_subject_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -850,7 +860,7 @@ ALTER TABLE ONLY public.workloads
 
 
 --
--- TOC entry 3758 (class 2606 OID 16919)
+-- TOC entry 3760 (class 2606 OID 17017)
 -- Name: workloads workloads_teacher_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -858,11 +868,12 @@ ALTER TABLE ONLY public.workloads
     ADD CONSTRAINT workloads_teacher_id_fkey FOREIGN KEY (teacher_id) REFERENCES public.teachers(id) ON DELETE CASCADE;
 
 
--- Completed on 2026-05-16 18:21:01 +07
+-- Completed on 2026-05-20 13:45:10 +07
 
 --
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 5H94jkSEfpaFQtTRgjidOBrbxXjhwPyKFy686SpD49VPauBLdrRaxBwNEzTnhfi
+\unrestrict pDZ7eYhSd9JmlXfcAWimsxxeeum2gEbqxNg3kh7xcB4UJaCXzvReerqGUC2KwGW
+
 

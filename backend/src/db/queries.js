@@ -70,31 +70,9 @@ export const schedulesQueries = {
 };
 
 export const workloadsQueries = {
-  getAll: `
-    SELECT 
-      w.id,
-      w.group_id as "groupId",
-      g.name as "groupName",
-      g.abbreviation as "groupAbbr",
-      w.teacher_id as "teacherId",
-      t.fio as "teacherName",
-      t.position as "teacherPosition",
-      w.subject_id as "subjectId",
-      s.name as "subjectName",
-      s.abbreviation as "subjectAbbr",
-      w.lessons_per_week as "lessonsPerWeek",
-      w.created_at as "createdAt",
-      w.updated_at as "updatedAt"
-    FROM workloads w
-    JOIN groups g ON w.group_id = g.id
-    JOIN teachers t ON w.teacher_id = t.id
-    JOIN subjects s ON w.subject_id = s.id
-    ORDER BY g.name, s.name
-  `,
-
   getByScheduleId: `
     SELECT 
-      w.id,
+      w.id as "workloadId",
       w.group_id as "groupId",
       g.name as "groupName",
       g.abbreviation as "groupAbbr",
@@ -208,9 +186,14 @@ export const lessonsQueries = {
 
   // Найти урок по ячейке
   findByCell: `
-    SELECT id FROM schedule_lessons 
-    WHERE schedule_id = $1 AND weekday = $2 AND lesson_number = $3
-  `,
+  SELECT sl.id 
+  FROM schedule_lessons sl
+  JOIN workloads w ON sl.workload_id = w.id
+  WHERE sl.schedule_id = $1 
+    AND sl.weekday = $2 
+    AND sl.lesson_number = $3
+    AND w.group_id = $4
+`,
 
   // Удалить урок по ячейке
   deleteByCell: `

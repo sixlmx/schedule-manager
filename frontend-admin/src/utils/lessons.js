@@ -8,7 +8,7 @@ export const daysMap = {
   7: 'воскресенье',
 };
 
-export const lessonsToArray = lessonsInDay => Array.from({ length: lessonsInDay }).map((_, i) => ({ lessonNumber: i + 1, text: '' }));
+export const lessonsToArray = lessonsInDay => Array.from({ length: lessonsInDay }).map((_, i) => ({ lessonNumber: i + 1, text: '', style: 'vacant' }));
 
 export const scheduleToGroups = (scheduleData) => {
   console.log('scheduleData', scheduleData);
@@ -23,6 +23,7 @@ export const scheduleToGroups = (scheduleData) => {
     const currentWeekday = currentGroup.weekdays.find(weekday => weekday.dayIndex === lesson.weekday);
     const currentLesson = currentWeekday.lessons[lesson.lessonNumber - 1];
     currentLesson.text = lesson.groupAbbr;
+    currentLesson.style = 'booked';
   });
 
   return newGroups;

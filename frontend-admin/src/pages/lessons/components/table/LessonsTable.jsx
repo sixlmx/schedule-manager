@@ -6,10 +6,7 @@ import TableCell from './TableCell';
 
 
 export default function LessonsTable({ lessonsByGroups, weekdays, lessonsInDay }) {
-  console.log(1, lessonsByGroups);
-  console.log(2, weekdays);
   const { selectedGroup } = state.ui
-
 
   return (
     <table class={styles.table}>

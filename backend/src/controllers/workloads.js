@@ -1,17 +1,6 @@
 // controllers/workloads.js
 import { workloadsQueries } from '../db/queries.js';
 
-export const getWorkloads = async (fastify) => {
-  const client = await fastify.pg.connect();
-  try {
-    const { rows } = await client.query(workloadsQueries.getAll);
-    return rows;
-  }
-  finally {
-    client.release();
-  }
-};
-
 export const getWorkloadByScheduleId = async (fastify, scheduleId) => {
   const client = await fastify.pg.connect();
   try {

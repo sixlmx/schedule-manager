@@ -86,23 +86,22 @@ export const setLesson = async (fastify, data) => {
   const client = await fastify.pg.connect();
 
   try {
-    // Проверяем, есть ли уже урок в этой ячейке
+    // Проверяем, есть ли уже урок для этой группы в этой ячейке
     const { rows: [existing] } = await client.query(
       lessonsQueries.findByCell,
-      [data.scheduleId, data.weekday, data.lessonNumber],
+      [data.scheduleId, data.weekday, data.lessonNumber, data.groupId],
     );
 
-    // Если ячейка занята, возвращаем ошибку
     if (existing) {
       return {
         type: 'error',
-        message: 'Эта ячейка уже занята другим уроком. Сначала удалите существующий урок.',
+        message: 'У этой группы уже есть урок в этой ячейке',
       };
     }
 
-    // Добавляем урок в ячейку
+    // Добавляем урок
     const insertResult = await client.query(lessonsQueries.create, [
-      data.id,
+      data.workloadId,
       data.scheduleId,
       data.weekday,
       data.lessonNumber,
@@ -111,7 +110,7 @@ export const setLesson = async (fastify, data) => {
 
     return {
       type: 'success',
-      message: 'Урок добавлен в расписание!',
+      message: 'Урок добавлен!',
       id: insertResult.rows[0].id,
     };
   }
