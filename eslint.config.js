@@ -16,7 +16,7 @@ export default defineConfig([
       globals: {
         ...globals.node,
         ...globals.browser,
-      }
+      },
     },
     rules: {
       'semi': ['error', 'always'],

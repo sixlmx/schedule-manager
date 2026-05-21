@@ -17,6 +17,10 @@ export const getLessonsByScheduleId = async (fastify, scheduleId) => {
       WHERE id = $1
     `, [scheduleId]);
 
+    if (!scheduleInfo[0]) {
+      return { type: 'error', message: 'Неизвестное расписание' };
+    }
+
     // Получаем все группы
     const { rows: groups } = await client.query(`
       SELECT id, name, abbreviation

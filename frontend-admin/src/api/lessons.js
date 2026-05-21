@@ -1,4 +1,3 @@
-// Получить все размещённые уроки для конкретного расписания
 async function fetchLessons(scheduleId) {
   try {
     const response = await fetch(`/apiv1/lessons/schedule/${scheduleId}`);
@@ -13,7 +12,6 @@ async function fetchLessons(scheduleId) {
   }
 }
 
-// Удалить урок из расписания
 async function deleteLesson(scheduledLessonId) {
   try {
     const response = await fetch('/apiv1/lessons', {

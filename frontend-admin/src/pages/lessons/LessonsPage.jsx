@@ -6,7 +6,7 @@ import WorkloadsSection from './components/workloadsSection/WorkloadsSection'
 import styles from './LessonsPage.module.css'
 import InfoSection from './components/InfoSection';
 import { fetchWorkloads } from '../../api/workloads';
-import { scheduleToGroups } from '../../utils/lessons';
+import { buildLessons } from '../../utils/lessons';
 import store from '../../state/store';
 
 export default async function LessonsPage() {
@@ -14,16 +14,15 @@ export default async function LessonsPage() {
   const [, , , scheduleId] = pathname.split('/')
   store.currentScheduleId = Number(scheduleId)
   const scheduleData = await fetchLessons(scheduleId);
-  // const { lessons } = scheduleToLessons(scheduleData)
   const workloads = await fetchWorkloads(scheduleId)
-  // const { subjects, teachers } = scheduleData;
   const { groups, teachers, subjects, schedule } = scheduleData
-  const { weekdays, lessonsInDay } = schedule
-  const lessonsByGroups = scheduleToGroups(scheduleData)
 
-  if (!scheduleData) {
+  if (scheduleData.type === 'error') {
     return <div>Расписание не найдено</div>;
   }
+
+  const { weekdays, lessonsInDay } = schedule 
+  const lessonsByGroups = buildLessons(scheduleData)
 
   return (
     <div class={styles.crudPage}>
