@@ -1,3 +1,37 @@
+/**
+ * @typedef {object} TeacherDTO
+ * @property {number} id
+ * @property {string|null} name
+ * @property {string|null} fio
+ * @property {string|null} position
+ * @property {string|null} color
+ */
+
+/**
+ * @typedef {object} CreateTeacherBody
+ * @property {string} fio
+ * @property {string} abbr
+ * @property {string|null} position
+ */
+
+/**
+ * @typedef {object} UpdateTeacherBody
+ * @property {number} id
+ * @property {string} fio
+ * @property {string} abbr
+ * @property {string|null} position
+ */
+
+/**
+ * @typedef {object} TeacherActionResult
+ * @property {'success'|'error'} type
+ * @property {string} message
+ */
+
+/**
+ * @returns {Promise<TeacherDTO[]|void>}
+ */
+
 async function fetchTeachers() {
   try {
     const response = await fetch('/apiv1/teachers');
@@ -11,6 +45,11 @@ async function fetchTeachers() {
     console.error('Fetch error:', error);
   }
 }
+
+/**
+ * @param {CreateTeacherBody} data
+ * @returns {Promise<TeacherActionResult>}
+ */
 
 async function createTeacher(data) {
   try {
@@ -32,6 +71,11 @@ async function createTeacher(data) {
   }
 }
 
+/**
+ * @param {UpdateTeacherBody} data
+ * @returns {Promise<TeacherActionResult>}
+ */
+
 async function updateTeacher(data) {
   try {
     const response = await fetch('/apiv1/teachers', {
@@ -51,6 +95,11 @@ async function updateTeacher(data) {
     return { type: 'error', message: error.message };
   }
 }
+
+/**
+ * @param {number} teacherId
+ * @returns {Promise<TeacherActionResult>}
+ */
 
 async function deleteTeacher(teacherId) {
   try {
