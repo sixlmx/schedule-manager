@@ -7,7 +7,6 @@ export default async function teachersRoutes(fastify) {
   });
 
   fastify.get('/teachers/lessons', async (req, reply) => {
-    // const { teacher, date } = req.query
     reply.send(`{
     "startDate": "2025-12-15T00:00:00Z",
     "endDate": "2025-12-21T00:00:00Z",

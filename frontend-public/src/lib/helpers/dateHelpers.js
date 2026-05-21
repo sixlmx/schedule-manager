@@ -30,11 +30,10 @@ export function calcWindow(endTime, startTime) {
     return hours * 60 + minutes;
   }
 
-  const endMinutes = toMinutes(endTime); // 16:40 = 1000 минут
-  const startMinutes = toMinutes(startTime); // 19:10 = 1150 минут
-  const breakMinutes = startMinutes - endMinutes; // 1150 - 1000 = 150 минут
+  const endMinutes = toMinutes(endTime);
+  const startMinutes = toMinutes(startTime);
+  const breakMinutes = startMinutes - endMinutes;
 
-  // Конвертируем обратно в часы и минуты
   const hours = Math.floor(breakMinutes / 60);
   const minutes = breakMinutes % 60;
 

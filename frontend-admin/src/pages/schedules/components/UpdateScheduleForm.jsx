@@ -1,4 +1,3 @@
-// pages/schedules/components/UpdateScheduleForm.jsx
 import pages from '../../pages.module.css'
 import styles from './ScheduleForm.module.css'
 import { updateSchedule } from '../../../api/schedules'

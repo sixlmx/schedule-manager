@@ -1,7 +1,5 @@
-// controllers/workloads.js
 import { workloadsQueries } from '../db/queries/workloads.js';
 
-// Получить все нагрузки по расписанию
 export const getWorkloadByScheduleId = async (fastify, scheduleId) => {
   const client = await fastify.pg.connect();
   try {
@@ -13,7 +11,6 @@ export const getWorkloadByScheduleId = async (fastify, scheduleId) => {
   }
 };
 
-// Создать нагрузку
 export const createWorkload = async (fastify, data) => {
   const client = await fastify.pg.connect();
   try {
@@ -35,7 +32,6 @@ export const createWorkload = async (fastify, data) => {
   }
 };
 
-// Уменьшить нагрузку на 1 (при добавлении урока)
 export const decrementWorkload = async (fastify, workloadId) => {
   const client = await fastify.pg.connect();
   try {
@@ -48,17 +44,11 @@ export const decrementWorkload = async (fastify, workloadId) => {
       return { type: 'error', message: 'Нагрузка не найдена' };
     }
 
-    if (workload.lessons_per_week <= 0) {
-      return { type: 'error', message: 'Нельзя уменьшить, нагрузка уже на нуле' };
-    }
-
-    // Если осталась 1 пара — удаляем нагрузку
     if (workload.lessons_per_week === 1) {
       await client.query(workloadsQueries.delete, [workloadId]);
       return { type: 'success', message: 'Нагрузка полностью использована и удалена' };
     }
 
-    // Иначе уменьшаем на 1
     const { rows: [updated] } = await client.query(
       workloadsQueries.decrement,
       [workloadId],
@@ -78,7 +68,6 @@ export const decrementWorkload = async (fastify, workloadId) => {
   }
 };
 
-// Удалить нагрузку (явное действие пользователя)
 export const deleteWorkload = async (fastify, workloadId) => {
   const client = await fastify.pg.connect();
   try {

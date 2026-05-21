@@ -1,7 +1,6 @@
 import { getLessonsByScheduleId, deleteLesson, setLesson } from '../controllers/lessons.js';
 
 export default async function scheduleLessonsRoutes(fastify) {
-  // Получить уроки по расписанию (для сетки)
   fastify.get('/lessons/schedule/:scheduleId', async (req, reply) => {
     const { scheduleId } = req.params;
     const scheduleLessons = await getLessonsByScheduleId(fastify, scheduleId);
@@ -13,7 +12,6 @@ export default async function scheduleLessonsRoutes(fastify) {
     reply.status(201).send(result);
   });
 
-  // Удалить размещённый урок
   fastify.delete('/lessons', async (req, reply) => {
     const scheduleLessonId = req.body;
     const result = await deleteLesson(fastify, scheduleLessonId);

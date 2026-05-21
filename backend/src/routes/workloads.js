@@ -8,20 +8,17 @@ export default async function workloadsRoutes(fastify) {
     reply.send(workloads);
   });
 
-  // Создать нагрузку
   fastify.post('/workloads', async (req, reply) => {
     const result = await createWorkload(fastify, req.body);
     reply.status(201).send(result);
   });
 
-  // Уменьшить нагрузку на 1
   fastify.patch('/workloads/:id/decrement', async (req, reply) => {
     const { id } = req.params;
     const result = await decrementWorkload(fastify, parseInt(id, 10));
     reply.send(result);
   });
 
-  // Удалить нагрузку
   fastify.delete('/workloads', async (req, reply) => {
     const workloadId = req.body;
     const result = await deleteWorkload(fastify, workloadId);

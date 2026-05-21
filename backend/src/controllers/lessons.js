@@ -1,7 +1,5 @@
-// controllers/lessons.js
 import { lessonsQueries } from '../db/queries/lessons.js';
 
-// Получить все уроки по расписанию
 export const getLessonsByScheduleId = async (fastify, scheduleId) => {
   const client = await fastify.pg.connect();
   try {
@@ -10,7 +8,6 @@ export const getLessonsByScheduleId = async (fastify, scheduleId) => {
       [scheduleId],
     );
 
-    // Получаем информацию о расписании
     const { rows: scheduleInfo } = await client.query(`
       SELECT id, name, lessons_in_day as "lessonsInDay", weekdays
       FROM schedules
@@ -21,28 +18,24 @@ export const getLessonsByScheduleId = async (fastify, scheduleId) => {
       return { type: 'error', message: 'Неизвестное расписание' };
     }
 
-    // Получаем все группы
     const { rows: groups } = await client.query(`
       SELECT id, name, abbreviation
       FROM groups
       ORDER BY name
     `);
 
-    // Получаем все предметы
     const { rows: subjects } = await client.query(`
       SELECT id, name, abbreviation
       FROM subjects
       ORDER BY name
     `);
 
-    // Получаем всех учителей
     const { rows: teachers } = await client.query(`
       SELECT id, fio, position, color
       FROM teachers
       ORDER BY fio
     `);
 
-    // Получаем нагрузку для левой панели
     const { rows: workloads } = await client.query(`
       SELECT 
         w.id,
@@ -78,12 +71,10 @@ export const getLessonsByScheduleId = async (fastify, scheduleId) => {
   }
 };
 
-// Добавить урок в расписание
 export const setLesson = async (fastify, data) => {
   const client = await fastify.pg.connect();
 
   try {
-    // Проверяем, не занята ли ячейка
     const { rows: [existing] } = await client.query(
       lessonsQueries.findByCell,
       [data.scheduleId, data.weekday, data.lessonNumber, data.groupId],
@@ -93,7 +84,6 @@ export const setLesson = async (fastify, data) => {
       return { type: 'error', message: 'Эта ячейка уже занята' };
     }
 
-    // Получаем данные из workload
     const { rows: [workload] } = await client.query(
       lessonsQueries.getWorkloadData,
       [data.workloadId],
@@ -103,7 +93,6 @@ export const setLesson = async (fastify, data) => {
       return { type: 'error', message: 'Нагрузка не найдена' };
     }
 
-    // Создаём урок с копией данных
     const insertResult = await client.query(lessonsQueries.create, [
       data.scheduleId,
       data.weekday,
@@ -133,7 +122,6 @@ export const setLesson = async (fastify, data) => {
   }
 };
 
-// Удалить урок из расписания
 export const deleteLesson = async (fastify, lessonId) => {
   const client = await fastify.pg.connect();
   try {
