@@ -1,12 +1,9 @@
 /**
- * @typedef {import('./teachers.types.js').TeacherDTO} TeacherDTO
- * @typedef {import('./teachers.types.js').CreateTeacherBody} CreateTeacherBody
- * @typedef {import('./teachers.types.js').UpdateTeacherBody} UpdateTeacherBody
- * @typedef {import('./teachers.types.js').TeacherActionResult} TeacherActionResult
+ * @import * as TeacherTypes from './types/teachers.js'
  */
 
 /**
- * @returns {Promise<TeacherDTO[]|void>}
+ * @returns {Promise<TeacherTypes.TeacherDTO[]|void>}
  */
 
 async function fetchTeachers() {
@@ -24,8 +21,8 @@ async function fetchTeachers() {
 }
 
 /**
- * @param {CreateTeacherBody} data
- * @returns {Promise<TeacherActionResult>}
+ * @param {TeacherTypes.CreateTeacherBody} data
+ * @returns {Promise<TeacherTypes.TeacherActionResult>}
  */
 
 async function createTeacher(data) {
@@ -49,8 +46,8 @@ async function createTeacher(data) {
 }
 
 /**
- * @param {UpdateTeacherBody} data
- * @returns {Promise<TeacherActionResult>}
+ * @param {TeacherTypes.UpdateTeacherBody} data
+ * @returns {Promise<TeacherTypes.TeacherActionResult>}
  */
 
 async function updateTeacher(data) {
@@ -75,7 +72,7 @@ async function updateTeacher(data) {
 
 /**
  * @param {number} teacherId
- * @returns {Promise<TeacherActionResult>}
+ * @returns {Promise<TeacherTypes.TeacherActionResult>}
  */
 
 async function deleteTeacher(teacherId) {
