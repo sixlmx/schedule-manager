@@ -1,3 +1,11 @@
+.PHONY: setup
+
+setup:
+	npm ci
+	cd backend && npm ci
+	cd frontend-admin && npm ci
+	cd frontend-public && npm ci
+
 start-server:
 	cd backend && node src/index.js
 

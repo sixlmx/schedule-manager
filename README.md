@@ -45,16 +45,21 @@
 
 ## Установка
 
-Установите зависимости во всех npm-зонах проекта:
+Установите зависимости во всех частях проекта:
 
 ```bash
-npm install
-cd backend
-npm install
-cd ../frontend-admin
-npm install
-cd ../frontend-public
-npm install
+make setup
+```
+
+Команда устанавливает зависимости через `npm ci` в корне проекта, `backend`, `frontend-admin` и `frontend-public`.
+
+Если `make` недоступен, выполните команды вручную:
+
+```bash
+npm ci
+cd backend && npm ci
+cd ../frontend-admin && npm ci
+cd ../frontend-public && npm ci
 ```
 
 ## Настройка базы данных
