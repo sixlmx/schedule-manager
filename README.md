@@ -51,17 +51,6 @@
 make setup
 ```
 
-Команда устанавливает зависимости через `npm ci` в корне проекта, `backend`, `frontend-admin` и `frontend-public`.
-
-Если `make` недоступен, выполните команды вручную:
-
-```bash
-npm ci
-cd backend && npm ci
-cd ../frontend-admin && npm ci
-cd ../frontend-public && npm ci
-```
-
 ## Настройка базы данных
 
 Для локальной работы нужна PostgreSQL.
@@ -75,60 +64,3 @@ CONNECTION_STRING=postgres://login:password@localhost/db-name
 Создайте `backend/.env` на основе `backend/.env.example` и укажите подключение к локальной базе данных.
 
 В репозитории есть `dbdump.txt` для подготовки локальной dev-базы. Команда восстановления dump уточняется отдельно.
-
-## Запуск backend
-
-Из корня проекта:
-
-```bash
-cd backend
-node src/index.js
-```
-
-После запуска backend локально слушает `http://localhost:3000`. Это локальный backend/API, а не публичный сайт.
-
-## Запуск frontend-admin
-
-```bash
-cd frontend-admin
-npm run dev
-```
-
-Vite покажет локальный URL в терминале. Базовый путь административной части: `/admin`.
-
-## Запуск frontend-public
-
-```bash
-cd frontend-public
-npm run dev
-```
-
-Vite покажет локальный URL в терминале. Базовый путь публичной части: `/public`.
-
-## Проверки
-
-Подтверждённые команды сборки frontend-приложений:
-
-```bash
-cd frontend-admin
-npm run build
-```
-
-```bash
-cd frontend-public
-npm run build
-```
-
-Перед сдачей изменений также полезно проверить diff:
-
-```bash
-git diff --check
-```
-
-Makefile содержит pre-push checks, но перед использованием этих команд нужно проверить актуальность npm scripts.
-
-## Документация
-
-Общая документация организации находится в репозитории:
-
-https://github.com/sixlmx/documentation

@@ -22,10 +22,10 @@ export const registerSubmit = (handler) => {
 };
 
 export const registerChange = (handler) => {
-  const id = handlers.getId()
-  handlers.change[id] = handler
-  return id
-}
+  const id = handlers.getId();
+  handlers.change[id] = handler;
+  return id;
+};
 
 export const registerMouseEnter = (handler) => {
   const id = handlers.getId();
@@ -91,11 +91,11 @@ export const initListeners = () => {
   };
 
   const handleChange = (e) => {
-    const { change } = e.target.dataset
+    const { change } = e.target.dataset;
     if (handlers.change[change]) {
-      handlers.change[change](e)
+      handlers.change[change](e);
     }
-  }
+  };
 
   const handleMouseEnter = (e) => {
     if (e.target.dataset) {
