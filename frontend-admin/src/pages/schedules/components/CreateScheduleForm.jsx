@@ -51,7 +51,7 @@ export default function CreateScheduleForm({ type }) {
 
       <label name="startDate" id="startDate" class="hidden">
         Дата начала:
-        <input type="date" name="startDate" step="7"/>
+        <input type="date" name="startDate"/>
       </label>
 
       <div class={styles.weekdays}>
