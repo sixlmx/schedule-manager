@@ -1,5 +1,6 @@
 export const buildDefaultBells = (lessonsInDay, lessonDurationMinutes = 90, breakMinutes = 10, startHour = 8, startMinute = 30) => {
   const bells = [];
+  console.log(222, lessonsInDay);
   let currentTime = new Date();
   currentTime.setHours(startHour, startMinute, 0, 0);
 

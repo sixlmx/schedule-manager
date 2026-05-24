@@ -24,7 +24,7 @@ export const createSchedule = async (fastify, data) => {
       data.weekdays,
     ]);
 
-    const defaultBells = buildDefaultBells(schedule.lessonsInDay);
+    const defaultBells = buildDefaultBells(data.lessonsInDay);
 
     for (const bell of defaultBells) {
       await client.query(bellsQueries.upsert, [
