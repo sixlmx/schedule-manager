@@ -20,6 +20,7 @@ export const createSchedule = async (fastify, data) => {
       data.name,
       data.lessonsInDay,
       data.type,
+      data.startDate,
       data.weekdays,
     ]);
 
@@ -43,6 +44,7 @@ export const createSchedule = async (fastify, data) => {
 
 export const updateSchedule = async (fastify, data) => {
   const client = await fastify.pg.connect();
+
   try {
     await client.query(schedulesQueries.update, [
       data.name,

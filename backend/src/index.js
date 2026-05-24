@@ -9,7 +9,7 @@ loadEnvFile('.env');
 const __dirname = import.meta.dirname;
 
 const fastify = Fastify({
-  // logger: true,
+  logger: true,
 });
 
 fastify.register(fastifyPostgres, {

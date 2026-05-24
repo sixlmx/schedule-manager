@@ -25,8 +25,10 @@ export default function CreateScheduleForm({ type }) {
       name: formData.get('name'),
       lessonsInDay: parseInt(formData.get('lessonsInDay')),
       type: formData.get('type'),
+      startDate: formData.get('startDate') || null,
       weekdays: weekdays,
     }
+  
     const result = await createSchedule(data)
     ui.closeModal()
     ui.showFlashMessage(result)
@@ -47,9 +49,9 @@ export default function CreateScheduleForm({ type }) {
         <option value="period">Период</option>
       </select>
 
-      <label id="startDate" class="hidden">
+      <label name="startDate" id="startDate" class="hidden">
         Дата начала:
-        <input type="date" name="startDate" required />
+        <input type="date" name="startDate"/>
       </label>
 
       <div class={styles.weekdays}>

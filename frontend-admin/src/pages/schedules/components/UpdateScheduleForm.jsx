@@ -18,6 +18,7 @@ export default function UpdateScheduleForm({ closeId, schedule }) {
       lessonsInDay: parseInt(formData.get('lessonsInDay')),
       weekdays: weekdays,
     }
+
     const result = await updateSchedule(data)
     ui.closeModal()
     ui.showFlashMessage(result)
