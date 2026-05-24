@@ -1,10 +1,3 @@
-install-git-hooks:
-	mkdir -p .git/hooks
-	echo '#!/bin/sh' > .git/hooks/pre-push
-	echo 'make pre-push || exit 1' >> .git/hooks/pre-push
-	chmod +x .git/hooks/pre-push
-	git config core.hooksPath .git/hooks
-	@echo "✅ Git hooks installed"
 .PHONY: setup
 
 setup:
@@ -34,3 +27,11 @@ lint-fix:
 
 pre-push: lint-fix
 	@echo "✅ lint checks passed"
+
+install-git-hooks:
+	mkdir -p .git/hooks
+	echo '#!/bin/sh' > .git/hooks/pre-push
+	echo 'make pre-push || exit 1' >> .git/hooks/pre-push
+	chmod +x .git/hooks/pre-push
+	git config core.hooksPath .git/hooks
+	@echo "✅ Git hooks installed"
