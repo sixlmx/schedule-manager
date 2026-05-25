@@ -21,7 +21,9 @@ export default function TableCell({ lessons, weekday, group }) {
     <td>
       <div class={styles.pairsContainer}>
         {lessons.map((lesson, index) => (
-          <div class={`${styles.pairSlot} ${lesson.style}`} onClick={(e) => handleClick(lesson)}>{lesson.text}</div>
+          <div class={`${styles.pairSlot} ${lesson.style}`} onClick={(e) => handleClick(lesson)}>
+            <span class={styles.pairText} title={lesson.text}>{lesson.text}</span>
+          </div>
         ))}
       </div>
     </td>
