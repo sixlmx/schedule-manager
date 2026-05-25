@@ -1,3 +1,12 @@
+/**
+ * @import * as WorkloadTypes from './types/workloads.js'
+ */
+
+/**
+ * @param {string|number} scheduleId
+ * @returns {Promise<WorkloadTypes.WorkloadDTO[]>}
+ */
+
 async function fetchWorkloads(scheduleId) {
   try {
     const response = await fetch(`/apiv1/workloads/schedule/${scheduleId}`);
@@ -12,6 +21,11 @@ async function fetchWorkloads(scheduleId) {
     return [];
   }
 }
+
+/**
+ * @param {WorkloadTypes.CreateWorkloadBody} data
+ * @returns {Promise<WorkloadTypes.WorkloadActionResult>}
+ */
 
 async function createWorkload(data) {
   try {
@@ -31,6 +45,11 @@ async function createWorkload(data) {
   }
 }
 
+/**
+ * @param {number} workloadId
+ * @returns {Promise<WorkloadTypes.WorkloadActionResult>}
+ */
+
 async function deleteWorkload(workloadId) {
   try {
     const response = await fetch('/apiv1/workloads', {
@@ -48,6 +67,11 @@ async function deleteWorkload(workloadId) {
     return { type: 'error', message: error.message };
   }
 }
+
+/**
+ * @param {number} workloadId
+ * @returns {Promise<WorkloadTypes.WorkloadActionResult>}
+ */
 
 async function decrementWorkload(workloadId) {
   try {

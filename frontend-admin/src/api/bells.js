@@ -1,3 +1,12 @@
+/**
+ * @import * as BellTypes from './types/bells.js'
+ */
+
+/**
+ * @param {string|number} scheduleId
+ * @returns {Promise<BellTypes.BellsByScheduleResult|void>}
+ */
+
 async function fetchBellsByScheduleId(scheduleId) {
   try {
     const response = await fetch(`/apiv1/bells/${scheduleId}`);
@@ -11,6 +20,12 @@ async function fetchBellsByScheduleId(scheduleId) {
     console.error('Fetch error:', error);
   }
 }
+
+/**
+ * @param {string|number} scheduleId
+ * @param {BellTypes.UpdateBellBody[]} bells
+ * @returns {Promise<BellTypes.BellActionResult>}
+ */
 
 async function updateBellsByScheduleId(scheduleId, bells) {
   try {
