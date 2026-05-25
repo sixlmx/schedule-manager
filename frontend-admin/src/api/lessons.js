@@ -1,3 +1,12 @@
+/**
+ * @import * as LessonTypes from './types/lessons.js'
+ */
+
+/**
+ * @param {string|number} scheduleId
+ * @returns {Promise<LessonTypes.LessonsByScheduleResult|LessonTypes.LessonActionResult|void>}
+ */
+
 async function fetchLessons(scheduleId) {
   try {
     const response = await fetch(`/apiv1/lessons/schedule/${scheduleId}`);
@@ -11,6 +20,11 @@ async function fetchLessons(scheduleId) {
     console.error('Fetch error:', error);
   }
 }
+
+/**
+ * @param {number} scheduledLessonId
+ * @returns {Promise<LessonTypes.LessonActionResult>}
+ */
 
 async function deleteLesson(scheduledLessonId) {
   try {
@@ -29,6 +43,11 @@ async function deleteLesson(scheduledLessonId) {
     return { type: 'error', message: error.message };
   }
 }
+
+/**
+ * @param {LessonTypes.SetLessonBody} data
+ * @returns {Promise<LessonTypes.LessonActionResult>}
+ */
 
 async function setLesson(data) {
   try {
