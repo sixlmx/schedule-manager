@@ -1,11 +1,3 @@
-/**
- * @import * as GroupTypes from './types/groups.js'
- */
-
-/**
- * @returns {Promise<GroupTypes.GroupDTO[]|void>}
- */
-
 async function fetchGroups() {
   try {
     const response = await fetch('/apiv1/groups');
@@ -19,11 +11,6 @@ async function fetchGroups() {
     console.error('Fetch error:', error);
   }
 }
-
-/**
- * @param {GroupTypes.CreateGroupBody} data
- * @returns {Promise<GroupTypes.GroupActionResult>}
- */
 
 async function createGroup(data) {
   try {
@@ -45,11 +32,6 @@ async function createGroup(data) {
   }
 }
 
-/**
- * @param {GroupTypes.UpdateGroupBody} data
- * @returns {Promise<GroupTypes.GroupActionResult>}
- */
-
 async function updateGroup(data) {
   try {
     const response = await fetch('/apiv1/groups', {
@@ -69,11 +51,6 @@ async function updateGroup(data) {
     return { type: 'error', message: error.message };
   }
 }
-
-/**
- * @param {number} GroupId
- * @returns {Promise<GroupTypes.GroupActionResult>}
- */
 
 async function deleteGroup(GroupId) {
   try {
