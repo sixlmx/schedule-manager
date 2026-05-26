@@ -1,0 +1,38 @@
+.publicationContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1rem;
+}
+
+.infoTable {
+  max-width: 52rem;
+}
+
+.infoTable td:first-child {
+  width: 20rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.emptyValue {
+  color: #64748b;
+}
+
+.publishedSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sectionTitle {
+  margin: 0;
+  color: #1e293b;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.emptyRow {
+  color: #64748b;
+  text-align: center;
+}
