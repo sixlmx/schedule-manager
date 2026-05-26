@@ -1,11 +1,3 @@
-/**
- * @import * as ClassTypes from './types/classes.js'
- */
-
-/**
- * @returns {Promise<ClassTypes.ClassDTO[]|void>}
- */
-
 async function fetchClasses() {
   try {
     const response = await fetch('/apiv1/classes');
@@ -19,11 +11,6 @@ async function fetchClasses() {
     console.error('Fetch error:', error);
   }
 }
-
-/**
- * @param {ClassTypes.CreateClassBody} data
- * @returns {Promise<ClassTypes.ClassActionResult>}
- */
 
 async function createClass(data) {
   try {
@@ -45,11 +32,6 @@ async function createClass(data) {
   }
 }
 
-/**
- * @param {ClassTypes.UpdateClassBody} data
- * @returns {Promise<ClassTypes.ClassActionResult>}
- */
-
 async function updateClass(data) {
   try {
     const response = await fetch('/apiv1/classes', {
@@ -69,11 +51,6 @@ async function updateClass(data) {
     return { type: 'error', message: error.message };
   }
 }
-
-/**
- * @param {number} classId
- * @returns {Promise<ClassTypes.ClassActionResult>}
- */
 
 async function deleteClass(classId) {
   try {
