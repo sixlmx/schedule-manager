@@ -33,10 +33,27 @@
 
 ## Установка
 
-Установите зависимости во всех частях проекта и инициализируйте хуки:
+Для Git Bash, WSL или Unix-like окружения:
 
 ```bash
 make setup
+```
+
+Для Windows PowerShell:
+
+```bash
+make setup-windows
+```
+
+Обе команды устанавливают зависимости через `npm ci` во всех npm-зонах проекта и настраивают pre-push hook.
+
+Если `make` недоступен, установите зависимости вручную:
+
+```bash
+npm ci
+cd backend && npm ci
+cd ../frontend-admin && npm ci
+cd ../frontend-public && npm ci
 ```
 
 ## Настройка базы данных

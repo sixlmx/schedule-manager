@@ -1,7 +1,14 @@
-.PHONY: setup
+.PHONY: setup setup-windows install-git-hooks install-git-hooks-windows
 
 setup:
 	make install-git-hooks
+	npm ci
+	cd backend && npm ci
+	cd frontend-admin && npm ci
+	cd frontend-public && npm ci
+
+setup-windows:
+	make install-git-hooks-windows
 	npm ci
 	cd backend && npm ci
 	cd frontend-admin && npm ci
@@ -35,3 +42,6 @@ install-git-hooks:
 	chmod +x .git/hooks/pre-push
 	git config core.hooksPath .git/hooks
 	@echo "✅ Git hooks installed"
+
+install-git-hooks-windows:
+	powershell -NoProfile -ExecutionPolicy Bypass -Command "$$hook = @('#!/bin/sh', 'make pre-push || exit 1'); New-Item -ItemType Directory -Force '.git/hooks' | Out-Null; Set-Content -Path '.git/hooks/pre-push' -Value $$hook -Encoding ascii; git config core.hooksPath .git/hooks; Write-Output 'Git hooks installed'"
