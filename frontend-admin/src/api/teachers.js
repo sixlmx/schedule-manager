@@ -1,11 +1,3 @@
-/**
- * @import * as TeacherTypes from './types/teachers.js'
- */
-
-/**
- * @returns {Promise<TeacherTypes.TeacherDTO[]|void>}
- */
-
 async function fetchTeachers() {
   try {
     const response = await fetch('/apiv1/teachers');
@@ -19,11 +11,6 @@ async function fetchTeachers() {
     console.error('Fetch error:', error);
   }
 }
-
-/**
- * @param {TeacherTypes.CreateTeacherBody} data
- * @returns {Promise<TeacherTypes.TeacherActionResult>}
- */
 
 async function createTeacher(data) {
   try {
@@ -45,11 +32,6 @@ async function createTeacher(data) {
   }
 }
 
-/**
- * @param {TeacherTypes.UpdateTeacherBody} data
- * @returns {Promise<TeacherTypes.TeacherActionResult>}
- */
-
 async function updateTeacher(data) {
   try {
     const response = await fetch('/apiv1/teachers', {
@@ -69,11 +51,6 @@ async function updateTeacher(data) {
     return { type: 'error', message: error.message };
   }
 }
-
-/**
- * @param {number} teacherId
- * @returns {Promise<TeacherTypes.TeacherActionResult>}
- */
 
 async function deleteTeacher(teacherId) {
   try {

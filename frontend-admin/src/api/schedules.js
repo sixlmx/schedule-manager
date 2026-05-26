@@ -1,11 +1,3 @@
-/**
- * @import * as ScheduleTypes from './types/schedules.js'
- */
-
-/**
- * @returns {Promise<ScheduleTypes.ScheduleDTO[]|void>}
- */
-
 async function fetchSchedules() {
   try {
     const response = await fetch('/apiv1/schedules');
@@ -19,11 +11,6 @@ async function fetchSchedules() {
     console.error('Fetch error:', error);
   }
 }
-
-/**
- * @param {ScheduleTypes.CreateScheduleBody} data
- * @returns {Promise<ScheduleTypes.ScheduleActionResult>}
- */
 
 async function createSchedule(data) {
   try {
@@ -45,11 +32,6 @@ async function createSchedule(data) {
   }
 }
 
-/**
- * @param {ScheduleTypes.UpdateScheduleBody} data
- * @returns {Promise<ScheduleTypes.ScheduleActionResult>}
- */
-
 async function updateSchedule(data) {
   try {
     const response = await fetch('/apiv1/schedules', {
@@ -69,11 +51,6 @@ async function updateSchedule(data) {
     return { type: 'error', message: error.message };
   }
 }
-
-/**
- * @param {number} scheduleId
- * @returns {Promise<ScheduleTypes.ScheduleActionResult>}
- */
 
 async function deleteSchedule(scheduleId) {
   try {

@@ -1,11 +1,3 @@
-/**
- * @import * as SubjectTypes from './types/subjects.js'
- */
-
-/**
- * @returns {Promise<SubjectTypes.SubjectDTO[]|void>}
- */
-
 async function fetchSubjects() {
   try {
     const response = await fetch('/apiv1/subjects');
@@ -19,11 +11,6 @@ async function fetchSubjects() {
     console.error('Fetch error:', error);
   }
 }
-
-/**
- * @param {SubjectTypes.CreateSubjectBody} data
- * @returns {Promise<SubjectTypes.SubjectActionResult>}
- */
 
 async function createSubject(data) {
   try {
@@ -45,11 +32,6 @@ async function createSubject(data) {
   }
 }
 
-/**
- * @param {SubjectTypes.UpdateSubjectBody} data
- * @returns {Promise<SubjectTypes.SubjectActionResult>}
- */
-
 async function updateSubject(data) {
   try {
     const response = await fetch('/apiv1/subjects', {
@@ -69,11 +51,6 @@ async function updateSubject(data) {
     return { type: 'error', message: error.message };
   }
 }
-
-/**
- * @param {number} subjectId
- * @returns {Promise<SubjectTypes.SubjectActionResult>}
- */
 
 async function deleteSubject(subjectId) {
   try {
