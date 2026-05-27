@@ -9,9 +9,6 @@
 - Node.js.
 - Fastify.
 - PostgreSQL.
-- `pg` и `@fastify/postgres` для подключения к базе данных.
-- `@fastify/static` для раздачи собранных frontend-приложений.
-- Слои backend: routes, controllers, db queries.
 
 ### Frontend
 
@@ -25,11 +22,9 @@
 ### Tooling
 
 - npm.
-- ESLint flat config.
-- `@eslint/js`.
-- `@stylistic/eslint-plugin`.
+- ESLint.
 - Stylelint.
-- Makefile с командами для запуска backend/frontend и pre-push checks.
+- Makefile.
 
 ## Установка
 
@@ -43,17 +38,6 @@ make setup
 
 ```bash
 make setup-windows
-```
-
-Обе команды устанавливают зависимости через `npm ci` во всех npm-зонах проекта и настраивают pre-push hook.
-
-Если `make` недоступен, установите зависимости вручную:
-
-```bash
-npm ci
-cd backend && npm ci
-cd ../frontend-admin && npm ci
-cd ../frontend-public && npm ci
 ```
 
 ## Настройка базы данных
