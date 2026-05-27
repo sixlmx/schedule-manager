@@ -28,8 +28,6 @@
 
 ## Установка
 
-Для Git Bash, WSL или Unix-like окружения:
-
 ```bash
 make setup
 ```
