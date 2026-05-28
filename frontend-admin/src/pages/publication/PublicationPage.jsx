@@ -14,7 +14,7 @@ export default function PublicationPage() {
     <div class={`content ${pages.crudPage}`}>
       <div class={pages.crudHeader}>
         <PageTitle title="Публикация расписания" />
-        <button class={pages.addButton} type="button">ОПУБЛИКОВАТЬ</button>
+        <button class={pages.addButton}>ОПУБЛИКОВАТЬ</button>
       </div>
 
       <div class={styles.publicationContent}>
@@ -45,18 +45,13 @@ export default function PublicationPage() {
               </tr>
             </thead>
             <tbody>
-              {publishedSchedules.length
-                ? publishedSchedules.map(schedule => (
-                  <tr>
-                    <td>{schedule.name}</td>
-                    <td>{schedule.period}</td>
-                  </tr>
-                ))
-                : (
-                  <tr>
-                    <td class={styles.emptyRow} colspan="2">Опубликованных расписаний пока нет</td>
-                  </tr>
-                )}
+              {publishedSchedules.map(schedule => (
+                <tr>
+                  <td>{schedule.name}</td>
+                  <td>{schedule.period}</td>
+                </tr>
+              ))
+              }
             </tbody>
           </table>
         </section>
