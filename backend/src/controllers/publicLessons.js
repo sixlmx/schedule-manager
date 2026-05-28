@@ -5,11 +5,14 @@ const getTimeMinutes = (time) => {
   return hours * 60 + minutes;
 };
 
-const getEndDate = (startDate) => {
-  const date = new Date(startDate);
-  date.setDate(date.getDate() + 6);
+const addDaysToDateOnly = (dateValue, days) => {
+  const [year, month, day] = String(dateValue).split('-').map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  date.setUTCDate(date.getUTCDate() + days);
   return date.toISOString().slice(0, 10);
 };
+
+const getEndDate = startDate => addDaysToDateOnly(startDate, 6);
 
 const formatTeacherName = (name, teacherNameFormat) => {
   if (teacherNameFormat !== 'initials') {
@@ -25,8 +28,8 @@ const formatTeacherName = (name, teacherNameFormat) => {
   return initials ? `${lastName} ${initials}` : name;
 };
 
-const getPublicationSettings = async (client) => {
-  const { rows: [settings] } = await client.query(publicLessonsQueries.getPublicationSettings);
+const getPublicationSettings = async (client, publicId) => {
+  const { rows: [settings] } = await client.query(publicLessonsQueries.getPublicationSettings, [publicId]);
 
   return {
     isPublished: Boolean(settings?.isPublished),
@@ -77,13 +80,13 @@ const mapLesson = (row, settings) => {
   };
 };
 
-export const getPublishedTeacherLessons = async (fastify, { id, date }) => {
+export const getPublishedTeacherLessons = async (fastify, { id, date, publicId }) => {
   const client = await fastify.pg.connect();
 
   try {
-    const settings = await getPublicationSettings(client);
+    const settings = await getPublicationSettings(client, publicId);
     const { rows: [teacher] } = await client.query(publicLessonsQueries.getTeacherById, [id]);
-    const { rows } = await client.query(publicLessonsQueries.getByTeacherAndWeek, [id, date]);
+    const { rows } = await client.query(publicLessonsQueries.getByTeacherAndWeek, [id, date, publicId]);
     const lessons = rows.map(row => mapLesson(row, settings));
     const responseTeacher = rows[0]
       ? { id: rows[0].teacherId, fio: formatTeacherName(rows[0].teacherName, settings.teacherNameFormat), position: null }
@@ -101,13 +104,13 @@ export const getPublishedTeacherLessons = async (fastify, { id, date }) => {
   }
 };
 
-export const getPublishedGroupLessons = async (fastify, { id, date }) => {
+export const getPublishedGroupLessons = async (fastify, { id, date, publicId }) => {
   const client = await fastify.pg.connect();
 
   try {
-    const settings = await getPublicationSettings(client);
+    const settings = await getPublicationSettings(client, publicId);
     const { rows: [group] } = await client.query(publicLessonsQueries.getGroupById, [id]);
-    const { rows } = await client.query(publicLessonsQueries.getByGroupAndWeek, [id, date]);
+    const { rows } = await client.query(publicLessonsQueries.getByGroupAndWeek, [id, date, publicId]);
     const lessons = rows.map(row => mapLesson(row, settings));
     const responseGroup = rows[0]
       ? { id: rows[0].groupId, name: rows[0].groupName }

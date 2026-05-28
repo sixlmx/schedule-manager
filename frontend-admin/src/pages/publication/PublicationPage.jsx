@@ -41,17 +41,20 @@ const formatDateTime = (dateValue) => {
   })
 }
 
+const addDaysToDateOnly = (dateValue, days) => {
+  const [year, month, day] = String(dateValue).split('-').map(Number)
+  const date = new Date(Date.UTC(year, month - 1, day))
+  date.setUTCDate(date.getUTCDate() + days)
+  return date.toISOString().slice(0, 10)
+}
+
 const formatPeriod = (weekStartDate) => {
   if (!weekStartDate) {
     return '-'
   }
 
-  const date = new Date(weekStartDate)
-  date.setDate(date.getDate() + 6)
-
-  return `${formatDate(weekStartDate)} - ${formatDate(date.toISOString())}`
+  return `${formatDate(weekStartDate)} - ${formatDate(addDaysToDateOnly(weekStartDate, 6))}`
 }
-
 const getPublicHref = (publicPath) => {
   if (!publicPath) {
     return ''

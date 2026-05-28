@@ -30,10 +30,16 @@ export async function fetchGroups() {
 }
 
 export async function fetchLessons(category) {
-  const { id } = parseUrl(window.location.href);
+  const { id, publicId } = parseUrl(window.location.href);
   const date = getMondayDate();
+  const searchParams = new URLSearchParams({ id, date });
+
+  if (publicId) {
+    searchParams.set('publicId', publicId);
+  }
+
   try {
-    const response = await fetch(`/apiv1/${category}/lessons?id=${id}&date=${date}`);
+    const response = await fetch(`/apiv1/${category}/lessons?${searchParams.toString()}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

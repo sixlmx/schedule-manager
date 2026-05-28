@@ -4,7 +4,7 @@ export const publicLessonsQueries = {
       is_published as "isPublished",
       teacher_name_format as "teacherNameFormat"
     FROM publication_settings
-    ORDER BY id
+    WHERE public_id = $1
     LIMIT 1
   `,
 
@@ -39,7 +39,11 @@ export const publicLessonsQueries = {
     WHERE
       teacher_id = $1
       AND week_start_date = $2::date
-      AND EXISTS (SELECT 1 FROM publication_settings WHERE is_published = true)
+      AND EXISTS (
+        SELECT 1
+        FROM publication_settings
+        WHERE public_id = $3 AND is_published = true
+      )
     ORDER BY weekday, lesson_number, group_name
   `,
 
@@ -62,7 +66,11 @@ export const publicLessonsQueries = {
     WHERE
       group_id = $1
       AND week_start_date = $2::date
-      AND EXISTS (SELECT 1 FROM publication_settings WHERE is_published = true)
+      AND EXISTS (
+        SELECT 1
+        FROM publication_settings
+        WHERE public_id = $3 AND is_published = true
+      )
     ORDER BY weekday, lesson_number, teacher_name
   `,
 };
