@@ -47,6 +47,6 @@ export async function fetchLessons(category) {
     return data;
   }
   catch (error) {
-    console.error('Fetch error:', error);
+    throw new Error('cannot connect to server', { cause: error });
   }
 }
