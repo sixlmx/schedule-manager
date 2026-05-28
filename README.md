@@ -16,12 +16,12 @@
 - Vite.
 - `frontend-admin` — административная часть.
 - `frontend-public` — публичная часть.
-- Собственный JSX/core **wood-js**: `h`, `Fragment`, `render`, `router`, `handlers`, `initWood`.
+- Собственный JSX/core **wood-js**.
 - CSS и CSS Modules.
 
 ### Tooling
 
-- npm.
+- NPM.
 - ESLint.
 - Stylelint.
 - Makefile.
