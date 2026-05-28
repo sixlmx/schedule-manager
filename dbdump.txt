@@ -217,6 +217,90 @@ ALTER SEQUENCE public.schedule_lessons_id_seq OWNED BY public.schedule_lessons.i
 
 
 --
+-- Name: published_lessons; Type: TABLE; Schema: public; Owner: postgres
+--
+CREATE TABLE public.published_lessons (
+    id integer NOT NULL,
+    source_schedule_id integer NOT NULL,
+    source_schedule_lesson_id integer NOT NULL,
+    schedule_name character varying(255) NOT NULL,
+    week_start_date date NOT NULL,
+    lesson_date date NOT NULL,
+    weekday integer NOT NULL,
+    lesson_number integer NOT NULL,
+    start_time time without time zone NOT NULL,
+    end_time time without time zone NOT NULL,
+    teacher_id integer NOT NULL,
+    teacher_name character varying(255) NOT NULL,
+    group_id integer NOT NULL,
+    group_name character varying(255) NOT NULL,
+    group_abbr text,
+    subject_id integer NOT NULL,
+    subject_name character varying(255) NOT NULL,
+    subject_abbr character varying(50),
+    classroom character varying(50),
+    published_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT published_lessons_lesson_number_check CHECK (((lesson_number >= 1) AND (lesson_number <= 15))),
+    CONSTRAINT published_lessons_weekday_check CHECK (((weekday >= 1) AND (weekday <= 7)))
+);
+
+ALTER TABLE public.published_lessons OWNER TO postgres;
+
+--
+-- Name: published_lessons_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+CREATE SEQUENCE public.published_lessons_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE public.published_lessons_id_seq OWNER TO postgres;
+
+--
+-- Name: published_lessons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+ALTER SEQUENCE public.published_lessons_id_seq OWNED BY public.published_lessons.id;
+
+--
+-- Name: publication_settings; Type: TABLE; Schema: public; Owner: postgres
+--
+CREATE TABLE public.publication_settings (
+    id integer NOT NULL,
+    public_id character varying(64) NOT NULL,
+    is_published boolean DEFAULT false NOT NULL,
+    school_name text DEFAULT ''::text NOT NULL,
+    school_website_url text DEFAULT ''::text NOT NULL,
+    teacher_name_format character varying(20) DEFAULT 'initials'::character varying NOT NULL,
+    last_published_at timestamp without time zone,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT publication_settings_teacher_name_format_check CHECK (((teacher_name_format)::text = ANY ((ARRAY['initials'::character varying, 'full'::character varying])::text[])))
+);
+
+ALTER TABLE public.publication_settings OWNER TO postgres;
+
+--
+-- Name: publication_settings_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+CREATE SEQUENCE public.publication_settings_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE public.publication_settings_id_seq OWNER TO postgres;
+
+--
+-- Name: publication_settings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+ALTER SEQUENCE public.publication_settings_id_seq OWNED BY public.publication_settings.id;
+--
 -- TOC entry 226 (class 1259 OID 16765)
 -- Name: schedules; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -418,6 +502,16 @@ ALTER TABLE ONLY public.schedule_lessons ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
+-- Name: published_lessons id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+ALTER TABLE ONLY public.published_lessons ALTER COLUMN id SET DEFAULT nextval('public.published_lessons_id_seq'::regclass);
+
+--
+-- Name: publication_settings id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+ALTER TABLE ONLY public.publication_settings ALTER COLUMN id SET DEFAULT nextval('public.publication_settings_id_seq'::regclass);
+
+--
 -- TOC entry 3704 (class 2604 OID 16768)
 -- Name: schedules id; Type: DEFAULT; Schema: public; Owner: postgres
 --
@@ -504,6 +598,18 @@ COPY public.schedule_lessons (id, schedule_id, weekday, lesson_number, classroom
 
 
 --
+-- Data for Name: published_lessons; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+COPY public.published_lessons (id, source_schedule_id, source_schedule_lesson_id, schedule_name, week_start_date, lesson_date, weekday, lesson_number, start_time, end_time, teacher_id, teacher_name, group_id, group_name, group_abbr, subject_id, subject_name, subject_abbr, classroom, published_at, created_at) FROM stdin;
+\.
+
+--
+-- Data for Name: publication_settings; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+COPY public.publication_settings (id, public_id, is_published, school_name, school_website_url, teacher_name_format, last_published_at, created_at, updated_at) FROM stdin;
+\.
+
+--
 -- TOC entry 3917 (class 0 OID 16765)
 -- Dependencies: 226
 -- Data for Name: schedules; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -587,6 +693,16 @@ SELECT pg_catalog.setval('public.groups_id_seq', 18, true);
 
 SELECT pg_catalog.setval('public.schedule_lessons_id_seq', 23, true);
 
+
+--
+-- Name: published_lessons_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+SELECT pg_catalog.setval('public.published_lessons_id_seq', 1, false);
+
+--
+-- Name: publication_settings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+SELECT pg_catalog.setval('public.publication_settings_id_seq', 1, false);
 
 --
 -- TOC entry 3944 (class 0 OID 0)
@@ -677,6 +793,31 @@ ALTER TABLE ONLY public.schedule_groups
 ALTER TABLE ONLY public.schedule_lessons
     ADD CONSTRAINT schedule_lessons_pkey PRIMARY KEY (id);
 
+
+--
+-- Name: published_lessons published_lessons_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+ALTER TABLE ONLY public.published_lessons
+    ADD CONSTRAINT published_lessons_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: published_lessons published_lessons_source_schedule_lesson_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+ALTER TABLE ONLY public.published_lessons
+    ADD CONSTRAINT published_lessons_source_schedule_lesson_id_key UNIQUE (source_schedule_lesson_id);
+
+--
+-- Name: publication_settings publication_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+ALTER TABLE ONLY public.publication_settings
+    ADD CONSTRAINT publication_settings_pkey PRIMARY KEY (id);
+
+--
+-- Name: publication_settings publication_settings_public_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+ALTER TABLE ONLY public.publication_settings
+    ADD CONSTRAINT publication_settings_public_id_key UNIQUE (public_id);
 
 --
 -- TOC entry 3731 (class 2606 OID 16777)
@@ -770,6 +911,18 @@ CREATE INDEX idx_schedule_lessons_group_id ON public.schedule_lessons USING btre
 --
 
 CREATE INDEX idx_schedule_lessons_schedule_id ON public.schedule_lessons USING btree (schedule_id);
+
+
+--
+-- Name: idx_published_lessons_group_week; Type: INDEX; Schema: public; Owner: postgres
+--
+CREATE INDEX idx_published_lessons_group_week ON public.published_lessons USING btree (group_id, week_start_date, weekday, lesson_number);
+
+
+--
+-- Name: idx_published_lessons_teacher_week; Type: INDEX; Schema: public; Owner: postgres
+--
+CREATE INDEX idx_published_lessons_teacher_week ON public.published_lessons USING btree (teacher_id, week_start_date, weekday, lesson_number);
 
 
 --
