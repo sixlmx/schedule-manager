@@ -1,74 +1,4 @@
 export const publicationQueries = {
-  getSettings: `
-    SELECT
-      id,
-      public_id as "publicId",
-      is_published as "isPublished",
-      school_name as "schoolName",
-      school_website_url as "schoolWebsiteUrl",
-      teacher_name_format as "teacherNameFormat",
-      last_published_at as "lastPublishedAt",
-      created_at as "createdAt",
-      updated_at as "updatedAt"
-    FROM publication_settings
-    ORDER BY id
-    LIMIT 1
-  `,
-
-  createSettings: `
-    INSERT INTO publication_settings (public_id)
-    VALUES ($1)
-    RETURNING
-      id,
-      public_id as "publicId",
-      is_published as "isPublished",
-      school_name as "schoolName",
-      school_website_url as "schoolWebsiteUrl",
-      teacher_name_format as "teacherNameFormat",
-      last_published_at as "lastPublishedAt",
-      created_at as "createdAt",
-      updated_at as "updatedAt"
-  `,
-
-  saveSettings: `
-    UPDATE publication_settings
-    SET
-      school_name = $1,
-      school_website_url = $2,
-      teacher_name_format = $3,
-      updated_at = CURRENT_TIMESTAMP
-    WHERE id = $4
-    RETURNING
-      id,
-      public_id as "publicId",
-      is_published as "isPublished",
-      school_name as "schoolName",
-      school_website_url as "schoolWebsiteUrl",
-      teacher_name_format as "teacherNameFormat",
-      last_published_at as "lastPublishedAt",
-      created_at as "createdAt",
-      updated_at as "updatedAt"
-  `,
-
-  markPublished: `
-    UPDATE publication_settings
-    SET
-      is_published = $1,
-      last_published_at = $2,
-      updated_at = CURRENT_TIMESTAMP
-    WHERE id = $3
-    RETURNING
-      id,
-      public_id as "publicId",
-      is_published as "isPublished",
-      school_name as "schoolName",
-      school_website_url as "schoolWebsiteUrl",
-      teacher_name_format as "teacherNameFormat",
-      last_published_at as "lastPublishedAt",
-      created_at as "createdAt",
-      updated_at as "updatedAt"
-  `,
-
   getPublishedSchedules: `
     SELECT
       source_schedule_id as "sourceScheduleId",
@@ -81,6 +11,11 @@ export const publicationQueries = {
     ORDER BY week_start_date DESC, schedule_name
   `,
 
+  getLastPublishedAt: `
+    SELECT MAX(published_at) as "lastPublishedAt"
+    FROM published_lessons
+  `,
+
   getPeriodLessonsSummary: `
     SELECT
       COUNT(DISTINCT s.id)::integer as "schedulesCount",
@@ -90,7 +25,7 @@ export const publicationQueries = {
     WHERE s.type = 'period'
   `,
 
-  clearSnapshot: 'DELETE FROM published_lessons',
+  clearPublishedLessons: 'DELETE FROM published_lessons',
 
   insertPeriodLessonsSnapshot: `
     WITH inserted AS (

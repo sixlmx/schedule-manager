@@ -31,49 +31,6 @@
   color: #1e293b;
 }
 
-.settingsSection {
-  margin-top: 2rem;
-}
-
-.settingsHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.settingsForm {
-  margin: 0;
-}
-
-.settingsInput {
-  width: 100%;
-  max-width: 26rem;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 0.375rem;
-  background-color: white;
-  color: #334155;
-  font: inherit;
-}
-
-.settingsInput:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgb(59 130 246 / 10%);
-}
-
-.settingsActions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
-}
-
-.emptyValue {
-  color: #64748b;
-}
-
 .emptyRow {
   text-align: center;
   color: #64748b;

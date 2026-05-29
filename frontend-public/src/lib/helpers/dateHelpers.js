@@ -13,16 +13,15 @@ export function getMondayDate(offset = 0) {
 }
 
 export function calcDate(startOfWeek, dayOfWeek) {
-  const [year, month, day] = startOfWeek.split('-').map(Number);
-  const result = new Date(Date.UTC(year, month - 1, day));
+  const result = new Date(startOfWeek);
 
-  result.setUTCDate(result.getUTCDate() + (dayOfWeek - 1));
+  result.setDate(result.getDate() + (dayOfWeek - 1));
 
-  const resultDay = String(result.getUTCDate()).padStart(2, '0');
-  const resultMonth = String(result.getUTCMonth() + 1).padStart(2, '0');
-  const resultYear = result.getUTCFullYear();
+  const day = String(result.getDate()).padStart(2, '0');
+  const month = String(result.getMonth() + 1).padStart(2, '0');
+  const year = result.getFullYear();
 
-  return `${resultDay}.${resultMonth}.${resultYear}`;
+  return `${day}.${month}.${year}`;
 }
 
 export function calcWindow(endTime, startTime) {

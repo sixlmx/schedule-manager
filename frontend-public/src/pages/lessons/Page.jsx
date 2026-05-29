@@ -1,34 +1,31 @@
-import BreadCrumbs from '../../components/BreadCrumbs.jsx'
-import PageNavigation from '../../components/PageNavigation.jsx'
-import { fetchLessons } from '../../lib/api.js'
-import { addWindows, sortLessonsByDays } from '../../lib/helpers/sortHelpers.js'
-import { parseUrl } from '../../lib/helpers/urlHelpers.js'
 import DayTable from './components/DayTable.jsx'
+import { addWindows, sortLessonsByDays } from '../../lib/helpers/sortHelpers.js'
 import styles from './Page.module.css'
+import BreadCrumbs from '../../components/BreadCrumbs.jsx'
+import { fetchLessons } from '../../lib/api.js'
+import PageNavigation from '../../components/PageNavigation.jsx'
+import { parseUrl } from '../../lib/helpers/urlHelpers.js'
 
-export default async function Schedule() {
-  const { category, publicBase } = parseUrl(window.location.href)
-  const { startDate, endDate, lessons, teacher, group } = await fetchLessons(category)
+export default async function Page() {
+  const { category } = parseUrl(window.location.href)
+  const { startDate, lessons, group } = await fetchLessons(category)
   const sortedLessons = sortLessonsByDays(lessons)
   const days = Object.keys(sortedLessons)
-  const title = category === 'teachers' ? teacher?.fio : group?.name
-  const crumbs = [
+  const breadcrumbs = [
     {
-      type: 'ref', href: `${publicBase}/${category}`,
+      type: 'ref', href: `/public/${category}`,
       text: category === 'teachers' ? 'Преподаватели' : 'Группы',
     },
-    { type: 'text', text: title ?? '' },
+    { text: category === 'teachers' ? lessons[0].teachers[0].fio : group.name },
   ]
 
   return (
     <div>
-      <BreadCrumbs rootHref={publicBase} crumbs={crumbs} />
-      <PageNavigation startDate={startDate} endDate={endDate} />
+      <BreadCrumbs crumbs={breadcrumbs} />
+      <PageNavigation />
       <div class={styles.scheduleDashboard}>
         <div class={styles.scheduleGrid}>
-          {days.length > 0
-            ? days.map(day => <DayTable lessons={addWindows(sortedLessons[day])} startDate={startDate} />)
-            : <p>Опубликованных занятий нет</p>}
+          {days.map(day => <DayTable lessons={addWindows(sortedLessons[day])} startDate={startDate} />)}
         </div>
       </div>
     </div>

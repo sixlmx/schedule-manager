@@ -1,15 +1,10 @@
 import styles from './PageNavigation.module.css'
 
-const formatDate = (dateValue) => {
-  const [year, month, day] = String(dateValue).split('-')
-  return `${day}.${month}.${year}`
-}
-
-export default function PageNavigation({ startDate, endDate }) {
+export default function PageNavigation() {
   return (
     <div class={styles.navigation}>
       <a class={styles.button}>Предыдущая неделя</a>
-      <div class={styles.date}>{formatDate(startDate)} - {formatDate(endDate)}</div>
+      <div class={styles.date}>23.03.2026 - 29.03.2026</div>
       <a class={styles.button}>Следующая неделя</a>
     </div>
   )

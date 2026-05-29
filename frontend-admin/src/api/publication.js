@@ -1,4 +1,4 @@
-async function fetchPublicationState() {
+async function fetchPublishedSchedules() {
   try {
     const response = await fetch('/apiv1/publication');
     if (!response.ok) {
@@ -28,7 +28,7 @@ async function publishPeriodLessons() {
   }
 }
 
-async function deletePublication() {
+async function clearPublishedLessons() {
   try {
     const response = await fetch('/apiv1/publication', {
       method: 'DELETE',
@@ -44,29 +44,8 @@ async function deletePublication() {
   }
 }
 
-async function updatePublicationSettings(settings) {
-  try {
-    const response = await fetch('/apiv1/publication/settings', {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(settings),
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
-  }
-  catch (error) {
-    return { type: 'error', message: error.message };
-  }
-}
-
 export {
-  deletePublication,
-  fetchPublicationState,
+  clearPublishedLessons,
+  fetchPublishedSchedules,
   publishPeriodLessons,
-  updatePublicationSettings,
 };

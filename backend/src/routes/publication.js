@@ -1,8 +1,7 @@
 import {
-  deletePublication,
+  clearPublishedLessons,
   getPublicationState,
   publishPeriodLessons,
-  updatePublicationSettings,
 } from '../controllers/publication.js';
 
 export default async function publicationRoutes(fastify) {
@@ -17,12 +16,7 @@ export default async function publicationRoutes(fastify) {
   });
 
   fastify.delete('/publication', async (req, reply) => {
-    const result = await deletePublication(fastify);
-    reply.send(result);
-  });
-
-  fastify.patch('/publication/settings', async (req, reply) => {
-    const result = await updatePublicationSettings(fastify, req.body);
+    const result = await clearPublishedLessons(fastify);
     reply.send(result);
   });
 }

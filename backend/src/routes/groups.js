@@ -1,15 +1,9 @@
-import { getPublishedGroupLessons } from '../controllers/publicLessons.js';
 import { createGroup, deleteGroup, getGroups, updateGroup } from '../controllers/groups.js';
 
-export default async function groupsRoutes(fastify) {
+export default async function teachersRoutes(fastify) {
   fastify.get('/groups', async (req, reply) => {
     const groups = await getGroups(fastify);
     reply.send(groups);
-  });
-
-  fastify.get('/groups/lessons', async (req, reply) => {
-    const lessons = await getPublishedGroupLessons(fastify, req.query);
-    reply.send(lessons);
   });
 
   fastify.post('/groups', async (req, reply) => {

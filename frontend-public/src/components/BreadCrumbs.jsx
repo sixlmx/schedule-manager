@@ -1,9 +1,9 @@
 import styles from './BreadCrumbs.module.css'
 
-export default function BreadCrumbs({ crumbs, rootHref = '/public' }) {
+export default function BreadCrumbs({ crumbs }) {
   return (
     <div class={styles.breadcrumbs}>
-      <a href={rootHref}>Расписание занятий</a>
+      <a href="/public">Расписание занятий</a>
       {crumbs.map((crumb) => (
         <div>
           <span class={styles.slash}>/</span>
