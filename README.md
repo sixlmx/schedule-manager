@@ -17,7 +17,7 @@
 - `frontend-admin` — административная часть.
 - `frontend-public` — публичная часть.
 - Собственный JSX/core **wood-js**.
-- CSS и CSS Modules.
+- CSS Modules.
 
 ### Tooling
 
