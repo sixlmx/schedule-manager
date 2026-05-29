@@ -8,6 +8,9 @@
   box-shadow: 0 3px 10px rgb(0 0 0 / 10%);
   border: 2px solid transparent;
   transition: 0.2s;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
 }
 
 .card:hover {
