@@ -18,6 +18,7 @@ export const createTeacher = async (fastify, data) => {
       data.fio,
       data.abbr,
       data.position,
+      data.color,
     ]);
     return { message: 'Преподаватель добавлен!' };
   }
@@ -33,6 +34,7 @@ export const updateTeacher = async (fastify, data) => {
       data.fio,
       data.abbr,
       data.position,
+      data.color,
       data.id,
     ]);
     return { message: 'Данные успешно обновлены!' };
