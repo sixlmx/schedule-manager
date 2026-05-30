@@ -1,4 +1,5 @@
 import styles from './Error.module.css'
+import { navigateBack } from '../core/router.js'
 
 export default function Error() {
   return (
@@ -7,7 +8,7 @@ export default function Error() {
         <h1 class={styles.errorCode}>404</h1>
         <h2 class={styles.errorTitle}>Страница не найдена</h2>
         <p class={styles.errorMessage}>Указанный путь ошибочен или страница была удалена</p>
-        <a href="back" class={styles.errorBackBtn}>← Вернуться назад</a>
+        <button class={styles.errorBackBtn} onClick={() => navigateBack()}>← Вернуться назад</button>
       </div>
     </div>
   )

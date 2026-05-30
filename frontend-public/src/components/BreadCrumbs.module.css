@@ -21,6 +21,20 @@
   text-decoration: underline;
 }
 
+.breadcrumbButton {
+  color: #06c;
+  text-decoration: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.breadcrumbButton:hover {
+  text-decoration: underline;
+}
+
 .breadcrumbs span {
   color: #06c;
 }

@@ -1,9 +1,10 @@
 import styles from './Teacher.module.css'
+import { redirect } from '../../../core/router.js'
 
 export default function TeacherName(teacher) {
   return (
-    <a href={`/public/teachers/${teacher.id}/lessons`}>
-      <h5 class={styles.teacherName}>{teacher.name}</h5>
-    </a>
+    <h5 class={styles.teacherName}>
+      <button class={styles.teacherButton} onClick={() => redirect(`/public/teachers/${teacher.id}/lessons`)}>{teacher.name}</button>
+    </h5>
   )
 }
