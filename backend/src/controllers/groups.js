@@ -18,6 +18,7 @@ export const createGroup = async (fastify, data) => {
       data.name,
       data.yearOfAdmission,
       data.abbreviation,
+      data.color || '#3b82f6',
     ]);
     return { message: 'Группа добавлена!' };
   }
@@ -33,6 +34,7 @@ export const updateGroup = async (fastify, data) => {
       data.name,
       data.abbreviation,
       data.yearOfAdmission,
+      data.color || '#3b82f6',
       data.id,
     ]);
     return { message: 'Данные группы обновлены!' };
