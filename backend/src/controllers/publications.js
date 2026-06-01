@@ -5,7 +5,8 @@ export const getPublications = async (fastify) => {
   try {
     const { rows } = await client.query(publicationsQueries.getPublishedSchedules);
     return rows;
-  } finally {
+  }
+  finally {
     client.release();
   }
 };
@@ -46,17 +47,19 @@ export const publishSchedule = async (fastify, scheduleId) => {
         lesson.weekday, lesson.lesson_number, lesson.classroom,
         lesson.group_id, lesson.group_name,
         lesson.teacher_id, lesson.teacher_name,
-        lesson.subject_id, lesson.subject_name, lesson.subject_abbr
+        lesson.subject_id, lesson.subject_name, lesson.subject_abbr,
       ]);
     }
 
     await client.query('COMMIT');
     return { type: 'success', message: 'Расписание опубликовано!' };
-  } catch (error) {
+  }
+  catch (error) {
     await client.query('ROLLBACK');
     console.error('Error publishing schedule:', error);
     return { type: 'error', message: error.message };
-  } finally {
+  }
+  finally {
     client.release();
   }
 };
@@ -66,10 +69,12 @@ export const unpublishAll = async (fastify) => {
   try {
     await client.query('DELETE FROM published_lessons');
     return { type: 'success', message: 'Все публикации удалены' };
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Error deleting all publications:', error);
     return { type: 'error', message: error.message };
-  } finally {
+  }
+  finally {
     client.release();
   }
 };
