@@ -31,6 +31,7 @@ fastify.register((fastify) => {
   fastify.register(import('./routes/schedules.js'), { prefix: '/apiv1' });
   fastify.register(import('./routes/classes.js'), { prefix: '/apiv1' });
   fastify.register(import('./routes/workloads.js'), { prefix: '/apiv1' });
+  fastify.register(import('./routes/publications.js'), { prefix: '/apiv1' });
 });
 
 // builds

@@ -1,24 +1,16 @@
 import PageTitle from '../../shared/PageTitle'
 import pages from '../pages.module.css'
 import styles from './PublicationPage.module.css'
+import { fetchPublications } from '../../api/publications.js'
 
-export default function PublicationPage() {
-  const publicationInfo = {
-    url: '',
-    lastPublishedAt: '-',
-  }
-
-  const publishedSchedules = []
-
-  const publishSchedules = () => {
-    // const schedules = 
-  }
+export default async function PublicationPage() {
+  const publications = await fetchPublications()
 
   return (
     <div class={`content ${pages.crudPage}`}>
       <div class={pages.crudHeader}>
         <PageTitle title="Публикация расписания" />
-        <button class={pages.addButton} onClick={()=>{}}>ОПУБЛИКОВАТЬ</button>
+        <button class={pages.addButton} onClick={() => { }}>ОПУБЛИКОВАТЬ</button>
       </div>
 
       <div class={styles.publicationContent}>
@@ -26,15 +18,9 @@ export default function PublicationPage() {
           <tbody>
             <tr>
               <td>Ссылка на опубликованное расписание</td>
-              <td>
-                {publicationInfo.url
-                  ? <a href={publicationInfo.url}>{publicationInfo.url}</a>
-                  : <span class={styles.emptyValue}>-</span>}
-              </td>
             </tr>
             <tr>
               <td>Дата последней публикации</td>
-              <td>{publicationInfo.lastPublishedAt}</td>
             </tr>
           </tbody>
         </table>
@@ -49,7 +35,7 @@ export default function PublicationPage() {
               </tr>
             </thead>
             <tbody>
-              {publishedSchedules.map(schedule => (
+              {publications.map(schedule => (
                 <tr>
                   <td>{schedule.name}</td>
                   <td>{schedule.period}</td>

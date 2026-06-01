@@ -1,8 +1,4 @@
-import { publicationsQueries } from '../db/queries.js';
-
-const generatePublicId = () => {
-  return Math.random().toString(36).substring(2, 15);
-};
+import { publicationsQueries } from '../db/queries/publications.js';
 
 export const getPublications = async (fastify) => {
   const client = await fastify.pg.connect();
@@ -42,16 +38,11 @@ export const publishSchedule = async (fastify, scheduleId) => {
 
     await client.query('BEGIN');
 
-    // Удаляем старую публикацию этого расписания если есть
-    await client.query(`
-      DELETE FROM published_lessons WHERE schedule_id = $1
-    `, [scheduleId]);
-
-    const publicId = generatePublicId();
+    await client.query(publicationsQueries.deleteByScheduleId, [scheduleId]);
 
     for (const lesson of lessons) {
       await client.query(publicationsQueries.insertPublishedLessons, [
-        publicId, schedule.id, schedule.name,
+        schedule.id, schedule.name,
         lesson.weekday, lesson.lesson_number, lesson.classroom,
         lesson.group_id, lesson.group_name,
         lesson.teacher_id, lesson.teacher_name,
@@ -60,7 +51,7 @@ export const publishSchedule = async (fastify, scheduleId) => {
     }
 
     await client.query('COMMIT');
-    return { type: 'success', message: 'Расписание опубликовано!', publicId };
+    return { type: 'success', message: 'Расписание опубликовано!' };
   } catch (error) {
     await client.query('ROLLBACK');
     console.error('Error publishing schedule:', error);
@@ -73,7 +64,7 @@ export const publishSchedule = async (fastify, scheduleId) => {
 export const unpublishAll = async (fastify) => {
   const client = await fastify.pg.connect();
   try {
-    await client.query(publicationsQueries.deleteAllPublished);
+    await client.query('DELETE FROM published_lessons');
     return { type: 'success', message: 'Все публикации удалены' };
   } catch (error) {
     console.error('Error deleting all publications:', error);
