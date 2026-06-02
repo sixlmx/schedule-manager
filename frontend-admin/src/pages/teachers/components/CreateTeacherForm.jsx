@@ -11,6 +11,7 @@ export default function CreateTeacherForm() {
       fio: formData.get('fio'),
       abbr: formData.get('abbr'),
       position: formData.get('position'),
+      color: formData.get('color'),
     }
     const result = await createTeacher(data)
     ui.closeModal()
@@ -24,6 +25,16 @@ export default function CreateTeacherForm() {
       <input type="text" name="fio" placeholder="ФИО" required />
       <input type="text" name="abbr" placeholder="Сокращение" required />
       <input type="text" name="position" placeholder="Должность" />
+      <div>
+        <label><input type="radio" name="color" value="red" required /><span style="background:red; width:20px; height:20px; display:inline-block;"></span></label>
+        <label><input type="radio" name="color" value="orange" /><span style="background:orange; width:20px; height:20px; display:inline-block;"></span></label>
+        <label><input type="radio" name="color" value="yellow" /><span style="background:yellow; width:20px; height:20px; display:inline-block;"></span></label>
+        <label><input type="radio" name="color" value="green" /><span style="background:green; width:20px; height:20px; display:inline-block;"></span></label>
+        <label><input type="radio" name="color" value="blue" /><span style="background:blue; width:20px; height:20px; display:inline-block;"></span></label>
+        <label><input type="radio" name="color" value="cyan" /><span style="background:cyan; width:20px; height:20px; display:inline-block;"></span></label>
+        <label><input type="radio" name="color" value="violet" /><span style="background:violet; width:20px; height:20px; display:inline-block;"></span></label>
+      </div>
+
       <button type="submit">Добавить</button>
     </form>
   )
