@@ -28,7 +28,7 @@ export default function Workload({ workload }) {
     refreshPage()
   }
   const onMouseEnter = () => {
-    render("#infoSection", <InfoSection workload={workload} />)
+    render("#infoSection", <InfoSection scheduleItem={workload} />)
   }
   const onMouseLeave = () => {
     render("#infoSection", <InfoSection />)
