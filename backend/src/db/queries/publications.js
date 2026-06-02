@@ -14,14 +14,16 @@ export const publicationsQueries = {
   `,
 
   getPublishedSchedules: `
-    SELECT DISTINCT
-      schedule_id,
-      schedule_name,
-      MIN(published_at) as published_at
-    FROM published_lessons
-    GROUP BY schedule_id, schedule_name
-    ORDER BY published_at DESC
-  `,
+  SELECT DISTINCT
+    pl.schedule_id,
+    pl.schedule_name,
+    MIN(pl.published_at) as published_at,
+    s.start_date
+  FROM published_lessons pl
+  JOIN schedules s ON pl.schedule_id = s.id
+  GROUP BY pl.schedule_id, pl.schedule_name, s.start_date
+  ORDER BY published_at DESC
+`,
 
   getPublishedLessons: `
     SELECT 

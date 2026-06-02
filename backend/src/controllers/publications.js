@@ -55,11 +55,13 @@ export const publishSchedules = async (fastify) => {
 
     await client.query('COMMIT');
     return { type: 'success', message: 'Новые расписания опубликованы!' };
-  } catch (error) {
+  }
+  catch (error) {
     await client.query('ROLLBACK');
     console.error('Error publishing schedules:', error);
     return { type: 'error', message: error.message };
-  } finally {
+  }
+  finally {
     client.release();
   }
 };

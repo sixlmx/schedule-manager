@@ -4,9 +4,11 @@ import styles from './PublicationPage.module.css'
 import { fetchPublications, publishSchedules } from '../../api/publications.js'
 import { refreshPage } from '../../core/router.js'
 import { ui } from '../../utils/dom.js'
+import { getWeekRange } from '../../utils/date.js'
 
 export default async function PublicationPage() {
   const publications = await fetchPublications()
+
   const handlePublish = async () => {
     const result = await publishSchedules()
     ui.showFlashMessage(result)
@@ -42,10 +44,10 @@ export default async function PublicationPage() {
               </tr>
             </thead>
             <tbody>
-              {publications.map(schedule => (
+              {publications.map(publication => (
                 <tr>
-                  <td>{schedule.name}</td>
-                  <td>{schedule.period}</td>
+                  <td>{publication.schedule_name}</td>
+                  <td>{getWeekRange(publication.start_date)}</td>
                 </tr>
               ))
               }
