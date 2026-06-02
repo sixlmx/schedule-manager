@@ -21,6 +21,7 @@ export const buildLessons = (scheduleData) => {
     const currentGroup = newGroups.find(group => group.id === lesson.groupId);
     const currentWeekday = currentGroup.weekdays.find(weekday => weekday.dayIndex === lesson.weekday);
     const currentLesson = currentWeekday.lessons[lesson.lessonNumber - 1];
+    currentLesson.id = lesson.id;
     currentLesson.groupName = lesson.groupName;
     currentLesson.subjectName = lesson.subjectName;
     currentLesson.teacherName = lesson.teacherName;

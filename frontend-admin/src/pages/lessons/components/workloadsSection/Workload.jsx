@@ -25,6 +25,7 @@ export default function Workload({ workload }) {
     store.ui.selectedGroup = workload.groupId
     store.ui.selectedWorkload = workload
     store.ui.workloadId = workload.workloadId
+    store.ui.selectedLessonId = null
     refreshPage()
   }
   const onMouseEnter = () => {
